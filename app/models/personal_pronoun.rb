@@ -1,0 +1,2 @@
+class PersonalPronoun < ApplicationRecord
+end

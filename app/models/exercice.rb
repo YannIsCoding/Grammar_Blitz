@@ -3,4 +3,5 @@ class Exercice < ApplicationRecord
 
   validates :name, :description, presence: true
   validates :name, :description, uniqueness: true
+
 end

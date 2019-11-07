@@ -1,3 +1,4 @@
+require_relative '../services/sentence_builder_service'
 class ExercicesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
   def index
@@ -6,16 +7,8 @@ class ExercicesController < ApplicationController
 
   def show
     @exercice = Exercice.find(params[:id])
-    @sentence = ''
-    structure = @exercice.structure.structure_elements
-    person = SentenceBuilder.person
-    structure.each do |el|
-      p 'this is the inside p:'
-      p el.element.value
-      @sentence = @sentence + " #{el.element.value}"
-    end
-    @sentence
-
-
+    @sentence = SentenceBuilderService.new(@exercice).generate
+    @progress_tracker = ProgressTracker.find_by(user_id: current_user, exercice_id: @exercice) || ProgressTracker.new
   end
+
 end

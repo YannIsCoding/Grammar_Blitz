@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   # get 'exercice', to: 'pages#exercice', as: :exercice
   resources :exercices, only: [:index, :show]
+  resources :progress_trackers, only: [:create, :update]
 end

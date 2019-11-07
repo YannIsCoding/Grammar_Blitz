@@ -5,10 +5,21 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.delete_all
 Verb.delete_all
 PersonalPronoun.delete_all
 Article.delete_all
 Noun.delete_all
+StructureElement.delete_all
+Element.delete_all
+Exercice.delete_all
+Structure.delete_all
+
+User.create!(
+  email: 'me@me.me',
+  password: '123456'
+  )
+
 
 verbs = [
       %w[bin first_singular sein],
@@ -17,7 +28,8 @@ verbs = [
       %w[sind first_plurial sein],
       %w[seid second_plurial sein],
       %w[sind third_plurial sein]
-]
+      ]
+
 verbs.each do |array|
   Verb.create!(
     value: array[0],
@@ -84,7 +96,36 @@ noun.each do |array|
       )
 end
 
+%w[subject verb OD OI preposition].each do |el|
+  Element.create!(value: el)
+end
 
+%w[S_V_PREP_OD S_V_OD].each do |structure|
+  Structure.create!(name: structure)
+end
 
+structure_elements = [
+  %w[1 subject S_V_PREP_OD],
+  %w[2 verb S_V_PREP_OD],
+  %w[3 preposition S_V_PREP_OD],
+  %w[4 OD S_V_PREP_OD],
+  %w[1 subject S_V_OD],
+  %w[2 verb S_V_OD],
+  %w[3 OD S_V_OD]
+]
+
+structure_elements.each do |array|
+  StructureElement.create!(
+    position: array[0].to_i,
+    element_id: Element.find_by(value: array[1]).id,
+    structure_id: Structure.find_by(name: array[2]).id
+    )
+end
+
+Exercice.create!(
+  name: 'direct object and accusative',
+  description: 'simple sentence structure with accusative and direct object',
+  structure_id: Structure.find_by(name: 'S_V_OD').id
+  )
 
 puts ' IT IS DONE! '

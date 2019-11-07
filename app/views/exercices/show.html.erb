@@ -1,0 +1,8 @@
+<h1><%= @exercice.name %></h1>
+<%= @exercice.structure.name %>
+<% @exercice.structure.structure_elements.each do |el| %>
+  <%= el.position %>
+  <%= el.element.value %>
+<% end %>
+
+<%= @sentence %>

@@ -20,38 +20,52 @@ User.create!(
   password: '123456'
   )
 
-
 verbs = [
-      %w[bin first_singular sein],
-      %w[bist second_singular sein],
-      %w[ist third_singular sein],
-      %w[sind first_plurial sein],
-      %w[seid second_plurial sein],
-      %w[sind third_plurial sein]
+      %w[bin first_singular sein auxiliary am],
+      %w[bist second_singular sein auxiliary are],
+      %w[ist third_singular sein auxiliary is],
+      %w[sind first_plurial sein auxiliary are],
+      %w[seid second_plurial sein auxiliary are],
+      %w[sind third_plurial sein auxiliary are],
+      %w[kenne first_singular kennen accusative know],
+      %w[kennst second_singular kennen accusative know],
+      %w[kennt third_singular kennen accusative knows],
+      %w[kennen first_plurial kennen accusative know],
+      %w[kennt second_plurial kennen accusative know],
+      %w[kennen third_plurial kennen accusative know],
+      %w[kaufe first_singular kaufen accusative buy],
+      %w[kaufst second_singular kaufen accusative buy],
+      %w[kauft third_singular kaufen accusative buys],
+      %w[kaufen first_plurial kaufen accusative buy],
+      %w[kauft second_plurial kaufen accusative buy],
+      %w[kaufen third_plurial kaufen accusative buy]
       ]
 
 verbs.each do |array|
   Verb.create!(
     value: array[0],
     person: array[1],
-    preterit: array[2]
+    preterit: array[2],
+    g_case: array[3],
+    english: array[4]
     )
 end
 
-pp = [%w[ich first_singular nominative],
-      %w[du second_singular nominative],
-      %w[er third_masculin nominative],
-      %w[sie third_feminin nominative],
-      %w[es third_neutral nominative],
-      %w[wir first_plurial nominative],
-      %w[ihr second_plurial nominative],
-      %w[Sie third_plurial nominative],
+pp = [%w[ich first_singular nominative I],
+      %w[du second_singular nominative you],
+      %w[er third_masculin nominative he],
+      %w[sie third_feminin nominative she],
+      %w[es third_neutral nominative it],
+      %w[wir first_plurial nominative we],
+      %w[ihr second_plurial nominative you],
+      %w[Sie third_plurial nominative they],
   ]
 pp.each do |array|
   PersonalPronoun.create!(
     value: array[0],
     person: array[1],
-    case: array[2]
+    case: array[2],
+    english: array[3]
       )
 end
 
@@ -59,7 +73,11 @@ da = [
   %w[der masculin nominative true],
   %w[die feminin nominative true],
   %w[das neutral nominative true],
-  %w[die plurial nominative true]
+  %w[die plurial nominative true],
+  %w[den masculin accusative true],
+  %w[das neutral accusative true],
+  %w[die feminin accusative true],
+  %w[die plurial accusative true]
   ]
 
 da.each do |array|
@@ -67,36 +85,38 @@ da.each do |array|
     value: array[0],
     gender: array[1],
     case: array[2],
-    definite: array[3] == 'true'
+    definite: array[3] == 'true',
+    english: 'the'
       )
 end
 
 noun = [
-  %w[freund masculin],
-  %w[mann masculin],
-  %w[kellner masculin],
-  %w[freundin feminin],
-  %w[stadt feminin],
-  %w[hand feminin],
-  %w[hande plurial],
-  %w[teile plurial],
-  %w[manner plurial],
-  %w[lander plurial],
-  %w[auto neutral],
-  %w[jahr neutral],
-  %w[beispiel neutral],
-  %w[haus neutral],
-  %w[end neutral]
+  %w[freund masculin friend],
+  %w[mann masculin man],
+  %w[kellner masculin waiter],
+  %w[freundin feminin friend],
+  %w[stadt feminin city],
+  %w[hand feminin hand],
+  %w[hande plurial hands],
+  %w[teile plurial parts],
+  %w[manner plurial men],
+  %w[lander plurial countries],
+  %w[auto neutral car],
+  %w[jahr neutral year],
+  %w[beispiel neutral exemple],
+  %w[haus neutral house],
+  %w[end neutral end]
   ]
 
 noun.each do |array|
   Noun.create!(
     value: array[0],
     gender: array[1],
+    english: array[2]
       )
 end
 
-%w[subject verb OD OI preposition].each do |el|
+%w[subject verb od oi preposition].each do |el|
   Element.create!(value: el)
 end
 
@@ -108,10 +128,10 @@ structure_elements = [
   %w[1 subject S_V_PREP_OD],
   %w[2 verb S_V_PREP_OD],
   %w[3 preposition S_V_PREP_OD],
-  %w[4 OD S_V_PREP_OD],
+  %w[4 od S_V_PREP_OD],
   %w[1 subject S_V_OD],
   %w[2 verb S_V_OD],
-  %w[3 OD S_V_OD]
+  %w[3 od S_V_OD]
 ]
 
 structure_elements.each do |array|

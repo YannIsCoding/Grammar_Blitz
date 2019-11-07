@@ -4,8 +4,4 @@ class Element < ApplicationRecord
 
   validates :value, presence: true
   validates :value, uniqueness: true
-
-  def self.subject
-
-  end
 end

@@ -1,8 +1,14 @@
 <h1><%= @exercice.name %></h1>
-<%= @exercice.structure.name %>
-<% @exercice.structure.structure_elements.each do |el| %>
-  <%= el.position %>
-  <%= el.element.value %>
-<% end %>
+<p>
+  The exercice sentence is:
+</p>
+<p>
+<%= @sentence[:english] %>
+</p>
+<p>
+<%= @sentence[:german] %>
 
-<%= @sentence %>
+<%= form_with model: @progress_tracker do |f| %>
+  <%= f.text_field :response %>
+  <%= f.submit "Submit" %>
+<% end %>

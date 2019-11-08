@@ -1,11 +1,13 @@
-<h1>List of Exercices</h1>
-<ul>
-  <% @exercices.each do |exercice| %>
-    <li>
-      <p>
-        <%= link_to exercice.name, exercice_path(exercice.id)  %>
-      </p>
-      <%= exercice.description %>
-    </li>
-  <% end %>
-</ul>
+<div class='main-container'>
+  <h1>List of Exercices</h1>
+  <ul>
+    <% @exercices.each do |exercice| %>
+      <li>
+        <p>
+          <%= link_to exercice.name, exercice_path(exercice.id)  %>
+        </p>
+        <%= exercice.description %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,12 +1,15 @@
 <h1><%= @exercice.name %></h1>
+
+<% if params[:success] == 'true' %>
+  <p>GOOD JOB!</p>
+<% elsif params[:success] == 'false' %>
+  <p>the answer was <%= params[:solution] %></p>
+  <p> Try again, you'll get it right next time!</p>
+<% end %>
 <p>the counter is:</p>
 <p> <%= @progress_tracker.counter %></p>
-<p>
-  The exercice sentence is:
-</p>
-<p>
-<%= @sentence[:english] %>
-</p>
+<p>The exercice sentence is:</p>
+<p><%= @sentence[:english] %></p>
 <p>
 <%= @sentence[:german] %>
 
@@ -14,6 +17,7 @@
 <p> UPDATE FORM </p>
   <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers/#{@progress_tracker.id}", method: 'patch', local: true) do %>
     <%= text_field_tag :response %>
+    <%= hidden_field_tag(:solution, @sentence[:german]) %>
     <%= submit_tag "Submit" %>
   <% end %>
 

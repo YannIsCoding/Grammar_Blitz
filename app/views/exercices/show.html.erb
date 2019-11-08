@@ -1,4 +1,6 @@
 <h1><%= @exercice.name %></h1>
+<p>the counter is:</p>
+<p> <%= @progress_tracker.counter %></p>
 <p>
   The exercice sentence is:
 </p>
@@ -8,7 +10,18 @@
 <p>
 <%= @sentence[:german] %>
 
-<%= form_with model: @progress_tracker do |f| %>
-  <%= f.text_field :response %>
-  <%= f.submit "Submit" %>
+<% if @progress_tracker.counter %>
+<p> UPDATE FORM </p>
+  <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers/#{@progress_tracker.id}", method: 'patch', local: true) do %>
+    <%= text_field_tag :response %>
+    <%= submit_tag "Submit" %>
+  <% end %>
+
+<% else %>
+<p> CREATE FORM </p>
+  <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers", method: 'post', local: true) do %>
+    <%= text_field_tag :response %>
+    <%= submit_tag "Submit" %>
+  <% end %>
+
 <% end %>

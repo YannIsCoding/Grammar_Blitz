@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
-  # get 'exercice', to: 'pages#exercice', as: :exercice
-  resources :exercices, only: [:index, :show]
-  resources :progress_trackers, only: [:create, :update]
+  resources :exercices, only: [:index, :show] do
+    resources :progress_trackers, only: [:create, :update]
+  end
 end

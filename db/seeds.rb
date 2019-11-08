@@ -14,6 +14,7 @@ StructureElement.delete_all
 Element.delete_all
 Exercice.delete_all
 Structure.delete_all
+ProgressTracker.delete_all
 
 User.create!(
   email: 'me@me.me',

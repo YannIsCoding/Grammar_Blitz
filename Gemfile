@@ -15,9 +15,16 @@ gem 'sassc-rails'
 gem 'simple_form'
 gem 'uglifier'
 gem 'webpacker'
+gem 'cloudinary', '~> 1.9.1'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'warden'
 end
 
 group :development, :test do
@@ -32,8 +39,3 @@ group :development, :test do
 end
 
 
-group :test do
-  gem 'shoulda-matchers'
-  gem 'capybara'
-  gem 'warden'
-end

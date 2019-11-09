@@ -4,7 +4,7 @@
     <% @exercices.each do |exercice| %>
       <li>
         <p>
-          <%= link_to exercice.name, exercice_path(exercice.id)  %>
+          <%= link_to exercice.name, exercice_path(exercice.id), { :class=>'cool-button' }  %>
         </p>
         <%= exercice.description %>
       </li>

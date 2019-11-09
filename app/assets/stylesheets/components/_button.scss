@@ -1,0 +1,22 @@
+.cool-button {
+    background-color: #FAE1E2;
+    padding: 15px;
+    box-shadow: black;
+    box-shadow: 5px 6px 0px 3px #CC4481;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px #CC4481;
+    color: #CC4481;
+    animation: bounce 0.3s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+
+    a {
+      color: #CC4481;
+    }
+
+    &:hover {
+      animation: none;
+      animation-direction: alternate;
+      animation-iteration-count: infinite;
+    }
+}

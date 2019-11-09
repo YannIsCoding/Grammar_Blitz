@@ -5,13 +5,14 @@ class ProgressTrackersController < ApplicationController
   end
 
   def update
-    @success = false
-    if params[:response].downcase == params[:solution]
+    session[:success] = false
+    session[:prev_sentence] = session[:sentence]
+    if params[:response].downcase == params[:solution].downcase
       progress_tracker = ProgressTracker.find(params[:id])
       progress_tracker.counter = progress_tracker.counter + 1
       progress_tracker.save
-      @success = true
+      session[:success] = true
     end
-    redirect_to exercice_path(params[:exercice_id], success: @success, solution: params[:solution])
+    redirect_to exercice_path(params[:exercice_id])
   end
 end

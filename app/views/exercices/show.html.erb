@@ -1,11 +1,10 @@
 <div class='main-container'>
 
   <h1><%= @exercice.name %></h1>
-
-  <% if params[:success] == 'true' %>
+  <% if session[:success] == true %>
     <p>GOOD JOB!</p>
-  <% elsif params[:success] == 'false' %>
-    <p>the answer was <%= params[:solution] %></p>
+  <% elsif session[:success] == false %>
+    <p>the answer was:  <%= session[:prev_sentence] %></p>
     <p> Try again, you'll get it right next time!</p>
   <% end %>
   <p>the counter is:</p>

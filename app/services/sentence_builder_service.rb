@@ -17,9 +17,11 @@ class SentenceBuilderService
     verb = fetch_verb
     article = fetch_article
     noun = fetch_noun
-    german = "#{subject[:german]} #{verb[:german]} #{article[:german]} #{noun[:german]}"
     english = "#{subject[:english]} #{verb[:english]} #{article[:english]} #{noun[:english]}"
-    return { german: german, english: english }
+    german = "#{subject[:german]} #{verb[:german]} #{article[:german]} #{noun[:german]}"
+    obfus = article[:german].split(//).map! { '_ ' }.join
+    obfus = "#{subject[:german]} #{verb[:german]} #{obfus} #{noun[:german]}"
+    return { german: german, obfus: obfus, english: english, solution: article[:german] }
   end
 
   private

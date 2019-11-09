@@ -8,7 +8,9 @@ class ExercicesController < ApplicationController
   def show
     @exercice = Exercice.find(params[:id])
     @sentence = SentenceBuilderService.new(@exercice).generate
-    session[:sentence] = @sentence
+    session[:solution] = @sentence[:solution]
+    session[:german] = @sentence[:german]
+
     @progress_tracker = ProgressTracker.find_by(user_id: current_user.id, exercice_id: @exercice) || ProgressTracker.new
   end
 

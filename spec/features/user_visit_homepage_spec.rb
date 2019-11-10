@@ -5,6 +5,6 @@ feature 'User visits home page' do
   scenario 'successfully' do
     visit root_path
 
-    expect(page).to have_css 'h1', text: 'Grammar Blitz'
+    expect(page).to have_css 'h1', text: 'Welcome to'
   end
 end

@@ -16,17 +16,15 @@
   <p><%= @sentence[:english] %></p>
   <p>
   <%= @sentence[:obfus] %>
-
   <% if @progress_tracker.counter %>
     <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers/#{@progress_tracker.id}", method: 'patch', local: true) do %>
-      <%= text_field_tag :response %>
-      <%#= hidden_field_tag(:solution, @sentence[:german]) %>
+      <%= text_field_tag :response, '', autofocus: true%>
       <%= submit_tag "Submit" %>
     <% end %>
 
   <% else %>
     <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers", method: 'post', local: true) do %>
-      <%= text_field_tag :response %>
+      <%= text_field_tag :response, '', autofocus: true %>
       <%= submit_tag "Submit" %>
     <% end %>
 

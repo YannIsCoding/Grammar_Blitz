@@ -5,7 +5,7 @@ feature 'user access exercice' do
     visit root_path
 
 
-    click_on "get the fun started"
+    click_on "GET THE FUN"
     exercice = Exercice.all.sample
     click_on exercice.name
     fill_in 'Email', with: 'me@me.me'
@@ -18,7 +18,7 @@ feature 'user access exercice' do
       user = FactoryBot.create(:user)
       login_as(user, :scope => :user)
       visit root_path
-      click_on "get the fun started"
+      click_on "GET THE FUN"
       exercice = Exercice.all.sample
       expect(page).to have_content(exercice.name)
       click_on exercice.name

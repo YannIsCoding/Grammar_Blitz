@@ -13,7 +13,6 @@ before_install:
 addons:
   postgresql: '9.6'
 before_script:
-  - cp config/database.yml
   - psql -c 'create database Grammar_Blitz_test;' -U postgres
 script:
   - bundle exec rake db:schema:load

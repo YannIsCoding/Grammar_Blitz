@@ -15,4 +15,4 @@ script:
   - bundle exec rake
 
 before_script:
-  - psql -c 'create database Grammar_Blitz_test;' -U postgres
+  - psql -c 'create database grammar_blitz_test;' -U postgres

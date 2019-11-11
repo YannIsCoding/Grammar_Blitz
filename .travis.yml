@@ -16,3 +16,4 @@ script:
 
 before_script:
   - psql -c 'create database grammar_blitz_test;' -U postgres
+  - yarn install bootstrap

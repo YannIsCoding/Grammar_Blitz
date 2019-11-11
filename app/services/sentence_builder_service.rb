@@ -1,9 +1,6 @@
 class SentenceBuilderService
   PERSON = %w[first_singular second_singular third_masculin third_feminin third_neutral first_plurial second_plurial third_plurial]
   GENDER = %w[masculin feminin neutral plurial]
-  # options[:person] = Exercice::PERSON.sample
-  # options[:gender] = Exercice::GENDER.sample
-  # options[:g_case] = 'accusative'
 
   def initialize(exercise)
     @exercise = exercise
@@ -21,7 +18,7 @@ class SentenceBuilderService
     german = "#{subject[:german]} #{verb[:german]} #{article[:german]} #{noun[:german]}"
     obfus = article[:german].split(//).map! { '_ ' }.join
     obfus = "#{subject[:german]} #{verb[:german]} #{obfus} #{noun[:german]}"
-    return { german: german, obfus: obfus, english: english, solution: article[:german] }
+    return { sentence: german, obfus: obfus, english: english, solution: article[:german] }
   end
 
   private

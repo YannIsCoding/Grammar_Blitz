@@ -7,11 +7,9 @@ class ExercicesController < ApplicationController
 
   def show
     @exercice = Exercice.find(params[:id])
-    @sentence = SentenceBuilderService.new(@exercice).generate
-    session[:solution] = @sentence[:solution]
-    session[:german] = @sentence[:german]
+    @exercice.update_attributes SentenceBuilderService.new(@exercice).generate
+    @exercice.save
 
     @progress_tracker = ProgressTracker.find_by(user_id: current_user.id, exercice_id: @exercice) || ProgressTracker.new
   end
-
 end

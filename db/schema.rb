@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_08_084721) do
+ActiveRecord::Schema.define(version: 2019_11_11_100334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(version: 2019_11_08_084721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "structure_id"
+    t.string "sentence"
+    t.string "prev_sentence"
+    t.string "english"
+    t.string "solution"
+    t.string "obfus"
+    t.boolean "result"
     t.index ["structure_id"], name: "index_exercices_on_structure_id"
   end
 

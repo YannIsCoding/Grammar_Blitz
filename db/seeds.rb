@@ -7,10 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 ProgressTracker.delete_all
 User.delete_all
+VerbNounLink.delete_all
 Verb.delete_all
+Noun.delete_all
 PersonalPronoun.delete_all
 Article.delete_all
-Noun.delete_all
 StructureElement.delete_all
 Element.delete_all
 Exercice.delete_all
@@ -22,24 +23,24 @@ User.create!(
   )
 
 verbs = [
-      %w[bin first_singular sein auxiliary am],
-      %w[bist second_singular sein auxiliary are],
-      %w[ist third_singular sein auxiliary is],
-      %w[sind first_plurial sein auxiliary are],
-      %w[seid second_plurial sein auxiliary are],
-      %w[sind third_plurial sein auxiliary are],
-      %w[kenne first_singular kennen accusative know],
-      %w[kennst second_singular kennen accusative know],
-      %w[kennt third_singular kennen accusative knows],
-      %w[kennen first_plurial kennen accusative know],
-      %w[kennt second_plurial kennen accusative know],
-      %w[kennen third_plurial kennen accusative know],
-      %w[kaufe first_singular kaufen accusative buy],
-      %w[kaufst second_singular kaufen accusative buy],
-      %w[kauft third_singular kaufen accusative buys],
-      %w[kaufen first_plurial kaufen accusative buy],
-      %w[kauft second_plurial kaufen accusative buy],
-      %w[kaufen third_plurial kaufen accusative buy]
+      %w[bin first_singular sein auxiliary am] << %w[people],
+      %w[bist second_singular sein auxiliary are] << %w[people],
+      %w[ist third_singular sein auxiliary is] << %w[people],
+      %w[sind first_plurial sein auxiliary are] << %w[people],
+      %w[seid second_plurial sein auxiliary are] << %w[people],
+      %w[sind third_plurial sein auxiliary are] << %w[people],
+      %w[kenne first_singular kennen accusative know] << %w[people place object],
+      %w[kennst second_singular kennen accusative know] << %w[people place object],
+      %w[kennt third_singular kennen accusative knows] << %w[people place object],
+      %w[kennen first_plurial kennen accusative know] << %w[people place object],
+      %w[kennt second_plurial kennen accusative know] << %w[people place object],
+      %w[kennen third_plurial kennen accusative know] << %w[people place object],
+      %w[kaufe first_singular kaufen accusative buy] << %w[food object animal vehicule building],
+      %w[kaufst second_singular kaufen accusative buy] << %w[food object animal vehicule building],
+      %w[kauft third_singular kaufen accusative buys] << %w[food object animal vehicule building],
+      %w[kaufen first_plurial kaufen accusative buy] << %w[food object animal vehicule building],
+      %w[kauft second_plurial kaufen accusative buy] << %w[food object animal vehicule building],
+      %w[kaufen third_plurial kaufen accusative buy] << %w[food object animal vehicule building]
       ]
 
 verbs.each do |array|
@@ -48,15 +49,54 @@ verbs.each do |array|
     person: array[1],
     preterit: array[2],
     g_case: array[3],
-    english: array[4]
+    english: array[4],
+    go_with: array[5]
     )
+end
+
+noun = [
+  %w[freund masculin friend people],
+  %w[mann masculin man people],
+  %w[kellner masculin waiter people],
+  %w[freundin feminin friend people],
+  %w[stadt feminin city place],
+  %w[hand feminin hand],
+  %w[hande plurial hands body],
+  %w[teile plurial parts object],
+  %w[manner plurial men people],
+  %w[lander plurial countries place],
+  %w[auto neutral car vehicule],
+  %w[jahr neutral year time],
+  %w[pizza feminin pizza food],
+  %w[kurbis masculin pumpkin food],
+  %w[haus neutral house building],
+  ]
+
+noun.each do |array|
+  Noun.create!(
+    value: array[0],
+    gender: array[1],
+    english: array[2],
+    is_a: array[3]
+      )
+end
+noun_instances = Noun.all
+verb_instances = Verb.all
+verb_instances.each do |verb|
+  noun_instances.each do |noun|
+    if verb.go_with.include?(noun.is_a)
+      VerbNounLink.create!(
+        verb_id: verb.id,
+        noun_id: noun.id
+        )
+    end
+  end
 end
 
 pp = [%w[ich first_singular nominative I],
       %w[du second_singular nominative you],
       %w[er third_masculin nominative he],
       %w[sie third_feminin nominative she],
-      %w[es third_neutral nominative it],
       %w[wir first_plurial nominative we],
       %w[ihr second_plurial nominative you],
       %w[Sie third_plurial nominative they],
@@ -91,31 +131,6 @@ da.each do |array|
       )
 end
 
-noun = [
-  %w[freund masculin friend],
-  %w[mann masculin man],
-  %w[kellner masculin waiter],
-  %w[freundin feminin friend],
-  %w[stadt feminin city],
-  %w[hand feminin hand],
-  %w[hande plurial hands],
-  %w[teile plurial parts],
-  %w[manner plurial men],
-  %w[lander plurial countries],
-  %w[auto neutral car],
-  %w[jahr neutral year],
-  %w[beispiel neutral exemple],
-  %w[haus neutral house],
-  %w[end neutral end]
-  ]
-
-noun.each do |array|
-  Noun.create!(
-    value: array[0],
-    gender: array[1],
-    english: array[2]
-      )
-end
 
 %w[subject verb od oi preposition].each do |el|
   Element.create!(value: el)

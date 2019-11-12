@@ -1,5 +1,5 @@
 class SentenceBuilderService
-  PERSON = %w[first_singular second_singular third_masculin third_feminin third_neutral first_plurial second_plurial third_plurial]
+  PERSON = %w[first_singular second_singular third_masculin third_feminin first_plurial second_plurial third_plurial]
   GENDER = %w[masculin feminin neutral plurial]
 
   def initialize(exercise)
@@ -30,11 +30,11 @@ class SentenceBuilderService
 
   def fetch_verb
     if @person[0..4] == 'third' && @person != 'third_plurial'
-      verb = Verb.where(person: 'third_singular', g_case: @g_case).sample
-      return { german: verb.value, english: verb.english }
+      @verb_instance = Verb.where(person: 'third_singular', g_case: @g_case).sample
+      return { german: @verb_instance.value, english: @verb_instance.english }
     end
-    verb = Verb.where(person: @person, g_case: @g_case).sample
-    { german: verb.value, english: verb.english }
+    @verb_instance = Verb.where(person: @person, g_case: @g_case).sample
+    { german: @verb_instance.value, english: @verb_instance.english }
   end
 
   def fetch_article
@@ -43,7 +43,7 @@ class SentenceBuilderService
   end
 
   def fetch_noun
-    noun = Noun.where(gender: @gender).sample
+    noun = @verb_instance.nouns.all.sample
     { german: noun.value, english: noun.english }
   end
 end

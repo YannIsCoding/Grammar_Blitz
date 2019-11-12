@@ -1,4 +1,9 @@
 FactoryBot.define do
+  factory :verb_noun_link do
+    noun { nil }
+    verb { nil }
+  end
+
   factory :progress_tracker do
     counter { "MyString" }
   end

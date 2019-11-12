@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Noun, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { should have_many(:verb_noun_links) }
+    it { should have_many(:verbs) }
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_100909) do
+ActiveRecord::Schema.define(version: 2019_11_12_152011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2019_11_12_100909) do
   create_table "articles", force: :cascade do |t|
     t.string "value"
     t.string "gender"
-    t.string "case"
+    t.string "g_case"
     t.boolean "definite"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2019_11_12_100909) do
   create_table "personal_pronouns", force: :cascade do |t|
     t.string "value"
     t.string "person"
-    t.string "case"
+    t.string "g_case"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "english"

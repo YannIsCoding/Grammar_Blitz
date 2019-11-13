@@ -9,40 +9,51 @@ class SentenceBuilderService
   end
 
   def generate
-    subject = fetch_subject
-    verb = fetch_verb
-    article = fetch_article
-    noun = fetch_noun
-    english = "#{subject[:english]} #{verb[:english]} #{article[:english]} #{noun[:english]}"
-    german = "#{subject[:german]} #{verb[:german]} #{article[:german]} #{noun[:german]}"
-    obfus = article[:german].split(//).map! { '_ ' }.join
-    obfus = "#{subject[:german]} #{verb[:german]} #{obfus} #{noun[:german]}"
-    return { sentence: german, obfus: obfus, english: english, solution: article[:german] }
+    @subject = fetch_subject
+    @article = fetch_article
+    @noun = fetch_noun
+    @verb = fetch_verb
+    @preposition = fetch_preposition
+    send(@exercice.structure.name)
   end
 
   private
 
   def fetch_subject
-    personal_pronoun = PersonalPronoun.find_by(person: @person)
-    { german: personal_pronoun.value, english: personal_pronoun.english }
+    PersonalPronoun.find_by(person: @person)
   end
 
   def fetch_verb
-    if @person[0..4] == 'third' && @person != 'third_plurial'
-      @verb_instance = Verb.where(person: 'third_singular', g_case: @g_case).sample
-      return { german: @verb_instance.value, english: @verb_instance.english }
+    if @noun.verbs.where(person: @person, g_case: @g_case).empty?
+      return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
     end
-    @verb_instance = Verb.where(person: @person, g_case: @g_case).sample
-    { german: @verb_instance.value, english: @verb_instance.english }
+
+    @noun.verbs.where(person: @person, g_case: @g_case).sample
   end
 
   def fetch_article
-    article = Article.find_by(gender: @gender, case: @g_case)
-    { german: article.value, english: article.english }
+    Article.find_by(gender: @gender, g_case: @g_case)
   end
 
   def fetch_noun
-    noun = @verb_instance.nouns.all.sample
-    { german: noun.value, english: noun.english }
+    Noun.where(gender: @gender).sample
+  end
+
+  def fetch_preposition
+    Preposition.where(g_case: 'accusative').sample
+  end
+
+  def s_v_do
+    english = "#{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}"
+    german = "#{@subject.value} #{@verb.value} #{@article.value} #{@noun.value}"
+    obfus = "#{@subject.value} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
+    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+  end
+
+  def s_v_prep_do
+    english = "#{@subject.english} #{@verb.english} #{@preposition.english} #{@article.english} #{@noun.english}"
+    german = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value}"
+    obfus = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
+    { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end
 end

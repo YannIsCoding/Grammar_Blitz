@@ -10,6 +10,7 @@ feature 'user access exercice' do
     # fill_in 'Email', with: 'me@me.me'
     # fill_in 'Password', with: '123456'
     # click_on 'Log in'
+
   end
 
   feature 'user login with warden' do

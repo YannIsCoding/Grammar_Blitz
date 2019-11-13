@@ -3,8 +3,6 @@ require 'rails_helper'
 feature 'user access exercice' do
   scenario 'successfully' do
     visit root_path
-
-
     click_on "GET THE FUN"
     exercice = Exercice.all.sample
     click_on exercice.name

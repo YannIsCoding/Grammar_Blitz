@@ -1,4 +1,9 @@
 FactoryBot.define do
+  factory :preposition do
+    value { "MyString" }
+    g_case { "MyString" }
+  end
+
   factory :verb_noun_link do
     noun { nil }
     verb { nil }

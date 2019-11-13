@@ -12,6 +12,7 @@ Verb.delete_all
 Noun.delete_all
 PersonalPronoun.delete_all
 Article.delete_all
+Preposition.delete_all
 StructureElement.delete_all
 Element.delete_all
 Exercice.delete_all
@@ -60,17 +61,17 @@ noun = [
   %w[kellner masculin waiter people],
   %w[freundin feminin friend people],
   %w[stadt feminin city place],
-  %w[hand feminin hand],
-  %w[hande plurial hands body],
   %w[teile plurial parts object],
   %w[manner plurial men people],
   %w[lander plurial countries place],
   %w[auto neutral car vehicule],
-  %w[jahr neutral year time],
   %w[pizza feminin pizza food],
   %w[kurbis masculin pumpkin food],
   %w[haus neutral house building],
   ]
+  # %w[jahr neutral year time],
+  # %w[hand feminin hand body],
+  # %w[hande plurial hands body],
 
 noun.each do |array|
   Noun.create!(
@@ -105,7 +106,7 @@ pp.each do |array|
   PersonalPronoun.create!(
     value: array[0],
     person: array[1],
-    case: array[2],
+    g_case: array[2],
     english: array[3]
       )
 end
@@ -125,29 +126,45 @@ da.each do |array|
   Article.create!(
     value: array[0],
     gender: array[1],
-    case: array[2],
+    g_case: array[2],
     definite: array[3] == 'true',
     english: 'the'
       )
 end
 
+prep = [
+  %w[durch accusative through], # verb: mouvement noun:place
+  %w[für accusative for], # verb: be noun: people
+  %w[gegen accusative against], # verb: be noun: vehicule, food
+  %w[ohne accusative without], #verb: be buy noun: people vehicule food
+  %w[um accusative around] #verb: buy noun: time
+]
 
-%w[subject verb od oi preposition].each do |el|
+prep.each do |array|
+  Preposition.create!(
+    value: array[0],
+    g_case: array[1],
+    english: array[2]
+    )
+end
+
+
+%w[subject verb do io preposition].each do |el|
   Element.create!(value: el)
 end
 
-%w[S_V_PREP_OD S_V_OD].each do |structure|
+%w[s_v_prep_do s_v_do].each do |structure|
   Structure.create!(name: structure)
 end
 
 structure_elements = [
-  %w[1 subject S_V_PREP_OD],
-  %w[2 verb S_V_PREP_OD],
-  %w[3 preposition S_V_PREP_OD],
-  %w[4 od S_V_PREP_OD],
-  %w[1 subject S_V_OD],
-  %w[2 verb S_V_OD],
-  %w[3 od S_V_OD]
+  %w[1 subject s_v_prep_do],
+  %w[2 verb s_v_prep_do],
+  %w[3 preposition s_v_prep_do],
+  %w[4 do s_v_prep_do],
+  %w[1 subject s_v_do],
+  %w[2 verb s_v_do],
+  %w[3 do s_v_do]
 ]
 
 structure_elements.each do |array|
@@ -161,7 +178,12 @@ end
 Exercice.create!(
   name: 'direct object and accusative',
   description: 'simple sentence structure with accusative and direct object',
-  structure_id: Structure.find_by(name: 'S_V_OD').id
+  structure_id: Structure.find_by(name: 's_v_do').id
+  )
+Exercice.create!(
+  name: 'direct object and accusative with preposition',
+  description: 'simple sentence structure with accusative and preposition',
+  structure_id: Structure.find_by(name: 's_v_prep_do').id
   )
 
 puts ' IT IS DONE! '

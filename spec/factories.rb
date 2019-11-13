@@ -21,6 +21,13 @@ FactoryBot.define do
     english { 'I' }
   end
 
+  factory :article do
+    value { 'der' }
+    gender { 'masculin' }
+    g_case { 'nominative' }
+    english { 'the' }
+  end
+
   factory :verb do
     value { 'bin' }
     person { 'first_singular' }

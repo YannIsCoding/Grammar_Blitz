@@ -18,6 +18,7 @@ feature 'user access exercice' do
       login_as(user, scope: :user)
       exercice = create(:exercice)
       create(:personal_pronoun)
+      create(:article)
       visit root_path
       click_on "GET THE FUN"
       expect(page).to have_content(exercice.name)

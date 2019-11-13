@@ -1,7 +1,6 @@
 class SentenceBuilderService
   PERSON = %w[first_singular second_singular third_masculin third_feminin first_plurial second_plurial third_plurial]
-  GENDER = %w[masculin feminin neutral plurial]
-
+  GENDER = Article.all.map { |a| a.gender }.uniq
   def initialize(exercise)
     @exercise = exercise
     @person = PERSON.sample

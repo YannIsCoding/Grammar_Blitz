@@ -44,15 +44,22 @@ class SentenceBuilderService
 
   def s_v_do
     english = "#{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
+    german = "#{@subject.value.capitalize} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end
 
   def s_v_prep_do
     english = "#{@subject.english} #{@verb.english} #{@preposition.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
+    german = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+  end
+
+  def v_s_do
+    english = "#{@person.include?('mascu' || 'femi') ? 'does' : 'do' } #{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}?"
+    german = "#{@verb.value} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
+    obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end
 end

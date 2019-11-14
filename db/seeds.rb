@@ -175,14 +175,27 @@ pp.each do |array|
 end
 
 da = [
-  %w[der masculin nominative true],
-  %w[die feminin nominative true],
-  %w[das neutral nominative true],
-  %w[die plurial nominative true],
-  %w[den masculin accusative true],
-  %w[das neutral accusative true],
-  %w[die feminin accusative true],
-  %w[die plurial accusative true]
+  %w[der masculin nominative true the],
+  %w[die feminin nominative true the],
+  %w[das neutral nominative true the],
+  %w[die plurial nominative true the],
+  %w[den masculin accusative true the],
+  %w[das neutral accusative true the],
+  %w[die feminin accusative true the],
+  %w[die plurial accusative true the],
+  %w[dem masculin dative true to the],
+  %w[dem neutral dative true to the],
+  %w[der feminin dative true to the],
+  %w[den plurial dative true to the],
+  %w[ein masculin nominative false a/an],
+  %w[eine feminin nominative false a/an],
+  %w[ein neutral nominative false a/an],
+  %w[einen masculin accusative false a/an],
+  %w[ein neutral accusative false a/an],
+  %w[eine feminin accusative false a/an],
+  %w[einem masculin dative false 'to a/an'],
+  %w[einem neutral dative false 'to a/an'],
+  %w[einer feminin dative false 'to a/an'],
   ]
 
 da.each do |array|
@@ -191,7 +204,7 @@ da.each do |array|
     gender: array[1],
     g_case: array[2],
     definite: array[3] == 'true',
-    english: 'the'
+    english: array[4]
       )
 end
 

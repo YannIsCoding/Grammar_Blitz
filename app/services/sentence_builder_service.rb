@@ -1,10 +1,8 @@
 class SentenceBuilderService
-  PERSON = %w[first_singular second_singular third_masculin third_feminin first_plurial second_plurial third_plurial]
-  GENDER = Article.all.map { |a| a.gender }.uniq
-  def initialize(exercise)
-    @exercise = exercise
-    @person = PERSON.sample
-    @gender = GENDER.sample
+  def initialize(exercice)
+    @exercice = exercice
+    @person = Verb.all.map(&:person).uniq.sample
+    @gender = Article.all.map(&:gender).uniq.sample
     @g_case = 'accusative'
   end
 
@@ -24,11 +22,11 @@ class SentenceBuilderService
   end
 
   def fetch_verb
-    if @noun.verbs.where(person: @person, g_case: @g_case).empty?
+    if @noun.verbs.where(person: @person).empty?
       return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
     end
 
-    @noun.verbs.where(person: @person, g_case: @g_case).sample
+    @noun.verbs.where(person: @person).sample
   end
 
   def fetch_article

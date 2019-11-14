@@ -6,7 +6,7 @@ FactoryBot.define do
   end
 
   factory :structure do
-    name { 'structure_1' }
+    name { 's_v_do' }
   end
 
   factory :exercice do
@@ -23,10 +23,18 @@ FactoryBot.define do
   end
 
   factory :article do
-    value { 'der' }
+    value { 'den' }
     gender { 'masculin' }
-    g_case { 'nominative' }
+    g_case { 'accusative' }
     english { 'the' }
+    definite { true }
+  end
+
+  factory :noun do
+    value { 'kellner' }
+    gender { 'masculin' }
+    english { 'waiter' }
+    is_a { 'people' }
   end
 
   factory :verb do
@@ -35,6 +43,11 @@ FactoryBot.define do
     g_case { 'nominative' }
     preterit { 'sein' }
     english { 'am' }
-    go_with { 'people' }
+    go_with { ['people'] }
+  end
+
+  factory :link, class: 'VerbNounLink' do
+    verb_id { 1 }
+    noun_id { 1 }
   end
 end

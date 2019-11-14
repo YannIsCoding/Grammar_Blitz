@@ -25,11 +25,9 @@ class SentenceBuilderService
   end
 
   def fetch_verb
-    if @noun.verbs.where(person: @person, g_case: @g_case).empty?
-      return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
-    end
+    return @noun.verbs.where(person: 'third_singular').sample if @noun.verbs.where(person: @person).empty?
 
-    @noun.verbs.where(person: @person, g_case: @g_case).sample
+    @noun.verbs.where(person: @person).sample
   end
 
   def fetch_article
@@ -46,14 +44,14 @@ class SentenceBuilderService
 
   def s_v_do
     english = "#{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value} #{@verb.value} #{@article.value} #{@noun.value}"
+    german = "#{@subject.value} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
     obfus = "#{@subject.value} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end
 
   def s_v_prep_do
     english = "#{@subject.english} #{@verb.english} #{@preposition.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value}"
+    german = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}"
     obfus = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end

@@ -31,7 +31,7 @@ class SentenceBuilderService
   end
 
   def fetch_article
-    Article.find_by(gender: @gender, g_case: @g_case)
+    Article.where(gender: @gender, g_case: @g_case).sample
   end
 
   def fetch_noun

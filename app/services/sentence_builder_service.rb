@@ -1,11 +1,8 @@
 class SentenceBuilderService
-  PERSON = %w[first_singular second_singular third_masculin third_feminin first_plurial second_plurial third_plurial]
-  GENDER = %w[masculin feminin neutral plurial]
-
   def initialize(exercice)
     @g_case = ['dative', 'accusative'].sample #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES
     @exercice = exercice
-    @person = PERSON.sample
+    @genders = Article.all.map(&:gender).uniq
     @gender = fetch_gender
   end
 
@@ -21,9 +18,9 @@ class SentenceBuilderService
   private
 
   def fetch_gender
-    return GENDER.reject { |gender| gender == 'neutral' }.sample if @g_case == 'dative'
+    return @genders.reject { |gender| gender == 'neutral' }.sample if @g_case == 'dative'
 
-    GENDER.sample
+    @genders.sample
   end
 
   def fetch_subject
@@ -31,11 +28,12 @@ class SentenceBuilderService
   end
 
   def fetch_verb
-    if @noun.verbs.where(person: @person, g_case: @g_case).empty?
-      return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
+    @person
+    if @noun.verbs.where(person: @person).empty?
+      return @noun.verbs.where(person: 'third_singular').sample
     end
 
-    @noun.verbs.where(person: @person, g_case: @g_case).sample
+    @noun.verbs.where(person: @person).sample
   end
 
   def fetch_article
@@ -43,7 +41,7 @@ class SentenceBuilderService
   end
 
   def fetch_noun
-    return Noun.where(gender: @gender, is_a: 'people').sample if @g_case == 'dative'
+    return Noun.where(gender: @gender, kind: 'people').sample if @g_case == 'dative'
 
     Noun.where(gender: @gender).sample
   end

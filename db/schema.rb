@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2019_11_12_164758) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "english"
-    t.string "is_a"
+    t.string "kind"
   end
 
   create_table "personal_pronouns", force: :cascade do |t|

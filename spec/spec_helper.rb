@@ -25,7 +25,7 @@ RSpec.configure do |config|
 
   #seed db
   config.before(:suite) do
-    Rails.application.load_seed # loading seeds
+    # Rails.application.load_seed # loading seeds
   end
 
 

@@ -1,9 +1,9 @@
 class SentenceBuilderService
   def initialize(exercice)
+    @g_case = ['dative', 'accusative'].sample #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES
     @exercice = exercice
-    @person = Verb.all.map(&:person).uniq.sample
-    @gender = Article.all.map(&:gender).uniq.sample
-    @g_case = 'accusative'
+    @genders = Article.all.map(&:gender).uniq
+    @gender = fetch_gender
   end
 
   def generate
@@ -16,6 +16,12 @@ class SentenceBuilderService
   end
 
   private
+
+  def fetch_gender
+    return @genders.reject { |gender| gender == 'neutral' }.sample if @g_case == 'dative'
+
+    @genders.sample
+  end
 
   def fetch_subject
     PersonalPronoun.find_by(person: @person)
@@ -31,10 +37,12 @@ class SentenceBuilderService
   end
 
   def fetch_article
-    Article.find_by(gender: @gender, g_case: @g_case)
+    Article.where(gender: @gender, g_case: @g_case).sample
   end
 
   def fetch_noun
+    return Noun.where(gender: @gender, kind: 'people').sample if @g_case == 'dative'
+
     Noun.where(gender: @gender).sample
   end
 
@@ -44,15 +52,22 @@ class SentenceBuilderService
 
   def s_v_do
     english = "#{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value} #{@verb.value} #{@article.value} #{@noun.value}"
-    obfus = "#{@subject.value} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
+    german = "#{@subject.value.capitalize} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end
 
   def s_v_prep_do
     english = "#{@subject.english} #{@verb.english} #{@preposition.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value}"
-    obfus = "#{@subject.value} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value}"
+    german = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+  end
+
+  def v_s_do
+    english = "#{@person.include?('masculin' || 'feminin') ? 'does' : 'do' } #{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}?"
+    german = "#{@verb.value} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
+    obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end
 end

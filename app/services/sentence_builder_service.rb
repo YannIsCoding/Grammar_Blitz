@@ -3,10 +3,10 @@ class SentenceBuilderService
   GENDER = %w[masculin feminin neutral plurial]
 
   def initialize(exercice)
+    @g_case = ['dative', 'accusative'].sample #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES
     @exercice = exercice
     @person = PERSON.sample
-    @gender = GENDER.sample
-    @g_case = 'accusative'
+    @gender = fetch_gender
   end
 
   def generate
@@ -20,14 +20,22 @@ class SentenceBuilderService
 
   private
 
+  def fetch_gender
+    return GENDER.reject { |gender| gender == 'neutral' }.sample if @g_case == 'dative'
+
+    GENDER.sample
+  end
+
   def fetch_subject
     PersonalPronoun.find_by(person: @person)
   end
 
   def fetch_verb
-    return @noun.verbs.where(person: 'third_singular').sample if @noun.verbs.where(person: @person).empty?
+    if @noun.verbs.where(person: @person, g_case: @g_case).empty?
+      return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
+    end
 
-    @noun.verbs.where(person: @person).sample
+    @noun.verbs.where(person: @person, g_case: @g_case).sample
   end
 
   def fetch_article
@@ -35,6 +43,8 @@ class SentenceBuilderService
   end
 
   def fetch_noun
+    return Noun.where(gender: @gender, is_a: 'people').sample if @g_case == 'dative'
+
     Noun.where(gender: @gender).sample
   end
 
@@ -57,7 +67,7 @@ class SentenceBuilderService
   end
 
   def v_s_do
-    english = "#{@person.include?('mascu' || 'femi') ? 'does' : 'do' } #{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}?"
+    english = "#{@person.include?('masculin' || 'feminin') ? 'does' : 'do' } #{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}?"
     german = "#{@verb.value} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
     obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }

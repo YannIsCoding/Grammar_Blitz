@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Article, type: :model do
   it 'sould have all it attributes' do
+    create(:article)
     expect(Article.first).to respond_to(:value)
     expect(Article.first).to respond_to(:gender)
     expect(Article.first).to respond_to(:g_case)

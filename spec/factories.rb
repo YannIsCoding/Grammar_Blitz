@@ -31,23 +31,23 @@ FactoryBot.define do
   end
 
   factory :noun do
-    value { 'kellner' }
+    value { 'teppich' }
     gender { 'masculin' }
-    english { 'waiter' }
-    is_a { 'people' }
+    english { 'carpet' }
+    kind { 'object' }
   end
 
   factory :verb do
-    value { 'bin' }
+    value { 'kaufe' }
     person { 'first_singular' }
-    g_case { 'nominative' }
-    preterit { 'sein' }
-    english { 'am' }
-    go_with { ['people'] }
+    g_case { 'accusative' }
+    preterit { 'kaufen' }
+    english { 'buy' }
+    go_with { ['object'] }
   end
 
-  factory :link, class: 'VerbNounLink' do
-    verb_id { 1 }
-    noun_id { 1 }
+  factory :verb_noun_link do
+    verb
+    noun
   end
 end

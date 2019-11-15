@@ -22,8 +22,9 @@ class SentenceBuilderService
   end
 
   def fetch_verb
+    @person
     if @noun.verbs.where(person: @person).empty?
-      return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
+      return @noun.verbs.where(person: 'third_singular').sample
     end
 
     @noun.verbs.where(person: @person).sample

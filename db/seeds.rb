@@ -78,17 +78,17 @@ noun.each do |array|
     value: array[0],
     gender: array[1],
     english: array[2],
-    is_a: array[3]
+    kind: array[3]
       )
 end
 noun_instances = Noun.all
 verb_instances = Verb.all
 verb_instances.each do |verb|
   noun_instances.each do |noun|
-    if verb.go_with.include?(noun.is_a)
+    if verb.go_with.include?(noun.kind)
       VerbNounLink.create!(
-        verb_id: verb.id,
-        noun_id: noun.id
+        verb: verb,
+        noun: noun
         )
     end
   end

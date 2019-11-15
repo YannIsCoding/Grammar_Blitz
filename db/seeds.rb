@@ -247,7 +247,7 @@ end
   Element.create!(value: el)
 end
 
-%w[s_v_prep_do s_v_do v_s_do].each do |structure|
+%w[s_v_prep_do s_v_do v_s_do s_v_do_dative].each do |structure|
   Structure.create!(name: structure)
 end
 
@@ -272,17 +272,22 @@ end
 Exercice.create!(
   name: 'Sentence with direct object and accusative',
   description: 'simple sentence structure with accusative and direct object',
-  structure_id: Structure.find_by(name: 's_v_do').id
+  structure: Structure.find_by(name: 's_v_do')
   )
 Exercice.create!(
   name: 'Sentence with direct object and accusative with preposition',
   description: 'simple sentence structure with accusative and preposition',
-  structure_id: Structure.find_by(name: 's_v_prep_do').id
+  structure: Structure.find_by(name: 's_v_prep_do')
   )
 Exercice.create!(
   name: ' Questions with direct object and accusative',
   description: 'Questions with accusative and preposition',
-  structure_id: Structure.find_by(name: 'v_s_do').id
+  structure: Structure.find_by(name: 'v_s_do')
+  )
+Exercice.create!(
+  name: ' Sentence with direct object and dative',
+  description: 'Sentence with dative and preposition',
+  structure: Structure.find_by(name: 's_v_do_dative')
   )
 
 puts ' IT IS DONE! '

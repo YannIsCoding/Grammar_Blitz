@@ -1,7 +1,8 @@
 class SentenceBuilderService
   def initialize(exercice)
-    @g_case = ['dative', 'accusative'].sample #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES
     @exercice = exercice
+    @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative' #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES
+    @person = PersonalPronoun.all.map(&:person).uniq.sample
     @genders = Article.all.map(&:gender).uniq
     @gender = fetch_gender
   end
@@ -28,12 +29,11 @@ class SentenceBuilderService
   end
 
   def fetch_verb
-    @person
     if @noun.verbs.where(person: @person).empty?
-      return @noun.verbs.where(person: 'third_singular').sample
+      return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
     end
 
-    @noun.verbs.where(person: @person).sample
+    @noun.verbs.where(person: @person, g_case: @g_case).sample
   end
 
   def fetch_article
@@ -69,5 +69,9 @@ class SentenceBuilderService
     german = "#{@verb.value} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
     obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
+  end
+
+  def s_v_do_dative
+    s_v_do
   end
 end

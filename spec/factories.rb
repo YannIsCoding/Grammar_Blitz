@@ -7,12 +7,22 @@ FactoryBot.define do
 
   factory :structure do
     name { 's_v_do' }
+
+    trait :v_s_do do
+      name { 'v_s_do' }
+    end
   end
 
   factory :exercice do
     name { 'accusative with direct object' }
     description { 'Very interesting description of the exercice goes here' }
     structure
+
+    trait :question_accusative do
+      name { 'question with accusative direct object'}
+      description { 'question with accusative direct object'}
+      association :structure, name: 'v_s_do'
+    end
   end
 
   factory :personal_pronoun do

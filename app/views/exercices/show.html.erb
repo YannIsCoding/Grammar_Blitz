@@ -2,31 +2,31 @@
   <h1><%= @exercice.name %></h1>
 
   <% if @exercice.result == true %>
-  <div  class='success'>
+  <div  class='success mb-3'>
     <p>GOOD JOB!</p>
   </div>
   <% elsif @exercice.result == false %>
-    <p>the answer was:  <%= @exercice.prev_sentence %></p>
-    <div  class='failure'>
+    <p>The answer was:  <%= @exercice.prev_sentence %></p>
+    <div  class='failure mb-3'>
       <p> Try again, you'll get it right next time!</p>
     </div>
   <% end %>
-  <p>Total number of correct answer: <%= @progress_tracker.counter %> </p>
-  <p>The exercice sentence is:</p>
+  <p>Look at you! You got <%= @progress_tracker.counter %> points on this exercise! </p>
+  <p>The next exercise sentence is:</p>
   <p><%= @exercice.english %></p>
   <p>
   <%= @exercice.obfus %>
   <% if @progress_tracker.counter %>
     <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers/#{@progress_tracker.id}", method: 'patch', local: true) do %>
       <%= hidden_field_tag sentence: @exercice.sentence  %>
-      <%= text_field_tag :response, '', autofocus: true%>
-      <%= submit_tag "Submit" %>
+      <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true%>
+      <%= submit_tag "BANG!", class:'cool-button' %>
     <% end %>
 
   <% else %>
     <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers", method: 'post', local: true) do %>
-      <%= text_field_tag :response, '', autofocus: true %>
-      <%= submit_tag "Submit" %>
+      <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true %>
+      <%= submit_tag "BANG!", class:'cool-button' %>
     <% end %>
 
   <% end %>

@@ -192,37 +192,39 @@ pp.each do |array|
       )
 end
 
-da = [
+articles = [
   %w[der masculin nominative true the],
   %w[die feminin nominative true the],
   %w[das neutral nominative true the],
   %w[die plurial nominative true the],
+  %w[ein masculin nominative false a/an],
+  %w[eine feminin nominative false a/an],
+  %w[ein neutral nominative false a/an],
+  #
   %w[den masculin accusative true the],
   %w[das neutral accusative true the],
   %w[die feminin accusative true the],
   %w[die plurial accusative true the],
-  %w[dem masculin dative true] << 'to the',
-  %w[dem neutral dative true] << 'to the',
-  %w[der feminin dative true] << 'to the',
-  %w[den plurial dative true] << 'to the',
-  %w[ein masculin nominative false a/an],
-  %w[eine feminin nominative false a/an],
-  %w[ein neutral nominative false a/an],
   %w[einen masculin accusative false a/an],
   %w[ein neutral accusative false a/an],
   %w[eine feminin accusative false a/an],
-  %w[einem masculin dative false] << 'to a/an',
-  %w[einem neutral dative false] << 'to a/an',
-  %w[einer feminin dative false] << 'to a/an',
+  #
+  %w[dem masculin dative true] << '(to) the',
+  %w[dem neutral dative true] << '(to) the',
+  %w[der feminin dative true] << '(to) the',
+  %w[den plurial dative true] << '(to) the',
+  %w[einem masculin dative false] << '(to) a/an',
+  %w[einem neutral dative false] << '(to) a/an',
+  %w[einer feminin dative false] << '(to) a/an',
   ]
 
-da.each do |array|
+articles.each do |article|
   Article.create!(
-    value: array[0],
-    gender: array[1],
-    g_case: array[2],
-    definite: array[3] == 'true',
-    english: array[4]
+    value: article[0],
+    gender: article[1],
+    g_case: article[2],
+    definite: article[3] == 'true',
+    english: article[4]
       )
 end
 

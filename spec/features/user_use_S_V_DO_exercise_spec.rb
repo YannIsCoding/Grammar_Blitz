@@ -17,7 +17,7 @@ feature 'user login with warden' do
     user = create(:user)
     login_as(user, scope: :user)
     exercice = create(:exercice)
-    create(:personal_pronoun)
+    create(:personal_pronoun, :first_singular_nominative)
     create(:article)
     create(:verb_noun_link)
     visit root_path
@@ -31,7 +31,7 @@ end
 feature 'user provide answer to s_v_do exercise' do
   scenario 'not successfully' do
     user = create(:user)
-    create(:personal_pronoun)
+    create(:personal_pronoun, :first_singular_nominative)
     create(:article)
     create(:verb_noun_link)
     exercice = create(:exercice)
@@ -44,7 +44,7 @@ feature 'user provide answer to s_v_do exercise' do
 
   scenario 'successfully' do
     user = create(:user)
-    create(:personal_pronoun)
+    create(:personal_pronoun, :first_singular_nominative)
     create(:article)
     create(:verb_noun_link)
     login_as(user, scope: :user)

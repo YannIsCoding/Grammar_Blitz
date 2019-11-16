@@ -16,25 +16,26 @@ FactoryBot.define do
   end
 
   factory :personal_pronoun do
+    value { 'sie' }
+    person { 'third_feminin' }
+    g_case { 'nominative' }
+    english { 'she' }
 
-    trait :first_person_nominative do
-      g_case { 'nominative' }
+    trait :first_singular_nominative do
       value { 'ich' }
       person { 'first_singular' }
       english { 'I' }
     end
 
-    trait :first_person_accusative do
-      g_case { 'accusative' }
+    trait :first_singular_accusative do
       value { 'mich' }
       person { 'first_singular' }
+      g_case { 'accusative' }
       english { 'me' }
     end
-    # trait :third_feminin do
-    #   value { 'sie' }
-    #   person { 'third_feminin' }
-    #   english { 'she' }
-    # end
+
+    trait :third_feminin_nominative do
+    end
   end
 
   factory :article do

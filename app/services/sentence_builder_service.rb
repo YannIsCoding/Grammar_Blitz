@@ -1,5 +1,5 @@
 class SentenceBuilderService
-  attr_reader :g_case, :person, :genders, :gender
+  attr_reader :g_case, :person, :genders, :gender, :verb, :subject, :article
   def initialize(exercice)
     @exercice = exercice
     @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative' #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES

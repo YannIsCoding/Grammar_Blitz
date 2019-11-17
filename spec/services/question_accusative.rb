@@ -13,8 +13,10 @@ RSpec.describe SentenceBuilderService do
   describe 'Exercise with interrogative form should' do
     it 'start with the verb followed by the subject' do
       sentence = @result[:sentence].split(' ')
-      expect(sentence[0]).to eq(@service.verb.value)
+      expect(sentence[0]).to eq(@service.verb.value.capitalize)
       expect(sentence[1]).to eq(@service.subject.value)
+      expect(sentence[2]).to eq(@service.article.value)
+      expect(sentence[3]).to eq("#{@service.noun.value.capitalize}?")
     end
 
     it 'give the correct solution to the exercise' do

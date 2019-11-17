@@ -35,7 +35,7 @@ RSpec.describe SentenceBuilderService do
       create(:article)
       create(:personal_pronoun, :first_singular_nominative)
       create(:verb_noun_link)
-      lambda { SentenceBuilderService.new(build(:exercice)).generate }.should raise_error(RuntimeError)
+      lambda { SentenceBuilderService.new(build(:exercice, :accusative_preposition)).generate }.should raise_error(RuntimeError)
     end
   end
 end

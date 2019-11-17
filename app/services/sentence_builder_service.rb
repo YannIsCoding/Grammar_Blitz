@@ -13,7 +13,7 @@ class SentenceBuilderService
     @article = fetch_article
     @noun = fetch_noun
     @verb = fetch_verb
-    @preposition = fetch_preposition
+    @preposition = fetch_preposition if @exercice.structure.name == 's_v_prep_do'
     send(@exercice.structure.name)
   end
 

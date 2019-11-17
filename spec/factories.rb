@@ -33,6 +33,12 @@ FactoryBot.define do
       description { 'sentences with the direct object dative'}
       association :structure, name: 's_v_do_dative'
     end
+
+    trait :accusative_preposition do
+      name { 'Accusative preposition'}
+      description { 'sentences with accusative preposition'}
+      association :structure, name: 's_v_prep_do'
+    end
   end
 
   factory :personal_pronoun do

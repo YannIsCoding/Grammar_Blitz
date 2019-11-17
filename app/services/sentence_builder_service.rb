@@ -21,34 +21,52 @@ class SentenceBuilderService
 
   def fetch_gender
     return @genders.reject { |gender| gender == 'neutral' }.sample if @g_case == 'dative'
+    raise "No gender found" if @genders.empty?
 
     @genders.sample
   end
 
   def fetch_subject
-    PersonalPronoun.find_by(person: @person)
+    personal_pronoun = PersonalPronoun.find_by(person: @person)
+    raise "No personal pronoun found with person #{@person}" if personal_pronoun.nil?
+
+    personal_pronoun
+  end
+
+  def fetch_article
+    article = Article.where(gender: @gender, g_case: @g_case).sample
+    raise "No Article found with gender #{@gender} and g_case #{@g_case}" if article.nil?
+
+    article
+  end
+
+  def fetch_noun
+    if @g_case == 'dative'
+      noun = Noun.where(gender: @gender, kind: 'people').sample
+    else
+      noun = Noun.where(gender: @gender).sample
+    end
+    raise "No noun found with the gender #{@gender} and the g_case #{@g_case}" if noun.nil?
+
+    noun
   end
 
   def fetch_verb
     if @noun.verbs.where(person: @person).empty?
-      return @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
+      verb = @noun.verbs.where(person: 'third_singular', g_case: @g_case).sample
+    else
+      verb = @noun.verbs.where(person: @person, g_case: @g_case).sample
     end
+    raise "No verb found with the noun #{@noun}, person #{@person} and g_case #{@g_case}" if verb.nil?
 
-    @noun.verbs.where(person: @person, g_case: @g_case).sample
-  end
-
-  def fetch_article
-    Article.where(gender: @gender, g_case: @g_case).sample
-  end
-
-  def fetch_noun
-    return Noun.where(gender: @gender, kind: 'people').sample if @g_case == 'dative'
-
-    Noun.where(gender: @gender).sample
+    verb
   end
 
   def fetch_preposition
-    Preposition.where(g_case: 'accusative').sample
+    preposition = Preposition.where(g_case: 'accusative').sample
+    raise "No preoposition found with g_case #{g_case}" if preposition.nil?
+
+    preposition
   end
 
   def s_v_do

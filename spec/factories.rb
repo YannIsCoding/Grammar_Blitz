@@ -11,6 +11,10 @@ FactoryBot.define do
     trait :v_s_do do
       name { 'v_s_do' }
     end
+
+    trait :s_v_do_dative do
+      name { 's_v_do_dative' }
+    end
   end
 
   factory :exercice do
@@ -22,6 +26,18 @@ FactoryBot.define do
       name { 'question with accusative direct object'}
       description { 'question with accusative direct object'}
       association :structure, name: 'v_s_do'
+    end
+
+    trait :direct_object_dative do
+      name { 'Direct object dative'}
+      description { 'sentences with the direct object dative'}
+      association :structure, name: 's_v_do_dative'
+    end
+
+    trait :accusative_preposition do
+      name { 'Accusative preposition'}
+      description { 'sentences with accusative preposition'}
+      association :structure, name: 's_v_prep_do'
     end
   end
 
@@ -84,15 +100,23 @@ FactoryBot.define do
       english { 'carpet' }
       kind { 'object' }
     end
+
+    trait :feminin_person do
+      value { 'kellnerin' }
+      gender { 'feminin' }
+      english { 'waitress' }
+      kind { 'people' }
+    end
+
   end
 
   factory :verb do
+    value { 'kaufe' }
+    person { 'first_singular' }
     g_case { 'accusative' }
     preterit { 'kaufen' }
     english { 'buy' }
     go_with { ['object'] }
-    person { 'first_singular' }
-    value { 'kaufe' }
 
     trait :first_person_accusative_that_go_with_object do
     end
@@ -102,11 +126,12 @@ FactoryBot.define do
       person { 'third_plurial' }
     end
 
-    trait :first_person_dative_that_go_with_object do
+    trait :first_person_dative_that_go_with_people do
       value { 'folge' }
       g_case { 'dative' }
       preterit { 'folgen' }
       english { 'follow' }
+      go_with { ['people'] }
     end
 
     trait :first_person_accusative_that_dont_go_with_object do
@@ -120,5 +145,10 @@ FactoryBot.define do
   factory :verb_noun_link do
     noun
     verb
+
+    trait :dative_form do
+      association :noun, :feminin_person
+      association :verb, :first_person_dative_that_go_with_people
+    end
   end
 end

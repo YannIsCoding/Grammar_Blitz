@@ -69,7 +69,7 @@ RSpec.describe SentenceBuilderService do
     end
 
     it 'shoud have the same g_case as define in the initialize' do
-      create(:verb, :first_person_dative_that_go_with_object)
+      create(:verb, :first_person_dative_that_go_with_people)
       expect(@verb.g_case).to eq(@service.g_case)
     end
   end

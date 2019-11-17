@@ -15,6 +15,10 @@ FactoryBot.define do
     trait :s_v_do_dative do
       name { 's_v_do_dative' }
     end
+
+    trait :s_v_prep_do do
+      name { 's_v_prep_do' }
+    end
   end
 
   factory :exercice do
@@ -23,20 +27,20 @@ FactoryBot.define do
     structure
 
     trait :question_accusative do
-      name { 'question with accusative direct object'}
-      description { 'question with accusative direct object'}
+      name { 'question with accusative direct object' }
+      description { 'question with accusative direct object' }
       association :structure, name: 'v_s_do'
     end
 
     trait :direct_object_dative do
-      name { 'Direct object dative'}
-      description { 'sentences with the direct object dative'}
+      name { 'Direct object dative' }
+      description { 'sentences with the direct object dative' }
       association :structure, name: 's_v_do_dative'
     end
 
     trait :accusative_preposition do
-      name { 'Accusative preposition'}
-      description { 'sentences with accusative preposition'}
+      name { 'Accusative preposition' }
+      description { 'sentences with accusative preposition' }
       association :structure, name: 's_v_prep_do'
     end
   end
@@ -149,6 +153,14 @@ FactoryBot.define do
     trait :dative_form do
       association :noun, :feminin_person
       association :verb, :first_person_dative_that_go_with_people
+    end
+  end
+
+  factory :preposition do
+    trait :accusative do
+      value { 'durch' }
+      g_case { 'accusative' }
+      english { 'through' }
     end
   end
 end

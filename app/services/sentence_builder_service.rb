@@ -1,5 +1,5 @@
 class SentenceBuilderService
-  attr_reader :g_case, :person, :genders, :gender, :verb, :subject, :article
+  attr_reader :g_case, :person, :genders, :gender, :verb, :subject, :article, :noun, :preposition
   def initialize(exercice)
     @exercice = exercice
     @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative' #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES
@@ -57,7 +57,7 @@ class SentenceBuilderService
     else
       verb = @noun.verbs.where(person: @person, g_case: @g_case).sample
     end
-    raise "No verb found with the noun #{@noun}, person #{@person} and g_case #{@g_case}" if verb.nil?
+    raise "No verb found with the noun #{@noun.value}, person #{@person} and g_case #{@g_case}" if verb.nil?
 
     verb
   end
@@ -85,7 +85,7 @@ class SentenceBuilderService
 
   def v_s_do
     english = "#{@person.include?('masculin' || 'feminin') ? 'Does' : 'Do' } #{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}?"
-    german = "#{@verb.value} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
+    german = "#{@verb.value.capitalize} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
     obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end

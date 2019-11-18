@@ -98,6 +98,20 @@ FactoryBot.define do
     trait :feminin_object do
     end
 
+    trait :masculin_idea do
+      value { 'kommunismus' }
+      gender { 'masculin' }
+      english { 'communism' }
+      kind { 'idea' }
+    end
+
+    trait :feminin_idea do
+      value { 'philosophie' }
+      gender { 'feminin' }
+      english { 'philosophy' }
+      kind { 'idea' }
+    end
+
     trait :masculin_object do
       value { 'teppich' }
       gender { 'masculin' }
@@ -144,6 +158,13 @@ FactoryBot.define do
       english { 'hear' }
       go_with { ['people', 'vehicule', 'animal'] }
     end
+
+    trait :first_person_sein do
+      value { 'bin' }
+      preterit { 'sein' }
+      english { 'am' }
+      go_with { ['people', 'vehicule', 'animal'] }
+    end
   end
 
   factory :verb_noun_link do
@@ -158,9 +179,19 @@ FactoryBot.define do
 
   factory :preposition do
     trait :accusative do
-      value { 'durch' }
+      value { 'gegen' }
       g_case { 'accusative' }
-      english { 'through' }
+      english { 'against' }
+      verbs { ['sein'] }
+      kind_nouns { ['idea'] }
+    end
+
+    trait :dative do
+      value { 'aus' }
+      g_case { 'dative' }
+      english { 'from' }
+      verbs { ['sein'] }
+      kind_nouns { ['place'] }
     end
   end
 end

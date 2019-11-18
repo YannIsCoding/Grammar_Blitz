@@ -2,7 +2,7 @@ require_relative '../services/sentence_builder_service'
 class ExercicesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
   def index
-    @exercices = Exercice.all
+    @exercices = Exercice.all.sort_by(&:created_at)
   end
 
   def show

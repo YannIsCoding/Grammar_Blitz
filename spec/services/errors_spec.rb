@@ -4,12 +4,8 @@ RSpec.describe SentenceBuilderService do
 
   describe 'The service should throw an error if' do
     it 'no gender is found' do
+      create(:personal_pronoun)
       lambda { SentenceBuilderService.new(build(:exercice)) }.should raise_error(RuntimeError)
-    end
-
-    it 'no personal pronoun is found' do
-      create(:article)
-      lambda { SentenceBuilderService.new(build(:exercice)).generate }.should raise_error(RuntimeError)
     end
 
     it 'no article is found' do

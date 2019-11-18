@@ -171,6 +171,11 @@ FactoryBot.define do
     noun
     verb
 
+    trait :accusative_mascullin do
+      association :noun, :masculin_object
+      association :verb
+    end
+
     trait :dative_form do
       association :noun, :feminin_person
       association :verb, :first_person_dative_that_go_with_people

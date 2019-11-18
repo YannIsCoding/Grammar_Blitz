@@ -171,7 +171,7 @@ FactoryBot.define do
     noun
     verb
 
-    trait :accusative_mascullin do
+    trait :accusative_masculin do
       association :noun, :masculin_object
       association :verb
     end

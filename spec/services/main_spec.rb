@@ -113,8 +113,9 @@ RSpec.describe SentenceBuilderService do
     create(:article, :definite_masculin_accusative)
     # Noun and Verb instances are created by the join table. line bellow
     create(:verb_noun_link)
+    create(:verb_noun_link, :accusative_masculin)
     @service = SentenceBuilderService.new(build(:exercice))
-    10.times do
+    20.times do
       @service.generate
       expect(@service.noun.gender).to eq(@service.article.gender)
     end

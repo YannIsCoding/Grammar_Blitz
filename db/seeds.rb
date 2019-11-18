@@ -30,12 +30,12 @@ interactive_things = %w[object vehicule animal food building]
 knowable_things = %w[people place object]
 
 verbs = [
-      # %w[bin first_singular sein auxiliary am] << %w[people],
-      # %w[bist second_singular sein auxiliary are] << %w[people],
-      # %w[ist third_singular sein auxiliary is] << %w[people],
-      # %w[sind first_plurial sein auxiliary are] << %w[people],
-      # %w[seid second_plurial sein auxiliary are] << %w[people],
-      # %w[sind third_plurial sein auxiliary are] << %w[people],
+      %w[bin first_singular sein auxiliary am] << %w[people],
+      %w[bist second_singular sein auxiliary are] << %w[people],
+      %w[ist third_singular sein auxiliary is] << %w[people],
+      %w[sind first_plurial sein auxiliary are] << %w[people],
+      %w[seid second_plurial sein auxiliary are] << %w[people],
+      %w[sind third_plurial sein auxiliary are] << %w[people],
       # %w[habe first_singular haben auxiliary have] << interactive_things,
       # %w[hast second_singular haben auxiliary have] << interactive_things,
       # %w[hat third_singular haben auxiliary has] << interactive_things,
@@ -144,6 +144,10 @@ noun = [
   %w[klang masculin sound sound],
   %w[wasser neutral water drink],
   %w[saft masculin juice drink],
+  %w[stoizismus masculin stoicism idea],
+  %w[philosophie feminin philosophy idea],
+  %w[maskottchen neutral mascot idea],
+  %w[steuern plurial taxes idea],
   ]
   # %w[glas neutral glass drink/object]
   # %w[buch neutral book readable]
@@ -229,18 +233,20 @@ articles.each do |article|
 end
 
 prep = [
-  %w[durch accusative through], # verb: mouvement noun:place
-  %w[für accusative for], # verb: be noun: people
-  %w[gegen accusative against], # verb: be noun: vehicule, food
-  %w[ohne accusative without], #verb: be buy noun: people vehicule food
-  %w[um accusative around] #verb: buy noun: time
+  # %w[durch accusative through] << %w[sehen gehen], # verb: mouvement noun:place
+  ['für', 'accusative', 'for', ['sein'], ['idea']], # verb: be noun: people
+  ['gegen', 'accusative', 'against', ['sein'], ['idea']] # verb: be noun: vehicule, food
+  # %w[ohne accusative without],<< %w[sein] #verb: be buy noun: people vehicule food
+  # %w[um accusative around] #verb: buy noun: time
 ]
 
 prep.each do |array|
   Preposition.create!(
     value: array[0],
     g_case: array[1],
-    english: array[2]
+    english: array[2],
+    verbs: array[3],
+    kind_nouns: array[4]
     )
 end
 

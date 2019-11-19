@@ -20,7 +20,8 @@ Structure.delete_all
 
 User.create!(
   email: 'me@me.me',
-  password: '123456'
+  password: '123456',
+  username: 'Charlie'
   )
 
 seeable_things = %w[object vehicule animal food building people]

@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   resources :exercices, only: [:index, :show] do
     resources :progress_trackers, only: [:create, :update]
   end
+
+  get 'profile', to: 'pages#profile', as: 'profile'
+
 end

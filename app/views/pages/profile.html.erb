@@ -1,0 +1,15 @@
+
+<div class="main-container">
+  <h1>coucou <%= current_user.username %></h1>
+<ul>
+
+  <% if @progress_trackers.empty? %>
+    <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>
+  <% end %>
+  <% @progress_trackers.each do |pt| %>
+    <li>
+      you have <%= pt.counter %> points for the <%= pt.exercice.name %>
+    </li>
+  <% end %>
+</ul>
+</div>

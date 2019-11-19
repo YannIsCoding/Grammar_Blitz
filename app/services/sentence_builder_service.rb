@@ -113,4 +113,11 @@ class SentenceBuilderService
   def s_v_do_dative
     s_v_do
   end
+
+  def s_v_io_do
+    english = "#{@subject.english.capitalize} #{@verb.english} #{@article.english} #{@noun.english}"
+    german = "#{@subject.value.capitalize} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+  end
 end

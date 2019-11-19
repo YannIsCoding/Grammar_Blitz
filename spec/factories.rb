@@ -19,6 +19,10 @@ FactoryBot.define do
     trait :s_v_prep_do do
       name { 's_v_prep_do' }
     end
+
+    trait :s_v_io_do do
+      name { 's_v_io_do' }
+    end
   end
 
   factory :exercice do
@@ -42,6 +46,12 @@ FactoryBot.define do
       name { 'Accusative preposition' }
       description { 'sentences with accusative preposition' }
       association :structure, name: 's_v_prep_do'
+    end
+
+    trait :direct_indirect do
+      name { 'Accusative and Dative at the same time!' }
+      description { 'direct indirect object' }
+      association :structure, name: 's_v_io_do'
     end
   end
 
@@ -85,6 +95,12 @@ FactoryBot.define do
 
     trait :definite_feminin_dative do
       value { 'der' }
+      g_case { 'dative' }
+    end
+
+    trait :definite_masculin_dative do
+      value { 'dem' }
+      gender { 'masculin' }
       g_case { 'dative' }
     end
   end

@@ -282,11 +282,11 @@ Exercice.create!(
   description: 'simple sentence structure with accusative and direct object',
   structure: Structure.find_by(name: 's_v_do')
   )
-Exercice.create!(
-  name: 'Sentence with direct object and accusative with preposition',
-  description: 'simple sentence structure with accusative and preposition',
-  structure: Structure.find_by(name: 's_v_prep_do')
-  )
+# Exercice.create!(
+#   name: 'Sentence with direct object and accusative with preposition',
+#   description: 'simple sentence structure with accusative and preposition',
+#   structure: Structure.find_by(name: 's_v_prep_do')
+#   )
 Exercice.create!(
   name: ' Questions with direct object and accusative',
   description: 'Questions with accusative and preposition',

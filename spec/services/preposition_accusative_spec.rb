@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SentenceBuilderService do
+RSpec.describe 'Preposition accusative exercise' do
   before(:each) do
     create(:personal_pronoun, :first_singular_nominative)
     create(:article, :definite_masculin_accusative)

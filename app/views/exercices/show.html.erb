@@ -11,7 +11,9 @@
       <p> Try again, you'll get it right next time!</p>
     </div>
   <% end %>
-  <p>Look at you! You got <%= @progress_tracker.counter %> points on this exercise! </p>
+  <% unless @progress_tracker.counter == 0 || @progress_tracker.counter.nil? %>
+    <p>Look at you! You got <%= @progress_tracker.counter %> points on this exercise! </p>
+  <% end %>
   <p>The next exercise sentence is:</p>
   <p><%= @exercice.english %></p>
   <p>

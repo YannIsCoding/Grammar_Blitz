@@ -70,7 +70,7 @@ class SentenceBuilderService
     elsif @preposition
       noun = Noun.where(gender: @gender, kind: @preposition.kind_nouns.sample).sample
     else
-      noun = Noun.where(gender: @gender).sample
+      noun = Noun.where(gender: @gender, %w[object vehicule animal food building people place].sample).sample
     end
     raise "No noun found with the gender #{@gender}" if noun.nil?
 

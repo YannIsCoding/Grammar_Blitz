@@ -12,8 +12,15 @@ class SentenceBuilderService
   def generate
     @preposition = fetch_preposition if @exercice.structure.name == 's_v_prep_do'
     @subject = fetch_subject
-    @article = fetch_article
-    @noun = fetch_noun
+    if @exercice.structure.name == 's_v_do_dative'
+      noun_kind = 'people'
+    elsif @preposition
+      noun_kind = @preposition.kind_nouns.sample
+    else
+      noun_kind = Noun.all.map(&:kind).uniq.sample
+    end
+    @noun = fetch_noun(noun_kind)
+    @article = fetch_article(@g_case, @noun.gender)
     @verb = fetch_verb
     send(@exercice.structure.name)
   end
@@ -53,27 +60,20 @@ class SentenceBuilderService
     personal_pronoun
   end
 
-  def fetch_article
+  def fetch_article(g_case, gender)
     if @definite_article
-      article = Article.where(gender: @gender, g_case: @g_case, definite: @definite_article).sample
+      article = Article.where(gender: gender, g_case: g_case, definite: @definite_article).sample
     else
-      article = Article.where(gender: @gender, g_case: @g_case).sample
+      article = Article.where(gender: gender, g_case: g_case).sample
     end
-    raise "No Article found with gender #{@gender}, g_case #{@g_case} and definite #{@definite_article}" if article.nil?
+    raise "No Article found with gender #{gender}, g_case #{g_case} and definite #{@definite_article}" if article.nil?
 
     article
   end
 
-  def fetch_noun
-    if @g_case == 'dative'
-      noun = Noun.where(gender: @gender, kind: 'people').sample
-    elsif @preposition
-      noun = Noun.where(gender: @gender, kind: @preposition.kind_nouns.sample).sample
-    else
-      noun_kind = Noun.all.map(&:kind).uniq.sample
-      noun = Noun.where(gender: @gender, kind: noun_kind).sample
-    end
-    raise "No noun found with the gender #{@gender}" if noun.nil?
+  def fetch_noun(noun_kind)
+    noun = Noun.where(kind: noun_kind).sample
+    raise "No noun found with the kind of noun #{noun_kind}" if noun.nil?
 
     noun
   end
@@ -116,9 +116,13 @@ class SentenceBuilderService
   end
 
   def s_v_io_do
-    english = "#{@subject.english.capitalize} #{@verb.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value.capitalize} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    io_noun = fetch_noun('people')
+    io_article = fetch_article('dative', io_noun.gender)
+    do_noun = fetch_noun('object')
+    do_article = fetch_article('accusative', do_noun.gender)
+    english = "#{@subject.english.capitalize} #{@verb.english} #{io_article.english} #{io_noun.english} #{@article.english} #{@noun.english}"
+    german = "#{@subject.value.capitalize} #{@verb.value} #{io_article.value} #{io_noun.value} #{@article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{@verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: @article.value }
   end
 end

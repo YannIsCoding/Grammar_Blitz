@@ -18,11 +18,14 @@ Element.delete_all
 Exercice.delete_all
 Structure.delete_all
 
-User.create!(
+url = "https://www.scienceabc.com/wp-content/uploads/2015/12/alan-turing.jpg"
+u = User.create!(
   email: 'me@me.me',
   password: '123456',
-  username: 'Charlie'
+  username: 'Alan'
   )
+u.remote_photo_url = url
+u.save
 
 seeable_things = %w[object vehicule animal food building people]
 hearable_things = %w[vehicule animal sound people]
@@ -256,7 +259,7 @@ end
   Element.create!(value: el)
 end
 
-%w[s_v_prep_do s_v_do v_s_do s_v_do_dative].each do |structure|
+%w[s_v_prep_do s_v_do v_s_do s_v_do_dative s_v_io_do].each do |structure|
   Structure.create!(name: structure)
 end
 
@@ -297,6 +300,11 @@ Exercice.create!(
   name: ' Sentence with direct object and dative',
   description: 'Sentence with dative and preposition',
   structure: Structure.find_by(name: 's_v_do_dative')
+  )
+Exercice.create!(
+  name: ' Sentence with direct and indirect object ',
+  description: 'Sentence with direct and indirect object',
+  structure: Structure.find_by(name: 's_v_io_do')
   )
 
 puts ' IT IS DONE! '

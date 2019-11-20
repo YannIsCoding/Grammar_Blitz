@@ -38,7 +38,7 @@ RSpec.describe SentenceBuilderService do
 
 
   describe 'with s_v_do structure and accusative the article' do
-    before(:each) { @article = @service.instance_eval { fetch_article } }
+    before(:each) { @article = @service.instance_eval { fetch_article('accusative', 'feminin') } }
 
     it 'shoud have the accusative case' do
       create(:article, :definite_feminin_dative)
@@ -59,13 +59,13 @@ RSpec.describe SentenceBuilderService do
   end
 
   describe 'with s_v_do structure and accusative the noun' do
-    it 'shoud have the same gender as define in the initialize' do
+    it 'article and noun should have the same gender' do
       # Line below: the gender in service is based on Article.all, therefor db need to
       # be populated with article from different gender
-      create(:article, :definite_masculin_accusative)
+      article = create(:article, :definite_masculin_accusative)
       create(:noun, :masculin_object)
-      noun = @service.instance_eval { fetch_noun }
-      expect(noun.gender).to eq(@service.gender)
+      noun = @service.instance_eval { fetch_noun('object') }
+      expect(noun.gender).to eq(article.gender)
     end
   end
 

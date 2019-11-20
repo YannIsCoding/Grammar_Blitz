@@ -6,8 +6,6 @@ Rails.application.routes.draw do
     resources :progress_trackers, only: [:create, :update]
   end
 
-  resources :user, only: [:edit, :update]
-
   get 'profile', to: 'pages#profile', as: 'profile'
 
 end

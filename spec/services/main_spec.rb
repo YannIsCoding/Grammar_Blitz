@@ -10,16 +10,7 @@ RSpec.describe SentenceBuilderService do
     @result = @service.generate
   end
 
-  describe 'If the person is third_masculin or feminin,' do
-    it '#person should return a different value for verb and personal_pronoun' do
-
-    end
-  end
   describe 'with s_v_do structure and accusative, the personal pronoun' do
-    # before(:each) do
-    #   @personal_pronoun = @service.instance_eval { fetch_subject }
-    # end
-
     it 'shoud have the nominative case (because personal_pronoun is used as subject)' do
       create(:personal_pronoun, :first_singular_accusative)
       personal_pronouns = []

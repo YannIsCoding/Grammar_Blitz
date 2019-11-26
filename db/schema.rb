@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_211738) do
+ActiveRecord::Schema.define(version: 2019_11_26_165851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 2019_11_19_211738) do
     t.string "sentence"
     t.string "prev_sentence"
     t.string "english"
-    t.string "solution"
     t.string "obfus"
     t.boolean "result"
     t.string "option", array: true
+    t.string "solution", array: true
     t.index ["structure_id"], name: "index_exercices_on_structure_id"
   end
 

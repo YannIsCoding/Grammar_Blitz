@@ -157,6 +157,12 @@ FactoryBot.define do
     trait :first_person_accusative_that_go_with_object do
     end
 
+    trait :geben_first_singular do
+      value { 'gebe' }
+      preterit { 'geben' }
+      english { 'give' }
+    end
+
     trait :third_plurial_accusative_that_go_with_object do
       value { 'kaufen' }
       person { 'third_plurial' }
@@ -183,11 +189,17 @@ FactoryBot.define do
       english { 'am' }
       go_with { ['people', 'vehicule', 'animal'] }
     end
+
   end
 
   factory :verb_noun_link do
     noun
     verb
+
+    trait :for_io_do do
+      association :noun
+      association :verb, :geben_first_singular
+    end
 
     trait :accusative_masculin do
       association :noun, :masculin_object

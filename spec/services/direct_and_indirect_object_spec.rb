@@ -7,10 +7,9 @@ RSpec.describe 'Exercise with direct and indirect object' do
     create(:article, :definite_masculin_accusative)
     create(:article, :definite_masculin_dative)
     create(:preposition, :accusative)
-    # create(:verb, :first_person_sein)
-    # create(:noun, :masculin_object)
     # Noun and Verb instances are created by the join table. line bellow
-    create(:verb_noun_link)
+    create(:noun, :feminin_person)
+    create(:verb_noun_link, :for_io_do)
     @service = SentenceBuilderService.new(build(:exercice, :direct_indirect))
     @result = @service.generate
     @sentence = @result[:sentence].split(' ')
@@ -36,6 +35,11 @@ RSpec.describe 'Exercise with direct and indirect object' do
 
   it 'the second article should be accusative' do
     expect(@sentence[4]).to eq('die')
+  end
+
+  it 'the solution should contains 2 elements' do
+    expect(@result[:solution].class).to eq(Array)
+    expect(@result[:solution].length).to eq(2)
   end
 end
 

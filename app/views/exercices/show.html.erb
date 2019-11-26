@@ -22,6 +22,9 @@
     <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers/#{@progress_tracker.id}", method: 'patch', local: true) do %>
       <%= hidden_field_tag sentence: @exercice.sentence  %>
       <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true%>
+      <% if @exercice.structure.name == 's_v_io_do' %>
+        <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
+      <% end %>
       <%= submit_tag "BANG!", class:'cool-button' %>
     <% end %>
 

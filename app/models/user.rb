@@ -6,4 +6,5 @@ class User < ApplicationRecord
   has_many :progress_tracker, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
+
 end

@@ -12,17 +12,21 @@ class SentenceBuilderService
   def generate
     @preposition = fetch_preposition if @exercice.structure.name == 's_v_prep_do'
     @subject = fetch_subject
-    if @exercice.structure.name == 's_v_do_dative'
-      noun_kind = 'people'
-    elsif @preposition
-      noun_kind = @preposition.kind_nouns.sample
+    if @exercice.structure.name == 's_v_io_do'
+      send(@exercice.structure.name)
     else
-      noun_kind = Noun.all.map(&:kind).uniq.sample
+      if @exercice.structure.name == 's_v_do_dative'
+        noun_kind = 'people'
+      elsif @preposition
+        noun_kind = 'idea'
+      else
+        noun_kind = Noun.all.map(&:kind).uniq.reject { |n| n == 'idea' }.sample
+      end
+      @noun = fetch_noun(noun_kind)
+      @article = fetch_article(@g_case, @noun.gender)
+      @verb = fetch_verb
+      send(@exercice.structure.name)
     end
-    @noun = fetch_noun(noun_kind)
-    @article = fetch_article(@g_case, @noun.gender)
-    @verb = fetch_verb
-    send(@exercice.structure.name)
   end
 
   private
@@ -78,8 +82,11 @@ class SentenceBuilderService
     noun
   end
 
-  def fetch_verb
-    if @preposition
+  def fetch_verb(preterit = false)
+    if preterit
+      verb = Verb.where(preterit: preterit, person: @person_verb).sample
+      raise "No verb found with the preterit: #{preterit} person #{@person_verb}" if verb.nil?
+    elsif @preposition
       verb = Verb.where(preterit: @preposition.verbs.sample, person: @person_verb).sample
       raise "No verb found with the preposition #{@preposition.value} only accept: #{@preposition.verbs} person #{@person_verb}" if verb.nil?
     else
@@ -94,21 +101,21 @@ class SentenceBuilderService
     english = "#{@subject.english.capitalize} #{@verb.english} #{@article.english} #{@noun.english}"
     german = "#{@subject.value.capitalize} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
     obfus = "#{@subject.value.capitalize} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+    { sentence: german, obfus: obfus, english: english, solution: [@article.value] }
   end
 
   def s_v_prep_do
     english = "#{@subject.english.capitalize} #{@verb.english} #{@preposition.english} #{@article.english} #{@noun.english}"
     german = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}"
     obfus = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+    { sentence: german, obfus: obfus, english: english, solution: [@article.value] }
   end
 
   def v_s_do
     english = "#{@person == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}?"
     german = "#{@verb.value.capitalize} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
     obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+    { sentence: german, obfus: obfus, english: english, solution: [@article.value] }
   end
 
   def s_v_do_dative
@@ -118,11 +125,14 @@ class SentenceBuilderService
   def s_v_io_do
     io_noun = fetch_noun('people')
     io_article = fetch_article('dative', io_noun.gender)
-    do_noun = fetch_noun('object')
-    do_article = fetch_article('accusative', do_noun.gender)
-    english = "#{@subject.english.capitalize} #{@verb.english} #{io_article.english} #{io_noun.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value.capitalize} #{@verb.value} #{io_article.value} #{io_noun.value} #{@article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{@verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: @article.value }
+    @noun = fetch_noun('object')
+    do_article = fetch_article('accusative', @noun.gender)
+
+    verb = fetch_verb('geben')
+
+    english = "#{@subject.english.capitalize} #{verb.english} #{io_article.english} #{io_noun.english} #{do_article.english} #{@noun.english}"
+    german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    { sentence: german, obfus: obfus, english: english, solution: [io_article.value, do_article.value] }
   end
 end

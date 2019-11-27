@@ -1,4 +1,9 @@
 FactoryBot.define do
+  factory :trial do
+    success { false }
+    progress_tracker { nil }
+  end
+
 
   factory :user do
     email { 'test@example.com' }

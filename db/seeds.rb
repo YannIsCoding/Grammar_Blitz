@@ -1,10 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
 # ProgressTracker.delete_all
 # User.delete_all
 VerbNounLink.delete_all
@@ -307,56 +304,56 @@ prep.each do |array|
 end
 
 
-# %w[subject verb do io preposition].each do |el|
-#   Element.create!(value: el)
-# end
+%w[subject verb do io preposition].each do |el|
+  Element.create!(value: el)
+end
 
-# %w[s_v_prep_do s_v_do v_s_do s_v_do_dative s_v_io_do].each do |structure|
-#   Structure.create!(name: structure)
-# end
+%w[s_v_prep_do s_v_do v_s_do s_v_do_dative s_v_io_do].each do |structure|
+  Structure.create!(name: structure)
+end
 
-# structure_elements = [
-#   %w[1 subject s_v_prep_do],
-#   %w[2 verb s_v_prep_do],
-#   %w[3 preposition s_v_prep_do],
-#   %w[4 do s_v_prep_do],
-#   %w[1 subject s_v_do],
-#   %w[2 verb s_v_do],
-#   %w[3 do s_v_do]
-# ]
+structure_elements = [
+  %w[1 subject s_v_prep_do],
+  %w[2 verb s_v_prep_do],
+  %w[3 preposition s_v_prep_do],
+  %w[4 do s_v_prep_do],
+  %w[1 subject s_v_do],
+  %w[2 verb s_v_do],
+  %w[3 do s_v_do]
+]
 
-# structure_elements.each do |array|
-#   StructureElement.create!(
-#     position: array[0].to_i,
-#     element_id: Element.find_by(value: array[1]).id,
-#     structure_id: Structure.find_by(name: array[2]).id
-#     )
-# end
+structure_elements.each do |array|
+  StructureElement.create!(
+    position: array[0].to_i,
+    element_id: Element.find_by(value: array[1]).id,
+    structure_id: Structure.find_by(name: array[2]).id
+    )
+end
 
+Exercice.create!(
+  name: 'Sentence with direct object and accusative',
+  description: 'simple sentence structure with accusative and direct object',
+  structure: Structure.find_by(name: 's_v_do')
+  )
 # Exercice.create!(
-#   name: 'Sentence with direct object and accusative',
-#   description: 'simple sentence structure with accusative and direct object',
-#   structure: Structure.find_by(name: 's_v_do')
+#   name: 'Sentence with direct object and accusative with preposition',
+#   description: 'simple sentence structure with accusative and preposition',
+#   structure: Structure.find_by(name: 's_v_prep_do')
 #   )
-# # Exercice.create!(
-# #   name: 'Sentence with direct object and accusative with preposition',
-# #   description: 'simple sentence structure with accusative and preposition',
-# #   structure: Structure.find_by(name: 's_v_prep_do')
-# #   )
-# Exercice.create!(
-#   name: ' Questions with direct object and accusative',
-#   description: 'Questions with accusative and preposition',
-#   structure: Structure.find_by(name: 'v_s_do')
-#   )
-# Exercice.create!(
-#   name: ' Sentence with direct object and dative',
-#   description: 'Sentence with dative and preposition',
-#   structure: Structure.find_by(name: 's_v_do_dative')
-#   )
-# Exercice.create!(
-#   name: ' Sentence with direct and indirect object ',
-#   description: 'Sentence with direct and indirect object',
-#   structure: Structure.find_by(name: 's_v_io_do')
-#   )
+Exercice.create!(
+  name: ' Questions with direct object and accusative',
+  description: 'Questions with accusative and preposition',
+  structure: Structure.find_by(name: 'v_s_do')
+  )
+Exercice.create!(
+  name: ' Sentence with direct object and dative',
+  description: 'Sentence with dative and preposition',
+  structure: Structure.find_by(name: 's_v_do_dative')
+  )
+Exercice.create!(
+  name: ' Sentence with direct and indirect object ',
+  description: 'Sentence with direct and indirect object',
+  structure: Structure.find_by(name: 's_v_io_do')
+  )
 
 puts ' IT IS DONE! '

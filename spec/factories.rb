@@ -160,6 +160,7 @@ FactoryBot.define do
     trait :geben_first_singular do
       value { 'gebe' }
       preterit { 'geben' }
+      g_case { 'accu_dati' }
       english { 'give' }
     end
 

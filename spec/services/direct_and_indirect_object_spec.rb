@@ -42,4 +42,3 @@ RSpec.describe 'Exercise with direct and indirect object' do
     expect(@result[:solution].length).to eq(2)
   end
 end
-

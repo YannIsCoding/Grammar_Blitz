@@ -13,10 +13,10 @@ Noun.delete_all
 PersonalPronoun.delete_all
 Article.delete_all
 Preposition.delete_all
-StructureElement.delete_all
-Element.delete_all
-Exercice.delete_all
-Structure.delete_all
+# StructureElement.delete_all
+# Element.delete_all
+# Exercice.delete_all
+# Structure.delete_all
 
 # url = "https://www.scienceabc.com/wp-content/uploads/2015/12/alan-turing.jpg"
 # u = User.create!(

@@ -2,7 +2,7 @@ class SentenceBuilderService
   attr_reader :g_case, :person, :genders, :gender, :verb, :subject, :article, :noun, :preposition
   def initialize(exercice)
     @exercice = exercice
-    @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative' #NEED TO BE REPLACE BY AN OPTION INSIDE EXERCICE TABLE SO USER CAN SELECT DIFFERENT FORM OF EXERCISES
+    @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative'
     @person = PersonalPronoun.all.map(&:person).uniq.sample
     @person_verb = fetch_person_verb
     @gender = fetch_gender
@@ -127,10 +127,10 @@ class SentenceBuilderService
     io_article = fetch_article('dative', io_noun.gender)
     @noun = fetch_noun('object')
     do_article = fetch_article('accusative', @noun.gender)
+    verb = Verb.where(g_case: 'accu_dati').sample
+    verb = fetch_verb(verb.preterit)
 
-    verb = fetch_verb('geben')
-
-    english = "#{@subject.english.capitalize} #{verb.english} #{io_article.english} #{io_noun.english} #{do_article.english} #{@noun.english}"
+    english = "#{@subject.english.capitalize} #{verb.english} #{do_article.english} #{@noun.english} #{io_article.english} #{io_noun.english}"
     german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}"
     obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: [io_article.value, do_article.value] }

@@ -112,7 +112,7 @@ class SentenceBuilderService
   end
 
   def v_s_do
-    english = "#{@person == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@verb.english} #{@article.english} #{@noun.english}?"
+    english = "#{@person_verb == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@verb.english[0..-2]} #{@article.english} #{@noun.english}?"
     german = "#{@verb.value.capitalize} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
     obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: [@article.value] }

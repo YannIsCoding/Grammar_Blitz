@@ -1,19 +1,19 @@
 
 <div class="main-container">
   <h1>Hello <%= current_user.username %></h1>
-<ul>
-  <%= cl_image_tag @user.photo, crop: :fill, class: 'avatar-large' %>
+<ul class='pl-0'>
+  <%= cl_image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
 
   <% if @progress_trackers.empty? %>
     <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>
   <% end %>
   <% @progress_trackers.each do |pt| %>
-    <li>
+    <li class='my-4'>
       you have <%= pt.counter %> points for the <%= pt.exercice.name %>
     </li>
   <% end %>
 </ul>
 
 
-<%= link_to 'edit your profile', edit_user_registration_path  %>
+<%= link_to 'edit your profile', edit_user_registration_path , class: 'cool-button' %>
 </div>

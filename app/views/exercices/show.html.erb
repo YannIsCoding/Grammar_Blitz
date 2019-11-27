@@ -1,11 +1,11 @@
 <div class='main-container'>
   <h1><%= @exercice.name %></h1>
 
-  <% if @exercice.result == true %>
+  <% if success(current_user, @exercice) %>
   <div  class='success mb-3'>
     <p>GOOD JOB!</p>
   </div>
-  <% elsif @exercice.result == false %>
+  <% elsif already_tried(current_user, @exercice) %>
     <p>The answer was:  <%= @exercice.prev_sentence %></p>
     <div  class='failure mb-3'>
       <p> Try again, you'll get it right next time!</p>
@@ -31,6 +31,9 @@
   <% else %>
     <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers", method: 'post', local: true) do %>
       <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true %>
+      <% if @exercice.structure.name == 's_v_io_do' %>
+        <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
+      <% end %>
       <%= submit_tag "BANG!", class:'cool-button' %>
     <% end %>
 

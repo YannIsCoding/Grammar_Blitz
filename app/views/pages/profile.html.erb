@@ -1,19 +1,45 @@
 
-<div class="main-container">
+<div class="main-container mb-5">
   <h1>Hello <%= current_user.username %></h1>
-<ul class='pl-0'>
   <%= cl_image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
 
   <% if @progress_trackers.empty? %>
     <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>
   <% end %>
+
   <% @progress_trackers.each do |pt| %>
-    <li class='my-4'>
-      you have <%= pt.counter %> points for the <%= pt.exercice.name %>
-    </li>
+    <div class="container my-5">
+
+      <div class="row justify-content">
+        <div class="col-sm">
+          <h5> sum up for <%= pt.exercice.name %> </h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <% ['today', 'week', 'all of time'].each do |sort_of_time| %>
+          <div class="col-sm">
+            <h6><%= sort_of_time %>:</h6>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="row">
+        <% [1, 7, 1_000_000].each_with_index do |nb_days| %>
+          <div class="col-sm">
+            <div class="progress mb-4 progressbar-container-profile">
+              <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= pt.percentage_for_day(1) %>%" aria-valuemin="0" aria-valuemax="100"> <%= pt.percentage_for_day(1) %>%</div>
+              <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - pt.percentage_for_day(1) %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - pt.percentage_for_day(1) %>%</div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+
+
   <% end %>
-</ul>
 
 
-<%= link_to 'edit your profile', edit_user_registration_path , class: 'cool-button' %>
+<%= link_to 'Edit your profile', edit_user_registration_path , class: 'cool-button' %>
 </div>

@@ -6,6 +6,7 @@
     <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= @progress_tracker.daily_percentage %>%" aria-valuemin="0" aria-valuemax="100"> <%= @progress_tracker.daily_percentage %>%</div>
     <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - @progress_tracker.daily_percentage %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - @progress_tracker.daily_percentage %>%</div>
   </div>
+
   <div class="exercice-container">
     <% if success(current_user, @exercice) %>
     <div  class='success mb-3'>

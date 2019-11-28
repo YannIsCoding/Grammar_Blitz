@@ -13,10 +13,13 @@ class ProgressTrackersController < ApplicationController
     @exercice = Exercice.find(params[:exercice_id])
     @exercice.result = false
     if @exercice.solution.length == 2
+      p '####################### 2 PART SOLUTION #######################333'
       update_progress_tracker if params[:response].downcase == @exercice.solution[0].downcase && params[:response_2].downcase == @exercice.solution[1].downcase
     elsif params[:response].downcase == @exercice.solution.first.downcase
+      p '################## ONE PART SOLUTION #################################'
       update_progress_tracker
     else
+      p '################## NOT SUCCESSFULL #################################'
       Trial.create!(progress_tracker: @progress_tracker, success: false)
     end
     @exercice.prev_sentence = @exercice.sentence

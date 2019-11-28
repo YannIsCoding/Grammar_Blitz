@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_27_152830) do
+ActiveRecord::Schema.define(version: 2019_11_28_133913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2019_11_27_152830) do
     t.bigint "user_id"
     t.integer "counter"
     t.index ["exercice_id"], name: "index_progress_trackers_on_exercice_id"
+    t.index ["user_id", "exercice_id"], name: "index_progress_trackers_on_user_id_and_exercice_id", unique: true
     t.index ["user_id"], name: "index_progress_trackers_on_user_id"
   end
 

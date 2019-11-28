@@ -1,41 +1,50 @@
 <div class='main-container'>
   <h1><%= @exercice.name %></h1>
 
-  <% if success(current_user, @exercice) %>
-  <div  class='success mb-3'>
-    <p>GOOD JOB!</p>
+  <h3>Your progress so far for today:</h3>
+  <div class="progress mb-4 progressbar-container">
+    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= @progress_tracker.daily_percentage %>%" aria-valuemin="0" aria-valuemax="100"> <%= @progress_tracker.daily_percentage %>%</div>
+    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - @progress_tracker.daily_percentage %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - @progress_tracker.daily_percentage %>%</div>
   </div>
-  <% elsif already_tried(current_user, @exercice) %>
-    <p>The answer was:  <%= @exercice.prev_sentence %></p>
-    <div  class='failure mb-3'>
-      <p> Try again, you'll get it right next time!</p>
+
+  <div class="exercice-container">
+    <% if success(current_user, @exercice) %>
+    <div  class='success mb-3'>
+      <p>GOOD JOB!</p>
     </div>
-  <% end %>
-  <% unless @progress_tracker.counter == 0 || @progress_tracker.counter.nil? %>
-    <p>Look at you! You got <%= @progress_tracker.counter %> points on this exercise! </p>
-  <% end %>
-  <p>The next exercise sentence is:</p>
-  <p><%= @exercice.english %></p>
-  <p>
-  <%= @exercice.obfus %>
-  <% if @progress_tracker.counter %>
-    <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers/#{@progress_tracker.id}", method: 'patch', local: true) do %>
-      <%= hidden_field_tag sentence: @exercice.sentence  %>
-      <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true%>
-      <% if @exercice.structure.name == 's_v_io_do' %>
-        <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
+    <% elsif already_tried(current_user, @exercice) %>
+      <p>The answer was:  <%= @exercice.prev_sentence %></p>
+      <div  class='failure mb-3'>
+        <p> Try again, you'll get it right next time!</p>
+      </div>
+    <% end %>
+    <% unless @progress_tracker.counter == 0 || @progress_tracker.counter.nil? %>
+      <p>Look at you! You got <%= @progress_tracker.counter %> points on this exercise! </p>
+    <% end %>
+    <p class="mt-5 font-weight-bold">The next exercise sentence is:</p>
+    <p><%= @exercice.english %></p>
+    <p>
+    <%= @exercice.obfus %>
+    <% if @progress_tracker.counter %>
+      <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers/#{@progress_tracker.id}", method: 'patch', local: true) do %>
+        <%= hidden_field_tag sentence: @exercice.sentence  %>
+        <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true%>
+        <% if @exercice.structure.name == 's_v_io_do' %>
+          <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
+        <% end %>
+        <%= submit_tag "BANG!", class:'cool-button' %>
       <% end %>
-      <%= submit_tag "BANG!", class:'cool-button' %>
+
+    <% else %>
+      <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers", method: 'post', local: true) do %>
+        <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true %>
+        <% if @exercice.structure.name == 's_v_io_do' %>
+          <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
+        <% end %>
+        <%= submit_tag "BANG!", class:'cool-button' %>
+      <% end %>
+
     <% end %>
 
-  <% else %>
-    <%= form_with(url: "/exercices/#{@exercice.id}/progress_trackers", method: 'post', local: true) do %>
-      <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true %>
-      <% if @exercice.structure.name == 's_v_io_do' %>
-        <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
-      <% end %>
-      <%= submit_tag "BANG!", class:'cool-button' %>
-    <% end %>
-
-  <% end %>
+  </div>
 </div>

@@ -10,6 +10,6 @@ class ExercicesController < ApplicationController
     @exercice.update_attributes SentenceBuilderService.new(@exercice).generate
     @exercice.save
 
-    @progress_tracker = ProgressTracker.find_by(user_id: current_user.id, exercice_id: @exercice) || ProgressTracker.new
+    @progress_tracker = ProgressTracker.find_by(user: current_user, exercice: @exercice) || ProgressTracker.new
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_165851) do
+ActiveRecord::Schema.define(version: 2019_11_28_133913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_165851) do
     t.bigint "user_id"
     t.integer "counter"
     t.index ["exercice_id"], name: "index_progress_trackers_on_exercice_id"
+    t.index ["user_id", "exercice_id"], name: "index_progress_trackers_on_user_id_and_exercice_id", unique: true
     t.index ["user_id"], name: "index_progress_trackers_on_user_id"
   end
 
@@ -99,6 +100,14 @@ ActiveRecord::Schema.define(version: 2019_11_26_165851) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "trials", force: :cascade do |t|
+    t.boolean "success"
+    t.bigint "progress_tracker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["progress_tracker_id"], name: "index_trials_on_progress_tracker_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -140,6 +149,7 @@ ActiveRecord::Schema.define(version: 2019_11_26_165851) do
   add_foreign_key "progress_trackers", "users"
   add_foreign_key "structure_elements", "elements"
   add_foreign_key "structure_elements", "structures"
+  add_foreign_key "trials", "progress_trackers"
   add_foreign_key "verb_noun_links", "nouns"
   add_foreign_key "verb_noun_links", "verbs"
 end

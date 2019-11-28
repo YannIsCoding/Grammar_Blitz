@@ -12,8 +12,8 @@ class ProgressTrackersController < ApplicationController
   def exercice_correction
     @exercice = Exercice.find(params[:exercice_id])
     @exercice.result = false
-    if @exercice.solution.length == 2
-      update_progress_tracker if params[:response].downcase == @exercice.solution[0].downcase && params[:response_2].downcase == @exercice.solution[1].downcase
+    if params[:response]&.downcase == @exercice.solution[0]&.downcase && params[:response_2]&.downcase == @exercice.solution[1]&.downcase
+      update_progress_tracker
     elsif params[:response].downcase == @exercice.solution.first.downcase
       update_progress_tracker
     else

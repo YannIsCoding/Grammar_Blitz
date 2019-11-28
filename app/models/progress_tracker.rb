@@ -6,12 +6,6 @@ class ProgressTracker < ApplicationRecord
   validates :user_id, uniqueness: { scope: :exercice_id,
                                     message: "Progress tracker already exists for given user and exercise" }
 
-  # def trials_for_day(number_days)
-  # end
-
-  # def successes_for_day(number_days)
-  # end
-
   def percentage_for_day(number_days)
     time_frame = Time.zone.now.midnight..(Time.zone.now.midnight + number_days.day)
     trials = Trial.where(progress_tracker: self,

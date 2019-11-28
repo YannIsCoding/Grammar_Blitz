@@ -19,6 +19,7 @@ RSpec.describe 'Exercise with direct and indirect object' do
     expect(@sentence.length).to eq(6)
   end
   it 'the english should be composed of 6 elements' do
+    p @result[:english]
     expect(@result[:english].split(' ').length).to eq(7)
   end
 

@@ -103,12 +103,14 @@ FactoryBot.define do
     trait :definite_feminin_dative do
       value { 'der' }
       g_case { 'dative' }
+      english { '(to/for) the' }
     end
 
     trait :definite_masculin_dative do
       value { 'dem' }
       gender { 'masculin' }
       g_case { 'dative' }
+      english { '(to/for) the' }
     end
   end
 

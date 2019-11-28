@@ -131,8 +131,8 @@ class SentenceBuilderService
     verb = fetch_verb(verb.preterit)
 
     english = "#{@subject.english.capitalize} #{verb.english} #{do_article.english} #{@noun.english} #{io_article.english} #{io_noun.english}"
-    german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value.capitalize} #{do_article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: [io_article.value, do_article.value] }
   end
 end

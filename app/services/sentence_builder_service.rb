@@ -2,6 +2,7 @@ class SentenceBuilderService
   attr_reader :g_case, :person, :genders, :gender, :verb, :subject, :article, :noun, :preposition
   def initialize(exercice)
     @exercice = exercice
+    @vowel = ('aeiou')
     @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative'
     @person = PersonalPronoun.all.map(&:person).uniq.sample
     @person_verb = fetch_person_verb
@@ -112,7 +113,7 @@ class SentenceBuilderService
   end
 
   def v_s_do
-    english = "#{@person_verb == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@verb.english[0..-2]} #{@article.english} #{@noun.english}?"
+    english = "#{@person_verb == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@person_verb == 'third_singular' ? @verb.english[0..-2] : @verb.english} #{@article.english} #{@noun.english}?"
     german = "#{@verb.value.capitalize} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
     obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: [@article.value] }
@@ -130,9 +131,17 @@ class SentenceBuilderService
     verb = Verb.where(g_case: 'accu_dati').sample
     verb = fetch_verb(verb.preterit)
 
-    english = "#{@subject.english.capitalize} #{verb.english} #{do_article.english} #{@noun.english} #{io_article.english} #{io_noun.english}"
-    german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value.capitalize} #{do_article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    english = "#{@subject.english.capitalize} #{verb.english} #{do_article.definite ? do_article.english : a_or_an(@noun)} #{@noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, true)} #{io_noun.english}"
+    german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: [io_article.value, do_article.value] }
+  end
+
+  def a_or_an(noun, dative = false)
+    if dative
+      @vowel.include?(noun.english[0]) ? '(to/for) an' : '(to/for) a'
+    else
+      @vowel.include?(noun.english[0]) ? 'an' : 'a'
+    end
   end
 end

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :progress_trackers, dependent: :destroy
-  has_many :trials, through: :progress_trackers
+  has_many :trials
 
   mount_uploader :photo, PhotoUploader
 end

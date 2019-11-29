@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User visits profile page' do
   before :each do
-    @pt = create(:progress_tracker)
+    @trial = create(:trial)
     @user = User.last
     login_as(@user, scope: :user)
   end
@@ -14,6 +14,6 @@ feature 'User visits profile page' do
 
   scenario 'And sees his/her stats' do
     visit profile_path
-    page.has_content?(@pt.exercice.name)
+    page.has_content?(@trial.exercice.name)
   end
 end

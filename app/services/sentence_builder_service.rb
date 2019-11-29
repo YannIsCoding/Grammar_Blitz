@@ -133,7 +133,7 @@ class SentenceBuilderService
 
     english = "#{@subject.english.capitalize} #{verb.english} #{do_article.definite ? do_article.english : a_or_an(@noun)} #{@noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, true)} #{io_noun.english}"
     german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
     { sentence: german, obfus: obfus, english: english, solution: [io_article.value, do_article.value] }
   end
 

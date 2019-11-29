@@ -4,6 +4,6 @@ class PagesController < ApplicationController
   def profile
     @user = current_user
     @users = User.all
-    @progress_trackers = ProgressTracker.where(user_id: @user.id)
+    @progress_trackers = ProgressTracker.where(user_id: @user.id).order(exercice_id: :asc)
   end
 end

@@ -47,7 +47,7 @@
       <% @users.each do |user| %>
         <li class='row my-3'>
           <%= user.username %>
-          <p> <%= cl_image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </p>
+          <p> <%= image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </p>
           <p>Successes: <%= user.trials.where(success: true).count %> </p>
         </li>
       <% end %>

@@ -10,7 +10,7 @@ module ViewsHelper
   end
 
   def success(user, exercice)
-    Trial.where(exercice: exercice, user: user).last.success
+    Trial.where(exercice: exercice, user: user).last&.success
   end
 
   def percentage_for_day(user, exercice, number_days)

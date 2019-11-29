@@ -12,4 +12,8 @@ module ViewsHelper
   def success(user, exercice)
     exercice.result == true && !ProgressTracker.where(exercice: exercice, user: user).empty?
   end
+
+  def active_class(link_path)
+    current_page?(link_path) ? "active" : ""
+  end
 end

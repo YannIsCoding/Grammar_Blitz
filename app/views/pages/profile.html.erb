@@ -1,7 +1,7 @@
 
 <div class="main-container mb-5">
   <h1>Hello <%= current_user.username %></h1>
-  <%= cl_image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
+  <%= image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
 
   <% if @progress_trackers.empty? %>
     <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>

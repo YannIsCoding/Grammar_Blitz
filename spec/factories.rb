@@ -13,7 +13,7 @@ FactoryBot.define do
     email { 'test@example.com' }
     password { 'f4k3p455w0rd' }
     username { 'Alan' }
-    photo { 'https://www.scienceabc.com/wp-content/uploads/2015/12/alan-turing.jpg' }
+    # photo { 'https://www.scienceabc.com/wp-content/uploads/2015/12/alan-turing.jpg' }
   end
 
   factory :structure do

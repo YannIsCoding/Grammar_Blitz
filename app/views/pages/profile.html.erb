@@ -1,7 +1,7 @@
 
 <div class="main-container mb-5">
   <h1>Hello <%= current_user.username %></h1>
-  <%= cl_image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
+  <%= image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
 
   <% if @progress_trackers.empty? %>
     <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>
@@ -47,7 +47,7 @@
       <% @users.each do |user| %>
         <li class='row my-3'>
           <%= user.username %>
-          <p> <%= cl_image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </p>
+          <p> <%= image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </p>
           <p>Successes: <%= user.trials.where(success: true).count %> </p>
         </li>
       <% end %>

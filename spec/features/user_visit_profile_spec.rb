@@ -1,12 +1,19 @@
-# require 'rails_helper'
+require 'rails_helper'
 
-# feature 'User visits profile page' do
-#   scenario 'successfully' do
-#     visit root_path
-#     @user = create(:user)
-#     login_as(@user, scope: :user)
-#     visit profile_path
+feature 'User visits profile page' do
+  before :each do
+    @pt = create(:progress_tracker)
+    @user = User.last
+    login_as(@user, scope: :user)
+  end
 
-#     expect(page).to have_css 'h1', text: 'Welcome to'
-#   end
-# end
+  scenario 'successfully' do
+    visit profile_path
+    expect(page).to have_css 'h1', text: "Hello #{@user.username}"
+  end
+
+  scenario 'And sees his/her stats' do
+    visit profile_path
+    page.has_content?(@pt.exercice.name)
+  end
+end

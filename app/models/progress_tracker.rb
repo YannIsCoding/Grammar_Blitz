@@ -7,6 +7,7 @@ class ProgressTracker < ApplicationRecord
                                     message: "Progress tracker already exists for given user and exercise" }
 
   def percentage_for_day(number_days)
+    time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
     trials = Trial.where(progress_tracker: self,
                          created_at: time_frame).count
     successes = Trial.where(progress_tracker: self,

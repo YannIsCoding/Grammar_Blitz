@@ -6,11 +6,25 @@ module ViewsHelper
   end
 
   def already_tried(user, exercice)
-    exercice.result == false && !ProgressTracker.where(exercice: exercice, user: user).empty?
+    Trial.where(exercice: exercice, user: user).length.positive?
   end
 
   def success(user, exercice)
-    exercice.result == true && !ProgressTracker.where(exercice: exercice, user: user).empty?
+    Trial.where(exercice: exercice, user: user).last.success
+  end
+
+  def percentage_for_day(user, exercice, number_days)
+    time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
+    trials = Trial.where(user: user,
+                         exercice: exercice,
+                         created_at: time_frame).count
+    successes = Trial.where(user: user,
+                            exercice: exercice,
+                            success: true,
+                            created_at: time_frame).count
+    return ((successes / trials.to_f) * 100).to_i if trials.positive?
+
+    100
   end
 
   def active_class(link_path)

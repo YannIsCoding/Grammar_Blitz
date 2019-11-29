@@ -1,12 +1,8 @@
 FactoryBot.define do
-  factory :progress_tracker do
-    user
-    exercice
-  end
-
   factory :trial do
     success { false }
-    progress_tracker { nil }
+    user
+    exercice
   end
 
   factory :user do

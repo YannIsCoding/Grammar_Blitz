@@ -3,16 +3,16 @@
   <h1>Hello <%= current_user.username %></h1>
   <%= image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
 
-  <% if @progress_trackers.empty? %>
+  <% if @exercices.empty? %>
     <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>
   <% end %>
 
-  <% @progress_trackers.each do |pt| %>
+  <% @exercices.each do |exer| %>
     <div class="container my-5">
 
       <div class="row justify-content">
         <div class="col-sm">
-          <h5> sum up for <%= pt.exercice.name %> </h5>
+          <h5> sum up for <%= exer.name %> </h5>
         </div>
       </div>
 
@@ -26,7 +26,7 @@
 
       <div class="row">
         <% [1, 7, 10_000].each_with_index do |nb_days| %>
-        <% percent = pt.percentage_for_day(nb_days)  %>
+        <% percent = percentage_for_day(current_user, exer, nb_days)  %>
           <div class="col-sm">
             <div class="progress mb-4 progressbar-container-profile">
               <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= percent %>%</div>

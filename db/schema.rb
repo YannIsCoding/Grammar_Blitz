@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_28_133913) do
+ActiveRecord::Schema.define(version: 2019_11_29_162138) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,12 +78,7 @@ ActiveRecord::Schema.define(version: 2019_11_28_133913) do
   create_table "progress_trackers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "exercice_id"
-    t.bigint "user_id"
     t.integer "counter"
-    t.index ["exercice_id"], name: "index_progress_trackers_on_exercice_id"
-    t.index ["user_id", "exercice_id"], name: "index_progress_trackers_on_user_id_and_exercice_id", unique: true
-    t.index ["user_id"], name: "index_progress_trackers_on_user_id"
   end
 
   create_table "structure_elements", force: :cascade do |t|
@@ -104,10 +99,12 @@ ActiveRecord::Schema.define(version: 2019_11_28_133913) do
 
   create_table "trials", force: :cascade do |t|
     t.boolean "success"
-    t.bigint "progress_tracker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["progress_tracker_id"], name: "index_trials_on_progress_tracker_id"
+    t.bigint "user_id"
+    t.bigint "exercice_id"
+    t.index ["exercice_id"], name: "index_trials_on_exercice_id"
+    t.index ["user_id"], name: "index_trials_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -120,6 +117,7 @@ ActiveRecord::Schema.define(version: 2019_11_28_133913) do
     t.datetime "updated_at", null: false
     t.string "username"
     t.string "photo"
+    t.integer "successes_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -145,11 +143,10 @@ ActiveRecord::Schema.define(version: 2019_11_28_133913) do
   end
 
   add_foreign_key "exercices", "structures"
-  add_foreign_key "progress_trackers", "exercices"
-  add_foreign_key "progress_trackers", "users"
   add_foreign_key "structure_elements", "elements"
   add_foreign_key "structure_elements", "structures"
-  add_foreign_key "trials", "progress_trackers"
+  add_foreign_key "trials", "exercices"
+  add_foreign_key "trials", "users"
   add_foreign_key "verb_noun_links", "nouns"
   add_foreign_key "verb_noun_links", "verbs"
 end

@@ -4,6 +4,6 @@ class PagesController < ApplicationController
   def profile
     @user = current_user
     @users = User.all
-    @exercices = Exercice.all
+    @exercices = @user.exercices.uniq
   end
 end

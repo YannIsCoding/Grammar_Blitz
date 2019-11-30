@@ -44,11 +44,12 @@
 
   <div class="container ranking-container">
     <ul class='mt-5'>
-      <% @users.each do |user| %>
+      <% @ranking.each do |rank_array| %>
+      <% user = User.find(rank_array.first) %>
         <li class='row my-3'>
-          <%= user.username %>
           <p> <%= image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </p>
-          <p>Successes: <%= user.trials.where(success: true).count %> </p>
+          <%= user.username %>
+          <p>Successes: <%= rank_array.last%> </p>
         </li>
       <% end %>
     </ul>

@@ -11,15 +11,19 @@
 
   <div class="exercice-container">
 
-    <% if success(current_user, @exercice) %>
-      <div  class='success mb-3'>
-        <p>GOOD JOB!</p>
-      </div>
-    <% elsif already_tried(current_user, @exercice) %>
-      <p>The answer was:  <%= @exercice.prev_sentence %></p>
-      <div  class='failure mb-3'>
-        <p> Try again, you'll get it right next time!</p>
-      </div>
+    <% if @exercice.result %>
+
+      <% if success(current_user, @exercice) %>
+        <div  class='success mb-3'>
+          <p>GOOD JOB!</p>
+        </div>
+
+      <% elsif already_tried(current_user, @exercice) %>
+        <p>The answer was:  <%= @exercice.prev_sentence %></p>
+        <div  class='failure mb-3'>
+          <p> Try again, you'll get it right next time!</p>
+        </div>
+      <% end %>
     <% end %>
 
     <p class="mt-5 font-weight-bold">The next exercise sentence is:</p>

@@ -34,4 +34,12 @@ module ViewsHelper
   def active_user_class(user)
     current_user == user ? "active-user" : ""
   end
+
+  def show_streak?(streak)
+    (streak % 5).zero? && !streak.zero?
+  end
+
+  def streak_congratulation
+    ['Du bist der hammer!', 'Du bist GIGA geil!'].sample
+  end
 end

@@ -1,6 +1,5 @@
 <div class='main-container'>
   <h1><%= @exercice.name %></h1>
-
   <h3>Your progress so far for today:</h3>
   <% percent = percentage_for_day(current_user, @exercice, 1) %>
 
@@ -17,13 +16,16 @@
         <div  class='success mb-3'>
           <p>GOOD JOB!</p>
         </div>
-
       <% elsif already_tried(current_user, @exercice) %>
         <p>The answer was:  <%= @exercice.prev_sentence %></p>
         <div  class='failure mb-3'>
           <p> Try again, you'll get it right next time!</p>
         </div>
       <% end %>
+    <% end %>
+
+    <% if show_streak?(@exercice.streak) %>
+      <p> <%= @exercice.streak %> % correct answer in a row! <%= streak_congratulation %> </p>
     <% end %>
 
     <p class="mt-5 font-weight-bold">The next exercise sentence is:</p>

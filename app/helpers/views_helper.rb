@@ -30,4 +30,8 @@ module ViewsHelper
   def active_class(link_path)
     current_page?(link_path) ? "active" : ""
   end
+
+  def active_user_class(user)
+    current_user == user ? "active-user" : ""
+  end
 end

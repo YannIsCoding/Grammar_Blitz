@@ -99,24 +99,30 @@ class SentenceBuilderService
   end
 
   def s_v_do
-    english = "#{@subject.english.capitalize} #{@verb.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value.capitalize} #{@verb.value} #{@article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: [@article.value] }
+    { sentence: "#{@subject.value.capitalize} #{@verb.value} #{@article.value} #{@noun.value.capitalize}",
+      obfus: "#{@subject.value.capitalize} #{@verb.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}",
+      english: "#{@subject.english.capitalize} #{@verb.english} #{definite_article(@article)} #{@noun.english}",
+      solution: [@article.value]}
   end
 
   def s_v_prep_do
-    english = "#{@subject.english.capitalize} #{@verb.english} #{@preposition.english} #{@article.english} #{@noun.english}"
-    german = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: [@article.value] }
+    # english = "#{@subject.english.capitalize} #{@verb.english} #{@preposition.english} #{definite_article(@article)} #{@noun.english}"
+    # german = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}"
+    # obfus = "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    { sentence: "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value} #{@noun.value.capitalize}",
+      obfus: "#{@subject.value.capitalize} #{@verb.value} #{@preposition.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}",
+      english: "#{@subject.english.capitalize} #{@verb.english} #{@preposition.english} #{definite_article(@article)} #{@noun.english}",
+      solution: [@article.value] }
   end
 
   def v_s_do
-    english = "#{@person_verb == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@person_verb == 'third_singular' ? @verb.english[0..-2] : @verb.english} #{@article.english} #{@noun.english}?"
-    german = "#{@verb.value.capitalize} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
-    obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: [@article.value] }
+    # english = "#{@person_verb == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@person_verb == 'third_singular' ? @verb.english[0..-2] : @verb.english} #{definite_article(@article)} #{@noun.english}?"
+    # german = "#{@verb.value.capitalize} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?"
+    # obfus = "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    { sentence: "#{@verb.value.capitalize} #{@subject.value} #{@article.value} #{@noun.value.capitalize}?",
+      obfus: "#{@verb.value.capitalize} #{@subject.value} #{@article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}",
+      english: "#{@person_verb == 'third_singular' ? 'Does' : 'Do' } #{@subject.english} #{@person_verb == 'third_singular' ? @verb.english[0..-2] : @verb.english} #{definite_article(@article)} #{@noun.english}?",
+      solution: [@article.value] }
   end
 
   def s_v_do_dative
@@ -131,10 +137,17 @@ class SentenceBuilderService
     verb = Verb.where(g_case: 'accu_dati').sample
     verb = fetch_verb(verb.preterit)
 
-    english = "#{@subject.english.capitalize} #{verb.english} #{do_article.definite ? do_article.english : a_or_an(@noun)} #{@noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, true)} #{io_noun.english}"
-    german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}"
-    obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
-    { sentence: german, obfus: obfus, english: english, solution: [io_article.value, do_article.value] }
+    # english = "#{@subject.english.capitalize} #{verb.english} #{do_article.definite ? do_article.english : a_or_an(@noun)} #{@noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, 'dative')} #{io_noun.english}"
+    # german = "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}"
+    # obfus = "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}"
+    { sentence: "#{@subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{@noun.value.capitalize}",
+      obfus: "#{@subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_ ' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_ ' }.join} #{@noun.value.capitalize}",
+      english: "#{@subject.english.capitalize} #{verb.english} #{do_article.definite ? do_article.english : a_or_an(@noun)} #{@noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, 'dative')} #{io_noun.english}",
+      solution: [io_article.value, do_article.value] }
+  end
+
+  def definite_article(article)
+    article.definite ? article.english : a_or_an(@noun)
   end
 
   def a_or_an(noun, dative = false)

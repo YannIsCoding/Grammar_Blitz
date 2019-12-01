@@ -31,7 +31,7 @@
     <p>
     <%= @exercice.obfus %>
     <% if already_tried(current_user, @exercice) %>
-      <%= form_with(url: "/exercices/#{@exercice.id}", method: 'get', local: true) do %>
+      <%= form_with(url: "/exercices/#{@exercice.id}", method: 'get', local: true, html: { autocomplete: "off" }) do %>
         <%= hidden_field_tag sentence: @exercice.sentence  %>
         <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true%>
         <% if @exercice.structure.name == 's_v_io_do' %>
@@ -41,7 +41,7 @@
       <% end %>
 
     <% else %>
-      <%= form_with(url: "/exercices/#{@exercice.id}", method: 'get', local: true) do %>
+      <%= form_with(url: "/exercices/#{@exercice.id}", method: 'get', local: true, html: { autocomplete: "off" }) do %>
         <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true %>
         <% if @exercice.structure.name == 's_v_io_do' %>
           <%= text_field_tag :response_2, '', class:'input-field mr-3'%>

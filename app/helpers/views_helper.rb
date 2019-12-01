@@ -40,6 +40,6 @@ module ViewsHelper
   end
 
   def streak_congratulation
-    ['Du bist der hammer!', 'Du bist GIGA geil!'].sample
+    ['Du bist der hammer!', 'Du bist MEGA geil!', 'bärenstark!'].sample
   end
 end

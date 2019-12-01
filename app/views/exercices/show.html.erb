@@ -8,7 +8,7 @@
     <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - percent %>%</div>
   </div>
 
-  <div class="exercice-container">
+  <div class="exercice-container mx-3">
 
     <% if @exercice.result %>
 
@@ -25,7 +25,7 @@
     <% end %>
 
     <% if show_streak?(@exercice.streak) %>
-      <p> <%= @exercice.streak %> % correct answer in a row! <%= streak_congratulation %> </p>
+      <p> <%= @exercice.streak %>  correct answers in a row! <%= streak_congratulation %> </p>
     <% end %>
 
     <p class="mt-5 font-weight-bold">The next exercise sentence is:</p>
@@ -35,7 +35,7 @@
     <% if already_tried(current_user, @exercice) %>
       <%= form_with(url: "/exercices/#{@exercice.id}", method: 'get', local: true, html: { autocomplete: "off" }) do %>
         <%= hidden_field_tag sentence: @exercice.sentence  %>
-        <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true%>
+        <%= text_field_tag :response, '', class:'input-field mr-3 mb-2', autofocus: true%>
         <% if @exercice.structure.name == 's_v_io_do' %>
           <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
         <% end %>

@@ -1,7 +1,9 @@
 
 <div class="profile-container mb-5">
   <h1>Hello <%= current_user.username %></h1>
-  <%= image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
+  <div class='mb-3'>
+    <%= image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
+  </div>
 
   <% if @exercices.empty? %>
     <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>
@@ -10,7 +12,7 @@
 
   <div class="container my-5">
     <div class="row">
-      <div class="col-8">
+      <div class="col-md-8 col-sm-12">
         <% @exercices.each do |exer| %>
           <div class="container">
 
@@ -21,17 +23,10 @@
             </div>
 
             <div class="row">
-              <% ['today', 'week', 'all of time'].each do |sort_of_time| %>
+              <% { 'today' => 1, 'week' => 7, 'all of time' => 10_000 }.each do |key, value| %>
+                <% percent = percentage_for_day(current_user, exer, value)  %>
                 <div class="col-sm">
-                  <h6><%= sort_of_time %>:</h6>
-                </div>
-              <% end %>
-            </div>
-
-            <div class="row">
-              <% [1, 7, 10_000].each_with_index do |nb_days| %>
-              <% percent = percentage_for_day(current_user, exer, nb_days)  %>
-                <div class="col-sm">
+                  <h6><%= key %>:</h6>
                   <div class="progress mb-4 progressbar-container-profile">
                     <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= percent %>%</div>
                     <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - percent %>%</div>
@@ -43,7 +38,7 @@
         <% end %>
       </div>
 
-      <div class="col-4">
+      <div class="col-md-4 col-sm-12">
         <div class="container ranking-container mt-5 p-2">
           <div class='row my-3 no-gutters border-bottom font-weight-bold'>
             <div class="col-2 "> Rank </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_162138) do
+ActiveRecord::Schema.define(version: 2019_12_01_165329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 2019_11_29_162138) do
     t.string "english"
     t.string "obfus"
     t.boolean "result"
-    t.string "option", array: true
     t.string "solution", array: true
+    t.integer "streak"
     t.index ["structure_id"], name: "index_exercices_on_structure_id"
   end
 

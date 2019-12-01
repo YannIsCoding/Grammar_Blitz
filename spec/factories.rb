@@ -9,6 +9,12 @@ FactoryBot.define do
     email { 'test@example.com' }
     password { 'f4k3p455w0rd' }
     username { 'Alan' }
+
+    trait :competitor do
+      email { 'competitor@aol.com' }
+      password { 'not_the_sharpest' }
+      username { 'leo' }
+    end
   end
 
   factory :structure do

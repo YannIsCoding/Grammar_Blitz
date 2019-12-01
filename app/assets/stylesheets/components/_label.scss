@@ -17,3 +17,10 @@
  font-weight: bold;
 }
 
+.active-user{
+  font-weight: bold;
+  color: white;
+  background-color: $red;
+  box-shadow: 0px 0px 2px 4px  $light-green;
+
+}

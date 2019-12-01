@@ -3,6 +3,15 @@
   max-width: 1000px;
   margin: auto;
   margin-top: 50px;
+  padding-bottom: 80px;
+}
+
+.profile-container{
+  text-align: center;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 50px;
+  padding-bottom: 80px;
 }
 
 .devise-container{
@@ -29,6 +38,7 @@
 .progressbar-container-profile{
   width: auto;
   margin: auto;
+  height: 56px;
 }
 
 .exercice-container{
@@ -42,5 +52,9 @@
 }
 
 .ranking-container{
-  width: 360px;
+  width: auto;
+  box-shadow: 4px 4px 0px 4px $red;
+  background-color: $yellow;
+  color: black;
 }
+

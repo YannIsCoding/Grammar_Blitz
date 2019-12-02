@@ -24,7 +24,14 @@
     <% end %>
 
     <% if show_streak?(@exercice.streak) %>
-      <p> <%= @exercice.streak %>  correct answers in a row! <%= streak_congratulation %> </p>
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="streak-message blink-streak p-2">
+            <p> <%= @exercice.streak %>  correct answers in a row! </p>
+            <p class='font-weight-bold'> <%= streak_congratulation %> </p>
+          </div>
+        </div>
+      </div>
     <% end %>
 
     <p class="mt-5 font-weight-bold">The next exercise sentence is:</p>

@@ -23,6 +23,8 @@ class ExercicesController < ApplicationController
       create_trial(true)
     else
       create_trial(false)
+      @answer_one = params[:response]
+      @answer_two = params[:response_2] if params[:response_2]
     end
     @exercice.prev_sentence = @exercice.sentence
   end

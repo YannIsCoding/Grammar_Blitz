@@ -17,6 +17,7 @@
         </div>
       <% elsif already_tried(current_user, @exercice) %>
         <p>The answer was:  <%= @exercice.prev_sentence %></p>
+        <p>You answered: <%= @answer_one %> <%= "and #{@answer_two}" if @answer_two %> </p>
         <div  class='failure mb-3'>
           <p> Try again, you'll get it right next time!</p>
         </div>
@@ -34,7 +35,7 @@
       </div>
     <% end %>
 
-    <p class="mt-5 font-weight-bold">The next exercise sentence is:</p>
+    <p class="mt-3 font-weight-bold">The next exercise sentence is:</p>
     <p><%= @exercice.english %></p>
     <p>
     <%= @exercice.obfus %>

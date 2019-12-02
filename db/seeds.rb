@@ -67,7 +67,7 @@ verbs = [
       %w[mögen first_plurial mögen accusative like] << percievable_things,
       %w[mögt second_plurial mögen accusative like] << percievable_things,
       %w[mögen third_plurial mögen accusative like] << percievable_things,
-      %w[trink first_singular trinken accusative drink] << ['drink'],
+      %w[trinke first_singular trinken accusative drink] << ['drink'],
       %w[trinkst second_singular trinken accusative drink] << ['drink'],
       %w[trinkt third_singular trinken accusative drinks] << ['drink'],
       %w[trinken first_plurial trinken accusative drink] << ['drink'],
@@ -311,9 +311,9 @@ end
 # %w[s_v_prep_do s_v_do v_s_do s_v_do_dative s_v_io_do conjug].each do |structure|
 #   Structure.create!(name: structure)
 # end
-%w[conjug].each do |structure|
-  Structure.create!(name: structure)
-end
+# %w[conjug].each do |structure|
+#   Structure.create!(name: structure)
+# end
 # structure_elements = [
 #   %w[1 subject s_v_prep_do],
 #   %w[2 verb s_v_prep_do],
@@ -357,10 +357,10 @@ end
 #   description: 'Sentence with direct and indirect object',
 #   structure: Structure.find_by(name: 's_v_io_do')
 #   )
-Exercice.create!(
-  name: 'Conjugation practice',
-  description: 'Practice conjugaison on all sort of verbs',
-  structure: Structure.find_by(name: 'conjug')
-  )
+# Exercice.create!(
+#   name: 'Conjugation practice',
+#   description: 'Practice conjugaison on all sort of verbs',
+#   structure: Structure.find_by(name: 'conjug')
+#   )
 
 puts ' IT IS DONE! '

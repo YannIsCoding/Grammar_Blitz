@@ -142,7 +142,7 @@ class SentenceBuilderService
     { sentence: "#{@subject.value.capitalize} #{verb.value}",
       obfus: "#{@subject.value.capitalize} #{verb.value.split(//).map! { '_ ' }.join}",
       english: "#{@subject.english.capitalize} #{verb.english}",
-      solution: [@verb.value] }
+      solution: [verb.value] }
   end
 
   def definite_article(article)

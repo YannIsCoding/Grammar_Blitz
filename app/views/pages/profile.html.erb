@@ -45,13 +45,12 @@
             <div class="col-8"> Blitzer </div>
             <div class="col-2"> Points  </div>
           </div>
-          <% @ranking.each_with_index do |rank_array, index| %>
-            <% user = User.find(rank_array.first) %>
+          <% @ranking.each_with_index do |user, index| %>
             <div class="row py-3 align-items-center no-gutters <%= active_user_class(user) %>">
               <div class="col-2 "> <%= index + 1 %> </div>
               <div class="col-3"> <%= image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </div>
               <div class="col-5 text-left"> <%= user.username %> </div>
-              <div class="col-2"> <%= rank_array.last%>  </div>
+              <div class="col-2"> <%= user.successes_count%>  </div>
             </div>
           <% end %>
         </div>

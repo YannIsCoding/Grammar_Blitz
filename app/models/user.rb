@@ -10,12 +10,25 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
-  def self.wins
-    User.find_by_sql("SELECT users.id, COUNT(trials.id) AS trial_count
-                      FROM trials
-                      INNER JOIN trials ON u.id = trials.user_id
-                      where trials.success = true
-                      group by users.id
-                      ")
+  # def self.wins
+  #   ActiveRecord::Base.connection.execute("select users.*, sum(case when trials.success = true then 1 else 0 end) as successful_trials
+  #                     from users
+  #                     left join trials on users.id = trials.id
+  #                     group by users.id
+  #                     order by successful_trials desc
+  #                     ")
+  # end
+
+  def successes
+    Trial.where(user: self, success: true).count
+  end
+
+  def self.ranking
+    shameful_array = []
+    User.all.each do |user|
+      user.successes_count = user.successes
+      shameful_array << user
+    end
+    shameful_array.sort_by(&:successes_count).reverse!
   end
 end

@@ -3,8 +3,8 @@ class PagesController < ApplicationController
 
   def profile
     @user = current_user
-    @ranking = User.group(:id).left_outer_joins(:trials).count(success = true).sort_by(&:last).reverse
-
+    # @ranking = User.group(:id).left_outer_joins(:trials).count(success = true).sort_by(&:last).reverse
+    @ranking = User.ranking
     @exercices = @user.exercices.uniq
   end
 end

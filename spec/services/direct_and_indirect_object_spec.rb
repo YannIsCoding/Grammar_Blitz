@@ -6,7 +6,6 @@ RSpec.describe 'Exercise with direct and indirect object' do
     create(:article, :definite_feminin_dative)
     create(:article, :definite_masculin_accusative)
     create(:article, :definite_masculin_dative)
-    create(:preposition, :accusative)
     # Noun and Verb instances are created by the join table. line bellow
     create(:noun, :feminin_person)
     create(:verb_noun_link, :for_io_do)

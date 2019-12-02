@@ -17,12 +17,12 @@ RSpec.describe 'Exercise with direct and indirect object' do
   it 'the sentence should be composed of 6 elements' do
     expect(@sentence.length).to eq(6)
   end
-  it 'the english should be composed of 6 elements' do
+  it 'the english should be composed of 7 elements' do
     expect(@result[:english].split(' ').length).to eq(7)
   end
 
   it 'the obfuscated should be composed of 6 elements' do
-    expect(@result[:obfus].split(' ').length).to eq(10)
+    expect(@result[:obfus].split(' ').length).to eq(6)
   end
 
   it 'the first article should be dative' do

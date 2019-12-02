@@ -9,4 +9,13 @@ class User < ApplicationRecord
   validates :username, uniqueness: true
 
   mount_uploader :photo, PhotoUploader
+
+  def self.wins
+    User.find_by_sql("SELECT users.id, COUNT(trials.id) AS trial_count
+                      FROM trials
+                      INNER JOIN trials ON u.id = trials.user_id
+                      where trials.success = true
+                      group by users.id
+                      ")
+  end
 end

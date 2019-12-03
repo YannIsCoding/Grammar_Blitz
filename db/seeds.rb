@@ -154,7 +154,7 @@ noun = [
   %w[frauen plurial women people],
   #
   %w[stadt feminin city place],
-  %w[lander plurial countries place],
+  %w[länder plurial countries place],
   %w[weg masculin way place],
   %w[schule feminin school building],
   %w[amt neutral office building],

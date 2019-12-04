@@ -209,6 +209,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    seedbank (0.5.0)
+      rake (>= 10.0)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
     simple_form (5.0.1)
@@ -276,6 +278,7 @@ DEPENDENCIES
   redis
   rspec-rails (~> 3.8)
   sassc-rails
+  seedbank
   shoulda-matchers
   simple_form
   spring

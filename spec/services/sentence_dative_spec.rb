@@ -10,11 +10,11 @@ RSpec.describe SentenceBuilderService do
     @result = @service.generate
   end
 
-  describe 'Exercise with interrogative form should' do
+  describe 'Exercise with s_v_do structure and dative should' do
     it 'give the element in the right order' do
       sentence = @result[:sentence].split(' ')
       expect(sentence[0]).to eq(@service.subject.value.capitalize)
-      expect(sentence[1]).to eq(@service.verb.value)
+      expect(sentence[1]).to eq(Verb.last.value)
       expect(sentence[2]).to eq(@service.article.value)
       expect(sentence[3]).to eq(@service.noun.value.capitalize)
     end

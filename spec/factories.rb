@@ -96,6 +96,7 @@ FactoryBot.define do
     g_case { 'accusative' }
     english { 'the' }
     definite { true }
+    negation { false }
 
     trait :definite_feminin_accusative do
     end

@@ -14,7 +14,7 @@ RSpec.describe SentenceBuilderService do
     it 'give the element in the right order' do
       sentence = @result[:sentence].split(' ')
       expect(sentence[0]).to eq(@service.subject.value.capitalize)
-      expect(sentence[1]).to eq(@service.verb.value)
+      expect(sentence[1]).to eq(Verb.last.value)
       expect(sentence[2]).to eq(@service.article.value)
       expect(sentence[3]).to eq(@service.noun.value.capitalize)
     end

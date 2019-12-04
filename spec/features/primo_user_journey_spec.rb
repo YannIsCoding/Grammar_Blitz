@@ -29,7 +29,8 @@ feature 'first time user tries everything ' do
     expect(page).not_to have_content exercice_io_do.name
     click_on "Exercises"
     #create data for the io_do exercise
-    create(:verb_noun_link, :for_io_do)
+    kiste = Noun.first
+    create(:verb_noun_link, :for_io_do, noun: kiste)
     create(:noun, :feminin_person)
     create(:article, :definite_feminin_dative)
     click_on exercice_io_do.name

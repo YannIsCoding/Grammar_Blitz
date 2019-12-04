@@ -58,7 +58,7 @@ RSpec.describe SentenceBuilderService do
   end
 
   describe 'with s_v_do structure and accusative the verb' do
-    before(:each) { @verb = @service.instance_eval { fetch_verb } }
+    before(:each) { @verb = @service.instance_eval { fetch_verb('accusative', Noun.last) } }
 
     it 'shoud have the same person has the personal pronoun' do
       create(:verb, :third_plurial_accusative_that_go_with_object)

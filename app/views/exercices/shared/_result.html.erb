@@ -1,0 +1,14 @@
+<% if exercice.result %>
+
+  <% if success(current_user, exercice) %>
+    <div  class='success mb-3'>
+      <p>GOOD JOB!</p>
+    </div>
+  <% elsif already_tried(current_user, exercice) %>
+    <p>The answer was:  <%= highlight_solution(exercice.prev_sentence, exercice.hide_index) %></p>
+    <p>You answered: <%= @answer_one %> <%= "and #{@answer_two}" if @answer_two %> </p>
+    <div  class='failure mb-3'>
+      <p> Try again, you'll get it right next time!</p>
+    </div>
+  <% end %>
+<% end %>

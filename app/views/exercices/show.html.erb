@@ -9,20 +9,7 @@
 
   <div class="exercice-container mx-3">
 
-    <% if @exercice.result %>
-
-      <% if success(current_user, @exercice) %>
-        <div  class='success mb-3'>
-          <p>GOOD JOB!</p>
-        </div>
-      <% elsif already_tried(current_user, @exercice) %>
-        <p>The answer was:  <%= highlight_solution(@exercice.prev_sentence, @exercice.hide_index) %></p>
-        <p>You answered: <%= @answer_one %> <%= "and #{@answer_two}" if @answer_two %> </p>
-        <div  class='failure mb-3'>
-          <p> Try again, you'll get it right next time!</p>
-        </div>
-      <% end %>
-    <% end %>
+    <%= render partial: 'exercices/shared/result', locals: {exercice: @exercice}  %>
 
     <% if show_streak?(@exercice.streak) %>
       <div class="container">
@@ -39,26 +26,8 @@
     <p><%= @exercice.english %></p>
     <p>
     <%= hide_answer(@exercice.sentence, @exercice.hide_index) %>
-    <% if already_tried(current_user, @exercice) %>
-      <%= form_with(url: "/exercice_try/#{@exercice.id}", method: 'post', local: true, html: { autocomplete: "off" }) do %>
-        <%= hidden_field_tag sentence: @exercice.sentence  %>
-        <%= text_field_tag :response, '', class:'input-field mr-3 mb-2', autofocus: true%>
-        <% if @exercice.structure.name == 's_v_io_do' %>
-          <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
-        <% end %>
-        <%= submit_tag "BANG!", class:'cool-button' %>
-      <% end %>
 
-    <% else %>
-      <%= form_with(url: "/exercice_try/#{@exercice.id}", method: 'post', local: true, html: { autocomplete: "off" }) do %>
-        <%= text_field_tag :response, '', class:'input-field mr-3', autofocus: true %>
-        <% if @exercice.structure.name == 's_v_io_do' %>
-          <%= text_field_tag :response_2, '', class:'input-field mr-3'%>
-        <% end %>
-        <%= submit_tag "BANG!", class:'cool-button' %>
-      <% end %>
-
-    <% end %>
+    <%= render partial: 'exercices/shared/form', locals: {exercice: @exercice}  %>
 
   </div>
 </div>

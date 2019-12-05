@@ -50,7 +50,7 @@
               <div class="col-2 "> <%= index + 1 %> </div>
               <div class="col-3"> <%= image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </div>
               <div class="col-5 text-left"> <%= user.username %> </div>
-              <div class="col-2"> <%= user.successes_count%>  </div>
+              <div class="col-2"> <%= user.successes_count * 88 %>  </div>
             </div>
           <% end %>
         </div>

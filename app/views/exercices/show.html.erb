@@ -16,7 +16,7 @@
           <p>GOOD JOB!</p>
         </div>
       <% elsif already_tried(current_user, @exercice) %>
-        <p>The answer was:  <%= @exercice.prev_sentence %></p>
+        <p>The answer was:  <%= highlight_solution(@exercice.prev_sentence, @exercice.hide_index) %></p>
         <p>You answered: <%= @answer_one %> <%= "and #{@answer_two}" if @answer_two %> </p>
         <div  class='failure mb-3'>
           <p> Try again, you'll get it right next time!</p>
@@ -38,7 +38,7 @@
     <p class="mt-3 font-weight-bold">The next exercise sentence is:</p>
     <p><%= @exercice.english %></p>
     <p>
-    <%= @exercice.obfus %>
+    <%= hide_answer(@exercice.sentence, @exercice.hide_index) %>
     <% if already_tried(current_user, @exercice) %>
       <%= form_with(url: "/exercice_try/#{@exercice.id}", method: 'post', local: true, html: { autocomplete: "off" }) do %>
         <%= hidden_field_tag sentence: @exercice.sentence  %>

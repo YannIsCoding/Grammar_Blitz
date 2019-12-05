@@ -29,6 +29,6 @@ class User < ApplicationRecord
       user.successes_count = user.successes
       shameful_array << user
     end
-    shameful_array.sort_by(&:successes_count).reverse!
+    shameful_array.select { |user| user.successes.positive? }.sort_by(&:successes_count).reverse!
   end
 end

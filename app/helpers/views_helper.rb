@@ -42,4 +42,20 @@ module ViewsHelper
   def streak_congratulation
     ['Du bist der hammer!', 'Du bist MEGA geil!', 'bärenstark!'].sample
   end
+
+  def hide_answer(sentence, positions)
+    splited_sentence = sentence.split(' ')
+    positions.each do |position|
+      splited_sentence[position.to_i] = splited_sentence[position.to_i].split(//).map! { '_' }.join
+    end
+    splited_sentence.join(' ')
+  end
+
+  def highlight_solution(sentence, positions)
+    splited_sentence = sentence.split(' ')
+    positions.each do |position|
+      splited_sentence[position.to_i] = splited_sentence[position.to_i].upcase
+    end
+    splited_sentence.join(' ')
+  end
 end

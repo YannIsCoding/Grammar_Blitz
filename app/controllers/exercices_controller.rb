@@ -10,16 +10,15 @@ class ExercicesController < ApplicationController
     @exercice.result = false
     params[:response] ? exercice_correction : @exercice.streak = 0
     @exercice.update_attributes SentenceBuilderService.new(@exercice).generate
-    @exercice.save
   end
 
   private
 
   def exercice_correction
     @exercice.result = true
-    if params[:response]&.downcase == @exercice.solution[0]&.downcase &&
-       params[:response_2]&.downcase == @exercice.solution[1]&.downcase ||
-       params[:response].downcase == @exercice.solution.first.downcase && params[:response_2].nil?
+    if text_cleaner(params[:response]) == text_cleaner(@exercice.solution[0]) &&
+       text_cleaner(params[:response_2]) == text_cleaner(@exercice.solution[1]) ||
+       text_cleaner(params[:response]) == text_cleaner(@exercice.solution.first) && params[:response_2].nil?
       create_trial(true)
     else
       create_trial(false)
@@ -32,5 +31,9 @@ class ExercicesController < ApplicationController
   def create_trial(success)
     Trial.create!(user: current_user, exercice: @exercice, success: success)
     @exercice.streak = success ? @exercice.streak + 1 : 0
+  end
+
+  def text_cleaner(answer)
+    answer&.downcase&.strip
   end
 end

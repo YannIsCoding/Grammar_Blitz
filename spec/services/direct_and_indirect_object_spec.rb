@@ -21,8 +21,8 @@ RSpec.describe 'Exercise with direct and indirect object' do
     expect(@result[:english].split(' ').length).to eq(7)
   end
 
-  it 'the obfuscated should be composed of 6 elements' do
-    expect(@result[:obfus].split(' ').length).to eq(6)
+  it 'the obfuscated elements should match the solution' do
+    expect(@result[:sentence].split(' ')[@result[:hide_index][0]]).to eq(@result[:solution][0])
   end
 
   it 'the first article should be dative' do

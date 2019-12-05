@@ -112,7 +112,7 @@ class SentenceBuilderService
     article = fetch_article(g_case, noun.gender)
     verb = fetch_verb(g_case, noun)
     { sentence: "#{subject.value.capitalize} #{verb.value} #{preposition.value} #{article.value} #{noun.value.capitalize}",
-      obfus: "#{subject.value.capitalize} #{verb.value} #{preposition.value} #{article.value.split(//).map! { '_' }.join} #{noun.value.capitalize}",
+      hide_index: [3], #{}"#{subject.value.capitalize} #{verb.value} #{preposition.value} #{article.value.split(//).map! { '_' }.join} #{noun.value.capitalize}",
       english: "#{subject.english.capitalize} #{verb.english} #{preposition.english} #{english_article(article, noun)} #{noun.english}",
       solution: [article.value] }
   end
@@ -123,7 +123,7 @@ class SentenceBuilderService
     article = fetch_article(g_case, noun.gender, negation: false)
     verb = fetch_verb(g_case, noun)
     { sentence: "#{verb.value.capitalize} #{subject.value} #{article.value} #{noun.value.capitalize}?",
-      obfus: "#{verb.value.capitalize} #{subject.value} #{article.value.split(//).map! { '_' }.join} #{noun.value.capitalize}",
+      hide_index: [2], #{}"#{verb.value.capitalize} #{subject.value} #{article.value.split(//).map! { '_' }.join} #{noun.value.capitalize}",
       english: "#{do_or_does(@person_verb)} #{subject.english} #{@person_verb == 'third_singular' ? remove_the_s(verb.english) : verb.english} #{english_article(article, noun)} #{noun.english}?",
       solution: [article.value] }
   end
@@ -137,7 +137,7 @@ class SentenceBuilderService
     do_article = fetch_article('accusative', noun.gender, negation: negation)
     verb = fetch_verb('accu_dati', noun)
     { sentence: "#{subject.value.capitalize} #{verb.value} #{io_article.value} #{io_noun.value} #{do_article.value} #{noun.value.capitalize} #{nicht_or_not(do_article)}",
-      obfus: "#{subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_' }.join} #{noun.value.capitalize} #{nicht_or_not(do_article)}",
+      hide_index: [2, 4], #"#{subject.value.capitalize} #{verb.value} #{io_article.value.split(//).map! { '_' }.join} #{io_noun.value.capitalize} #{do_article.value.split(//).map! { '_' }.join} #{noun.value.capitalize} #{nicht_or_not(do_article)}",
       english: "#{subject.english.capitalize} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(do_article, noun)} #{noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, 'dative')} #{io_noun.english}",
       solution: [io_article.value, do_article.value] }
   end
@@ -145,14 +145,14 @@ class SentenceBuilderService
   def conjug
     verb = Verb.where(person: @person_verb).sample
     { sentence: "#{@subject.value.capitalize} #{verb.value}",
-      obfus: "#{@subject.value.capitalize} #{verb.value.split(//).map! { '_ ' }.join}",
+      hide_index: [1], #{}"#{@subject.value.capitalize} #{verb.value.split(//).map! { '_ ' }.join}",
       english: "#{@subject.english.capitalize} #{verb.english}",
       solution: [verb.value] }
   end
 
   def fetch_sentence(subject, verb, article, noun)
     { sentence: "#{subject.value.capitalize} #{verb.value} #{article.value} #{noun.value.capitalize} #{nicht_or_not(article)}",
-      obfus: "#{subject.value.capitalize} #{verb.value} #{article.value.split(//).map! { '_' }.join} #{noun.value.capitalize} #{nicht_or_not(article)} ",
+      hide_index: [2], #"#{subject.value.capitalize} #{verb.value} #{article.value.split(//).map! { '_' }.join} #{noun.value.capitalize} #{nicht_or_not(article)} ",
       english: "#{subject.english.capitalize} #{article.negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(article, noun)} #{noun.english}",
       solution: [article.value] }
   end

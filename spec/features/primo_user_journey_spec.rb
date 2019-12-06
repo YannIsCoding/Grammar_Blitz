@@ -17,10 +17,10 @@ feature 'first time user tries everything ' do
     create(:article)
     create(:verb_noun_link)
     click_on exercice.name
-    fill_in 'response', with: Article.last.value
+    fill_in 'response_0', with: Article.last.value
     click_on "BANG!"
     expect(page).to have_content 'GOOD JOB!'
-    fill_in 'response', with: 'chunky bacon'
+    fill_in 'response_0', with: 'chunky bacon'
     click_on "BANG!"
     expect(page).to have_content 'Try again'
     exercice_io_do = create(:exercice, :direct_indirect)
@@ -34,11 +34,11 @@ feature 'first time user tries everything ' do
     create(:noun, :feminin_person)
     create(:article, :definite_feminin_dative)
     click_on exercice_io_do.name
-    fill_in 'response', with: 'chunky bacon'
+    fill_in 'response_0', with: 'chunky bacon'
     click_on "BANG!"
     expect(page).to have_content 'Try again'
-    fill_in 'response', with: Article.last.value
-    fill_in 'response_2', with: Article.first.value
+    fill_in 'response_0', with: Article.last.value
+    fill_in 'response_1', with: Article.first.value
     click_on "BANG!"
     expect(page).to have_content 'GOOD JOB!'
     click_on "Profile"

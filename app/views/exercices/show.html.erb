@@ -9,7 +9,7 @@
 
   <div class="exercice-container mx-3">
 
-    <%= render partial: 'exercices/shared/result', locals: {exercice: @exercice}  %>
+    <%= render partial: 'exercices/shared/result', locals: {exercice: @exercice, prev_sentence: @prev_sentence}  %>
 
     <% if show_streak?(@exercice.streak) %>
       <div class="container">

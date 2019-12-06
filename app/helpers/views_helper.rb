@@ -58,4 +58,13 @@ module ViewsHelper
     end
     splited_sentence.join(' ')
   end
+
+  def print_response(responses)
+    message = 'You answered:'
+    responses.each do |response|
+      message << " #{response} -"
+    end
+    message[-2..-1] = ''
+    message
+  end
 end

@@ -112,8 +112,7 @@ class SentenceBuilderService
     verb = fetch_verb(g_case, noun)
     { sentence: subject.to_s.capitalize + " #{verb} #{preposition} #{article} #{noun}",
       hide_index: [3],
-      english: "#{subject.english} #{verb.english} #{preposition.english} #{english_article(article, noun)} #{noun.english}".capitalize,
-      solution: [article.value] }
+      english: "#{subject.english} #{verb.english} #{preposition.english} #{english_article(article, noun)} #{noun.english}".capitalize }
   end
 
   def v_s_do
@@ -123,8 +122,7 @@ class SentenceBuilderService
     verb = fetch_verb(g_case, noun)
     { sentence: verb.to_s.capitalize + " #{subject} #{article} #{noun}?",
       hide_index: [2],
-      english: "#{do_or_does(@person_verb)} #{subject.english} #{@person_verb == 'third_singular' ? remove_the_s(verb.english) : verb.english} #{english_article(article, noun)} #{noun.english}?",
-      solution: [article.value] }
+      english: "#{do_or_does(@person_verb)} #{subject.english} #{@person_verb == 'third_singular' ? remove_the_s(verb.english) : verb.english} #{english_article(article, noun)} #{noun.english}?" }
   end
 
   def s_v_io_do
@@ -137,23 +135,20 @@ class SentenceBuilderService
     verb = fetch_verb('accu_dati', noun)
     { sentence: subject.to_s.capitalize + " #{verb} #{io_article} #{io_noun} #{do_article} #{noun} #{nicht_or_not(do_article)}".capitalize,
       hide_index: [2, 4],
-      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(do_article, noun)} #{noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, 'dative')} #{io_noun.english}".capitalize,
-      solution: [io_article.value, do_article.value] }
+      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(do_article, noun)} #{noun.english} #{io_article.definite ? io_article.english : a_or_an(io_noun, 'dative')} #{io_noun.english}".capitalize}
   end
 
   def conjug
     verb = Verb.where(person: @person_verb).sample
     { sentence: "#{@subject} #{verb}".capitalize,
       hide_index: [1],
-      english: "#{@subject.english} #{verb.english}".capitalize,
-      solution: [verb.value] }
+      english: "#{@subject.english} #{verb.english}".capitalize}
   end
 
   def fetch_sentence(subject, verb, article, noun)
     { sentence: subject.to_s.capitalize + " #{verb} #{article} #{noun} #{nicht_or_not(article)}",
       hide_index: [2],
-      english: "#{subject.english} #{article.negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(article, noun)} #{noun.english}".capitalize,
-      solution: [article.value] }
+      english: "#{subject.english} #{article.negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(article, noun)} #{noun.english}".capitalize}
   end
 
   def english_article(article, noun)

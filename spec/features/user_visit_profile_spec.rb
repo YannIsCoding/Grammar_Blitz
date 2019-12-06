@@ -18,10 +18,9 @@ feature 'User visits profile page' do
   end
 
   scenario 'and sees his/her accurate global ranking' do
-    visit profile_path
-    expect(page).to have_css '.active-user', text: 'Alan'
     competitor = create(:user, :competitor)
-    create(:trial, user: competitor, exercice: @trial.exercice, success: true)
+    create(:trial, user: @user, exercice: @trial.exercice, success: true)
+    create_list(:trial, 2, user: competitor, exercice: @trial.exercice, success: true)
     visit profile_path
     expect(page).to have_css '.ranking-container', text: /leo/
     expect(page).to have_css '.active-user', text: '2'

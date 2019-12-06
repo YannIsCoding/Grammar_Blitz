@@ -73,7 +73,7 @@ noun = [
   %w[Telefone plurial phones object],
   %w[Stuhl masculin chair object],
   %w[Taschen plurial bags object],
-  %w[Waffe feminin gun object],
+  %w[Waffe feminin weapon object],
   %w[stein masculin stone object],
   %w[steine plurial stones object],
   #

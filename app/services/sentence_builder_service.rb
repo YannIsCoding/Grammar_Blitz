@@ -4,7 +4,7 @@ class SentenceBuilderService
     @exercice = exercice
     @vowel = ('aeiou')
     @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative'
-    @person = PersonalPronoun.all.map(&:person).uniq.sample
+    @person = Pronoun.where(kind: 'personal').map(&:person).uniq.sample
     @person_verb = fetch_person_verb(@person)
     @gender = fetch_gender
   end
@@ -57,7 +57,7 @@ class SentenceBuilderService
   end
 
   def fetch_subject
-    personal_pronoun = PersonalPronoun.find_by(person: @person)
+    personal_pronoun = Pronoun.find_by(person: @person, kind: 'personal')
     raise "No personal pronoun found with person #{@person}" if personal_pronoun.nil?
 
     personal_pronoun

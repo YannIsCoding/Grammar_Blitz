@@ -67,11 +67,12 @@ FactoryBot.define do
     end
   end
 
-  factory :personal_pronoun do
+  factory :pronoun, aliases: [:personal_pronoun] do
     value { 'sie' }
     person { 'third_feminin' }
     g_case { 'nominative' }
     english { 'she' }
+    kind { 'personal' }
 
     trait :first_singular_nominative do
       value { 'ich' }

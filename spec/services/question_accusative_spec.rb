@@ -18,10 +18,5 @@ RSpec.describe SentenceBuilderService do
       expect(sentence[2]).to eq(@service.article.value)
       expect(sentence[3]).to eq("#{@service.noun.value.capitalize}?")
     end
-
-    it 'give the correct solution to the exercise' do
-      solution = @result[:solution]
-      expect(solution.first).to eq(@service.article.value)
-    end
   end
 end

@@ -8,7 +8,7 @@ class ExercicesController < ApplicationController
   def show
     @exercice = Exercice.find(params[:id])
     @exercice.result = false
-    params[:response] ? exercice_correction : @exercice.streak = 0
+    params[:response_0] ? exercice_correction : @exercice.streak = 0
     @exercice.update_attributes SentenceBuilderService.new(@exercice).generate
   end
 
@@ -16,16 +16,13 @@ class ExercicesController < ApplicationController
 
   def exercice_correction
     @exercice.result = true
-    if text_cleaner(params[:response]) == text_cleaner(@exercice.solution[0]) &&
-       text_cleaner(params[:response_2]) == text_cleaner(@exercice.solution[1]) ||
-       text_cleaner(params[:response]) == text_cleaner(@exercice.solution.first) && params[:response_2].nil?
+    if RegexMachine.new(response_params).generate =~ @exercice.sentence
       create_trial(true)
     else
       create_trial(false)
-      @answer_one = params[:response]
-      @answer_two = params[:response_2] if params[:response_2]
+      @responses = response_params
     end
-    @exercice.prev_sentence = @exercice.sentence
+    @prev_sentence = @exercice.sentence
   end
 
   def create_trial(success)
@@ -35,5 +32,11 @@ class ExercicesController < ApplicationController
 
   def text_cleaner(answer)
     answer&.downcase&.strip
+  end
+
+  def response_params
+    @exercice.hide_index.map.with_index do |_el, index|
+      params["response_#{index}".to_sym]
+    end
   end
 end

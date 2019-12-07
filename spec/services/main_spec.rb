@@ -48,13 +48,6 @@ RSpec.describe SentenceBuilderService do
       create(:article, :definite_masculin_accusative)
       expect(@article.gender).to eq(@service.gender)
     end
-
-    it 'shoud be the same as the solution' do
-      create(:article, :definite_feminin_dative)
-      create(:article, :definite_masculin_accusative)
-      article = @result[:sentence].split(' ')[2]
-      expect(article).to eq(@result[:solution].first)
-    end
   end
 
   describe 'with s_v_do structure and accusative the verb' do

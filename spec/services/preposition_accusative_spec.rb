@@ -29,11 +29,6 @@ RSpec.describe 'Preposition accusative exercise' do
         expect(@service.instance_eval { noun }).to eq(Noun.first)
       end
     end
-
-    it 'give the correct solution to the exercise' do
-      solution = @result[:solution]
-      expect(solution.first).to eq(@service.article.value)
-    end
   end
 end
 

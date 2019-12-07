@@ -21,10 +21,6 @@ RSpec.describe 'Exercise with direct and indirect object' do
     expect(@result[:english].split(' ').length).to eq(7)
   end
 
-  it 'the obfuscated elements should match the solution' do
-    expect(@result[:sentence].split(' ')[@result[:hide_index][0]]).to eq(@result[:solution][0])
-  end
-
   it 'the first article should be dative' do
     expect(@sentence[2]).to eq('der')
   end
@@ -34,10 +30,5 @@ RSpec.describe 'Exercise with direct and indirect object' do
 
   it 'the second article should be accusative' do
     expect(@sentence[4]).to eq('die')
-  end
-
-  it 'the solution should contains 2 elements' do
-    expect(@result[:solution].class).to eq(Array)
-    expect(@result[:solution].length).to eq(2)
   end
 end

@@ -4,6 +4,7 @@ RSpec.describe SentenceBuilderService do
   before(:each) do
     create(:personal_pronoun, :first_singular_nominative)
     create(:article, :definite_feminin_accusative)
+    create(:pronoun, :possessive_first_person_feminin_accusative)
     # Noun and Verb instances are created by the join table. line bellow
     create(:verb_noun_link)
     @service = SentenceBuilderService.new(build(:exercice))
@@ -43,11 +44,6 @@ RSpec.describe SentenceBuilderService do
       create(:article, :definite_feminin_dative)
       expect(@article.g_case).to eq('accusative')
     end
-
-    it 'shoud have the same gender as define in initialize' do
-      create(:article, :definite_masculin_accusative)
-      expect(@article.gender).to eq(@service.gender)
-    end
   end
 
   describe 'with s_v_do structure and accusative the verb' do
@@ -81,6 +77,8 @@ end
 RSpec.describe SentenceBuilderService do
   it 'noun and article should have the same gender' do
     create(:personal_pronoun, :first_singular_nominative)
+    create(:pronoun, :possessive_first_person_masculin_accusative)
+    create(:pronoun, :possessive_first_person_feminin_accusative)
     create(:article, :definite_feminin_accusative)
     create(:article, :definite_masculin_accusative)
     # Noun and Verb instances are created by the join table. line bellow
@@ -88,8 +86,13 @@ RSpec.describe SentenceBuilderService do
     create(:verb_noun_link, :accusative_masculin)
     @service = SentenceBuilderService.new(build(:exercice))
     20.times do
-      @service.generate
-      expect(@service.noun.gender).to eq(@service.article.gender)
+      result = @service.generate
+      sentence = result[:sentence].split(' ')
+      if ['der', 'meinen'].include?(sentence[2])
+        expect(sentence[3]).to eq('Teppich')
+      elsif ['die', 'meine'].include?(sentence[2])
+        expect(sentence[3]).to eq('Kiste')
+      end
     end
   end
 end

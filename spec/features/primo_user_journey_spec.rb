@@ -14,15 +14,22 @@ feature 'first time user tries everything ' do
     click_on "GET THE FUN"
     # Fill in db with data so exercice can work
     create(:personal_pronoun, :first_singular_nominative)
-    create(:article)
+    possessive_pronoun_accusative = create(:pronoun, :possessive_first_person_feminin_accusative )
+    article_accusative = create(:article)
     create(:verb_noun_link)
     click_on exercice.name
-    fill_in 'response_0', with: Article.last.value
-    click_on "BANG!"
-    expect(page).to have_content 'GOOD JOB!'
-    fill_in 'response_0', with: 'chunky bacon'
-    click_on "BANG!"
-    expect(page).to have_content 'Try again'
+    5.times do
+      if page.has_content? 'my box'
+        fill_in 'response_0', with: possessive_pronoun_accusative
+      else
+        fill_in 'response_0', with: article_accusative
+      end
+      click_on "BANG!"
+      expect(page).to have_content 'GUT GEMACHT!'
+      fill_in 'response_0', with: 'chunky bacon'
+      click_on "BANG!"
+      expect(page).to have_content 'Versuch es nochmal'
+    end
     exercice_io_do = create(:exercice, :direct_indirect)
     click_on "Profile"
     expect(page).to have_content exercice.name
@@ -32,15 +39,27 @@ feature 'first time user tries everything ' do
     kiste = Noun.first
     create(:verb_noun_link, :for_io_do, noun: kiste)
     create(:noun, :feminin_person)
-    create(:article, :definite_feminin_dative)
+    article_dative = create(:article, :definite_feminin_dative)
+    possessive_pronoun_dative = create(:pronoun, :possessive_first_person_feminin_dative)
     click_on exercice_io_do.name
     fill_in 'response_0', with: 'chunky bacon'
     click_on "BANG!"
-    expect(page).to have_content 'Try again'
-    fill_in 'response_0', with: Article.last.value
-    fill_in 'response_1', with: Article.first.value
-    click_on "BANG!"
-    expect(page).to have_content 'GOOD JOB!'
+    expect(page).to have_content 'Versuch es nochmal'
+    5.times do
+      if page.has_content? 'my waitress'
+        fill_in 'response_0', with: possessive_pronoun_dative
+      else
+        fill_in 'response_0', with: article_dative
+      end
+
+      if page.has_content? 'my box'
+        fill_in 'response_1', with: possessive_pronoun_accusative
+      else
+        fill_in 'response_1', with: article_accusative
+      end
+      click_on "BANG!"
+      expect(page).to have_content 'GUT GEMACHT!'
+    end
     click_on "Profile"
     expect(page).to have_content exercice.name
     expect(page).to have_content exercice_io_do.name

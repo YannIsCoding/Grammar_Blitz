@@ -117,6 +117,12 @@ class SentenceBuilderService
     fetch_sentence(subject, verb, determiner, noun, negation)
   end
 
+  def fetch_sentence(subject, verb, determiner, noun, negation)
+    { sentence: subject.to_s.capitalize + " #{verb} #{determiner} #{noun} #{nicht_or_not(determiner, negation)}",
+      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(determiner, noun)} #{noun.english}".capitalize,
+      hide_index: [2] }
+  end
+
   def s_v_do_dative
     s_v_do('dative')
   end
@@ -162,11 +168,6 @@ class SentenceBuilderService
       hide_index: [1] }
   end
 
-  def fetch_sentence(subject, verb, determiner, noun, negation)
-    { sentence: subject.to_s.capitalize + " #{verb} #{determiner} #{noun} #{nicht_or_not(determiner, negation)}",
-      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(determiner, noun)} #{noun.english}".capitalize,
-      hide_index: [2] }
-  end
 
   def english_article(determiner, noun, dative = false)
     if determiner.is_a?(Article)

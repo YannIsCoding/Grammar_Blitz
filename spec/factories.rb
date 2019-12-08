@@ -67,7 +67,7 @@ FactoryBot.define do
     end
   end
 
-  factory :pronoun, aliases: [:personal_pronoun] do
+  factory :pronoun, aliases: [:personal_pronoun,] do
     value { 'sie' }
     person { 'third_feminin' }
     g_case { 'nominative' }
@@ -88,6 +88,50 @@ FactoryBot.define do
     end
 
     trait :third_feminin_nominative do
+    end
+
+    trait :first_person_feminin_dative do
+      value { 'meiner' }
+      person { 'first_person' }
+      g_case { 'dative' }
+      english { 'my' }
+      gender { 'feminin' }
+      kind { 'possessive' }
+    end
+
+    trait :possessive_first_person_feminin_dative do
+      value { 'meiner' }
+      person { 'first_person' }
+      g_case { 'dative' }
+      english { 'my' }
+      gender { 'feminin' }
+      kind { 'possessive' }
+    end
+
+    trait :possessive_first_person_masculin_dative do
+      value { 'meinem' }
+      person { 'first_person' }
+      g_case { 'dative' }
+      english { 'my' }
+      gender { 'masculin' }
+      kind { 'possessive' }
+    end
+
+    trait :possessive_first_person_feminin_accusative do
+      value { 'meine' }
+      person { 'first_person' }
+      g_case { 'accusative' }
+      english { 'my' }
+      gender { 'feminin' }
+      kind { 'possessive' }
+    end
+    trait :possessive_first_person_masculin_accusative do
+      value { 'meinen' }
+      person { 'first_person' }
+      g_case { 'accusative' }
+      english { 'my' }
+      gender { 'masculin' }
+      kind { 'possessive' }
     end
   end
 
@@ -110,14 +154,14 @@ FactoryBot.define do
     trait :definite_feminin_dative do
       value { 'der' }
       g_case { 'dative' }
-      english { '(to/for) the' }
+      english { 'the' }
     end
 
     trait :definite_masculin_dative do
       value { 'dem' }
       gender { 'masculin' }
       g_case { 'dative' }
-      english { '(to/for) the' }
+      english { 'the' }
     end
   end
 

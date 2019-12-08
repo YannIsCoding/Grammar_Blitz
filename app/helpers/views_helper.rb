@@ -46,7 +46,7 @@ module ViewsHelper
   def hide_answer(sentence, positions)
     splited_sentence = sentence.split(' ')
     positions.each do |position|
-      splited_sentence[position.to_i] = splited_sentence[position.to_i].split(//).map! { '_' }.join
+      splited_sentence[position.to_i] = '_____'#splited_sentence[position.to_i].split(//).map! { '_' }.join
     end
     splited_sentence.join(' ')
   end

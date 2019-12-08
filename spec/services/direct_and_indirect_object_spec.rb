@@ -33,10 +33,12 @@ RSpec.describe 'Exercise with direct and indirect object' do
     end
   end
 
-  it 'the first noun should have the same gender as the first article' do
-  end
-
   it 'the second article should be accusative' do
     expect(@sentence[4]).to eq('die')
+  end
+
+  it 'the nouns should be capitalized' do
+    expect(@sentence[3][0].capitalize!).to eq(nil)
+    expect(@sentence[5][0].capitalize!).to eq(nil)
   end
 end

@@ -2,13 +2,13 @@
 
   <% if success(current_user, exercice) %>
     <div  class='success mb-3'>
-      <p>GOOD JOB!</p>
+      <p>GUT GEMACHT!</p>
     </div>
   <% elsif already_tried(current_user, exercice) %>
     <p>The answer was:  <%= highlight_solution(prev_sentence, exercice.hide_index) %></p>
     <p> <%= print_response(@responses) %> </p>
     <div  class='failure mb-3'>
-      <p> Try again, you'll get it right next time!</p>
+      <p> Versuch es nochmal, beim nächsten Mal schaffst du es!</p>
     </div>
   <% end %>
 <% end %>

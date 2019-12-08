@@ -106,7 +106,7 @@ verbs = [
       #
       %w[schenke first_singular schenken accu_dati offer(gift)] << interactive_things,
       %w[schenkst second_singular schenken accu_dati offer(gift)] << interactive_things,
-      %w[schenkt third_singular schenken accu_dati offers(gift)] << interactive_things,
+      %w[schenkt third_singular schenken accu_dati offers] << interactive_things, # removed the 'gift' at the third_singular otherwise screw up with the remove_s method in sentence_builder
       %w[schenken first_plurial schenken accu_dati offer(gift)] << interactive_things,
       %w[schenkt second_plurial schenken accu_dati offer(gift)] << interactive_things,
       %w[schenken third_plurial schenken accu_dati offer(gift)] << interactive_things,

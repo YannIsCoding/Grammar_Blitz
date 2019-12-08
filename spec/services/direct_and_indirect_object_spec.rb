@@ -2,6 +2,10 @@ require 'rails_helper'
 RSpec.describe 'Exercise with direct and indirect object' do
   before(:each) do
     create(:personal_pronoun, :first_singular_nominative)
+    create(:pronoun, :possessive_first_person_masculin_accusative)
+    create(:pronoun, :possessive_first_person_feminin_accusative)
+    create(:pronoun, :possessive_first_person_feminin_dative)
+    create(:pronoun, :possessive_first_person_masculin_dative)
     create(:article, :definite_feminin_accusative)
     create(:article, :definite_feminin_dative)
     create(:article, :definite_masculin_accusative)
@@ -18,11 +22,15 @@ RSpec.describe 'Exercise with direct and indirect object' do
     expect(@sentence.length).to eq(6)
   end
   it 'the english should be composed of 7 elements' do
-    expect(@result[:english].split(' ').length).to eq(7)
+    10.times do
+      expect(@result[:english].split(' ').length).to eq(7)
+    end
   end
 
   it 'the first article should be dative' do
-    expect(@sentence[2]).to eq('der')
+    10.times do
+      expect(['der', 'meiner']).to include(@sentence[2])
+    end
   end
 
   it 'the first noun should have the same gender as the first article' do

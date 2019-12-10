@@ -8,7 +8,7 @@ class RegexMachine
     @answers.each do |answer|
       regex << answer + '[ ].*'
     end
-    regex[-5..-1] = '($|[ ].*)'
+    regex[-5..-1] = '($|[ ]|.*)'
     Regexp.new(regex)
   end
 end

@@ -52,11 +52,12 @@ module ViewsHelper
   end
 
   def highlight_solution(sentence, positions)
-    splited_sentence = sentence.split(' ')
-    positions.each do |position|
-      splited_sentence[position.to_i] = splited_sentence[position.to_i].upcase
-    end
-    splited_sentence.join(' ')
+    # splited_sentence = sentence.split(' ')
+    # positions.each do |position|
+    #   splited_sentence[position.to_i] = splited_sentence[position.to_i].upcase
+    # end
+    # splited_sentence.join(' ')
+    sentence
   end
 
   def print_response(responses)

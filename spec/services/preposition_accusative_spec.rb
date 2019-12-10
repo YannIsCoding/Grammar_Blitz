@@ -15,7 +15,7 @@ RSpec.describe 'Preposition accusative exercise' do
 
   describe 'Exercise with prepositions should' do
     it 'give the element in the right order' do
-      sentence = @result[:sentence].split(' ')
+      sentence = @result[:value].split(' ')
       expect(sentence[0]).to eq(@service.subject.value.capitalize)
       expect(sentence[1]).to eq(Verb.last.value)
       expect(sentence[2]).to eq(Preposition.last.value)

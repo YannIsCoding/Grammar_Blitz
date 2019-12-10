@@ -15,7 +15,7 @@ RSpec.describe 'Exercise with direct and indirect object' do
     create(:verb_noun_link, :for_io_do)
     @service = SentenceBuilderService.new(build(:exercice, :direct_indirect))
     @result = @service.generate
-    @sentence = @result[:sentence].split(' ')
+    @sentence = @result[:value].split(' ')
   end
 
   it 'the sentence should be composed of 6 elements' do

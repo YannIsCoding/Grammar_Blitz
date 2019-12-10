@@ -118,9 +118,8 @@ class SentenceBuilderService
   end
 
   def fetch_sentence(subject, verb, determiner, noun, negation)
-    { sentence: subject.to_s.capitalize + " #{verb} #{determiner} #{noun} #{nicht_or_not(determiner, negation)}",
-      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(determiner, noun)} #{noun.english}".capitalize,
-      hide_index: [2] }
+    { value: subject.to_s.capitalize + " #{verb} #{determiner} #{noun} #{nicht_or_not(determiner, negation)}",
+      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(determiner, noun)} #{noun.english}".capitalize}
   end
 
   def s_v_do_dative
@@ -133,9 +132,8 @@ class SentenceBuilderService
     noun = fetch_noun(@noun_kind)
     determiner = pick_determiner(g_case, noun.gender, negation)
     verb = fetch_verb(g_case, noun)
-    { sentence: subject.to_s.capitalize + " #{verb} #{preposition} #{determiner} #{noun}",
-      english: "#{subject.english} #{verb.english} #{preposition.english} #{english_article(determiner, noun)} #{noun.english}".capitalize,
-      hide_index: [3] }
+    { value: subject.to_s.capitalize + " #{verb} #{preposition} #{determiner} #{noun}",
+      english: "#{subject.english} #{verb.english} #{preposition.english} #{english_article(determiner, noun)} #{noun.english}".capitalize }
   end
 
   def v_s_do
@@ -143,9 +141,8 @@ class SentenceBuilderService
     noun = fetch_noun(@noun_kind)
     determiner = pick_determiner(g_case, noun.gender)
     verb = fetch_verb(g_case, noun)
-    { sentence: verb.to_s.capitalize + " #{subject} #{determiner} #{noun}?",
-      english: "#{do_or_does(@person_verb)} #{subject.english} #{@person_verb == 'third_singular' ? remove_the_s(verb.english) : verb.english} #{english_article(determiner, noun)} #{noun.english}?",
-      hide_index: [2] }
+    { value: verb.to_s.capitalize + " #{subject} #{determiner} #{noun}?",
+      english: "#{do_or_does(@person_verb)} #{subject.english} #{@person_verb == 'third_singular' ? remove_the_s(verb.english) : verb.english} #{english_article(determiner, noun)} #{noun.english}?" }
   end
 
   def s_v_io_do
@@ -156,16 +153,14 @@ class SentenceBuilderService
     noun = fetch_noun('object')
     do_determiner = fetch_article('accusative', noun.gender, negation: negation)
     verb = fetch_verb('accu_dati', noun)
-    { sentence: subject.to_s.capitalize + " #{verb} #{io_determiner} #{io_noun} #{do_determiner} #{noun} #{nicht_or_not(do_determiner, negation)}",
-      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(do_determiner, noun)} #{noun.english} (to/for) #{english_article(io_determiner, io_noun, 'dative')} #{io_noun.english}".capitalize,
-      hide_index: [2, 4] }
+    { value: subject.to_s.capitalize + " #{verb} #{io_determiner} #{io_noun} #{do_determiner} #{noun} #{nicht_or_not(do_determiner, negation)}",
+      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(do_determiner, noun)} #{noun.english} (to/for) #{english_article(io_determiner, io_noun, 'dative')} #{io_noun.english}".capitalize, }
   end
 
   def conjug
     verb = Verb.where(person: @person_verb).sample
-    { sentence: "#{@subject} #{verb}".capitalize,
-      english: "#{@subject.english} #{verb.english}".capitalize,
-      hide_index: [1] }
+    { value: "#{@subject} #{verb}".capitalize,
+      english: "#{@subject.english} #{verb.english}".capitalize }
   end
 
 

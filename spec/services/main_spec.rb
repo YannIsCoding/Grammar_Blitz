@@ -87,7 +87,7 @@ RSpec.describe SentenceBuilderService do
     @service = SentenceBuilderService.new(build(:exercice))
     20.times do
       result = @service.generate
-      sentence = result[:sentence].split(' ')
+      sentence = result[:value].split(' ')
       if ['der', 'meinen'].include?(sentence[2])
         expect(sentence[3]).to eq('Teppich')
       elsif ['die', 'meine'].include?(sentence[2])

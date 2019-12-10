@@ -10,6 +10,7 @@ class ExercicesController < ApplicationController
   def show
     params[:response_0] ? exercice_correction : @sentence.streak = 0 && @result = false
     @sentence.update_attributes SentenceBuilderService.new(@exercice).generate
+    reset_params_response
   end
 
   def setup
@@ -38,7 +39,7 @@ class ExercicesController < ApplicationController
 
   def response_params
     @sentence.word_indexes.map.with_index do |_el, index|
-      params["response_#{index}"]&.strip&.empty? ? 'nothing' : params["response_#{index}"]&.strip
+      params["response_#{index}"]&.strip&.empty? ? 'nothing' : params["response_#{index}"]&.gsub(/[^0-9A-Za-zäÄöÖüÜß]/, '')
     end
   end
 
@@ -52,5 +53,11 @@ class ExercicesController < ApplicationController
 
   def setup_params
     ['subject', 'verb', '_article', 'noun', 'noun2'].map { |el| params[el] if params.key?(el) }.compact
+  end
+
+  def reset_params_response
+    params.each do |param|
+      param.delete if param.key.include('response')
+    end
   end
 end

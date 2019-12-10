@@ -38,7 +38,7 @@ class ExercicesController < ApplicationController
 
   def response_params
     @sentence.word_indexes.map.with_index do |_el, index|
-      params["response_#{index}"]&.strip&.empty? ? 'nothing' : params["response_#{index}"]&.strip
+      params["response_#{index}"]&.strip&.empty? ? 'nothing' : params["response_#{index}"]&.gsub(/[^0-9A-Za-zäÄöÖüÜß]/, '')
     end
   end
 

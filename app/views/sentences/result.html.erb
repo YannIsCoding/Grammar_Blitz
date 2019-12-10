@@ -1,0 +1,13 @@
+<div class='main-container'>
+  <h1><%= @exercice.name %></h1>
+  <p>Your progress so far today:</p>
+  <% percent = percentage_for_day(current_user, @exercice, 1) %>
+
+
+  <div class="progress mb-4 progressbar-container">
+    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= percent %>%</div>
+    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - percent %>%</div>
+  </div>
+
+  <%= link_to 'Try again', exercice_setup_path(@exercice) %>
+</div>

@@ -1,5 +1,5 @@
 <% if already_tried(current_user, sentence.exercice) %>
-  <%= form_with(url: "/exercice_try/#{sentence.exercice.id}", method: 'post', local: true, html: { autocomplete: "off" }) do %>
+  <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off" }) do %>
     <%= hidden_field_tag sentence: sentence.value  %>
     <% sentence.word_indexes.each_with_index do |_value, index| %>
       <%= text_field_tag "response_#{index}".to_sym, '', class:'input-field mr-3', autofocus: index.zero? ? true : false %>
@@ -8,7 +8,7 @@
   <% end %>
 
 <% else %>
-  <%= form_with(url: "/exercice_try/#{sentence.exercice.id}", method: 'post', local: true, html: { autocomplete: "off" }) do %>
+  <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off" }) do %>
     <% sentence.word_indexes.each_with_index do |_value, index| %>
       <%= text_field_tag "response_#{index}".to_sym, '', class:'input-field mr-3', autofocus: index.zero? ? true : false %>
     <% end %>

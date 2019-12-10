@@ -1,0 +1,26 @@
+<div class='main-container'>
+  <h1><%= @exercice.name %></h1>
+  <p>Choose an option! They're optional!</p>
+
+  <%= form_with(url: "/sentences/#{@sentence.id}", method: "patch", local: true, html: { autocomplete: "off" })  do %>
+
+    <%= hidden_field_tag 'exercice_id', "#{@exercice.id}" %>
+
+    <%= check_box_tag(:subject, 0, (true if @sentence.word_indexes.include?(0))) %>
+    <%= label_tag(:subject, "Subject") %>
+
+    <%= check_box_tag(:verb, 1, (true if @sentence.word_indexes.include?(1))) %>
+    <%= label_tag(:verb, "Verb") %>
+
+    <%= check_box_tag(:noun, 3, (true if @sentence.word_indexes.include?(3))) %>
+    <%= label_tag(:noun, "Noun") %>
+
+    <% if @sentence.exercice.structure.name == 's_v_io_do'  %>
+      <%= check_box_tag(:noun2, 5, (true if @sentence.word_indexes.include?(5))) %>
+      <%= label_tag(:noun2, "Noun 2") %>
+    <% end %>
+
+    <%= submit_tag("Los!", class:'cool-button') %>
+  <% end %>
+
+</div>

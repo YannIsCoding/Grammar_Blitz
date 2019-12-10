@@ -1,4 +1,12 @@
 FactoryBot.define do
+  factory :sentence do
+    value { "Ich bin ein Berliner" }
+    english { "I am the president" }
+    word_indexes { [2] }
+    association :user
+    association :exercice
+  end
+
   factory :trial do
     success { false }
     user
@@ -40,6 +48,7 @@ FactoryBot.define do
   factory :exercice do
     name { 'accusative with direct object' }
     description { 'Very interesting description of the exercice goes here' }
+    hide_index { [2] }
     structure
 
     trait :question_accusative do
@@ -64,6 +73,7 @@ FactoryBot.define do
       name { 'Accusative and Dative at the same time!' }
       description { 'direct indirect object' }
       association :structure, name: 's_v_io_do'
+      hide_index { [2, 4] }
     end
   end
 

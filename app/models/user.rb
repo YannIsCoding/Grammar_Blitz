@@ -5,19 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :trials
   has_many :exercices, through: :trials
+  has_many :sentences
 
   validates :username, uniqueness: true
 
   mount_uploader :photo, PhotoUploader
-
-  # def self.wins
-  #   ActiveRecord::Base.connection.execute("select users.*, sum(case when trials.success = true then 1 else 0 end) as successful_trials
-  #                     from users
-  #                     left join trials on users.id = trials.id
-  #                     group by users.id
-  #                     order by successful_trials desc
-  #                     ")
-  # end
 
   def successes
     Trial.where(user: self, success: true).count

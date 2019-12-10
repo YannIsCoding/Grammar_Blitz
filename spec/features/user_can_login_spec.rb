@@ -16,6 +16,7 @@ feature 'user login with warden' do
   scenario 'successfully' do
     exercice = create(:exercice)
     create(:personal_pronoun, :first_singular_nominative)
+    create(:pronoun, :possessive_first_person_feminin_accusative)
     create(:article)
     create(:verb_noun_link)
     user = create(:user)

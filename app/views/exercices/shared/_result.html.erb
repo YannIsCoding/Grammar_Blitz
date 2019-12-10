@@ -1,12 +1,11 @@
-<% if exercice.result %>
-
-  <% if success(current_user, exercice) %>
+<% if result %>
+  <% if success(current_user, sentence.exercice) %>
     <div  class='success mb-3'>
       <p>GUT GEMACHT!</p>
     </div>
-  <% elsif already_tried(current_user, exercice) %>
-    <p>The answer was:  <%= highlight_solution(prev_sentence, exercice.hide_index) %></p>
-    <p> <%= print_response(@responses) %> </p>
+  <% elsif already_tried(current_user, sentence.exercice) %>
+    <p>The answer was:  <%= highlight_solution(prev_sentence, sentence.word_indexes) %></p>
+    <p> <%= print_response(responses) %> </p>
     <div  class='failure mb-3'>
       <p> Versuch es nochmal, beim nächsten Mal schaffst du es!</p>
     </div>

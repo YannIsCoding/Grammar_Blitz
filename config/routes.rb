@@ -6,5 +6,6 @@ Rails.application.routes.draw do
 
   get 'profile', to: 'pages#profile', as: 'profile'
   post 'exercice_try/:id', to: 'exercices#show', as: :exercice_try
+  post 'exercice_setup/:id', to: 'exercices#setup', as: :exercice_setup
 
 end

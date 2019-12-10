@@ -77,7 +77,8 @@
 Exercice.find_or_create_by!(
   name: 'Sentence with direct object and accusative',
   description: 'simple sentence structure with accusative and direct object',
-  structure: Structure.find_by(name: 's_v_do')
+  structure: Structure.find_by(name: 's_v_do'),
+  hide_index: [2]
   )
 # Exercice.find_or_create_by!(
 #   name: 'Sentence with direct object and accusative with preposition',
@@ -87,22 +88,26 @@ Exercice.find_or_create_by!(
 Exercice.find_or_create_by!(
   name: ' Questions with direct object and accusative',
   description: 'Questions with accusative and preposition',
-  structure: Structure.find_by(name: 'v_s_do')
+  structure: Structure.find_by(name: 'v_s_do'),
+  hide_index: [2]
   )
 Exercice.find_or_create_by!(
   name: ' Sentence with direct object and dative',
   description: 'Sentence with dative and preposition',
-  structure: Structure.find_by(name: 's_v_do_dative')
+  structure: Structure.find_by(name: 's_v_do_dative'),
+  hide_index: [2]
   )
 Exercice.find_or_create_by!(
   name: ' Sentence with direct and indirect object ',
   description: 'Sentence with direct and indirect object',
-  structure: Structure.find_by(name: 's_v_io_do')
+  structure: Structure.find_by(name: 's_v_io_do'),
+  hide_index: [2, 4]
   )
 Exercice.find_or_create_by!(
   name: 'Conjugation practice',
   description: 'Practice conjugaison on all sort of verbs',
-  structure: Structure.find_by(name: 'conjug')
+  structure: Structure.find_by(name: 'conjug'),
+  hide_index: [1]
   )
 
 puts 'Root seeds file DONE!'

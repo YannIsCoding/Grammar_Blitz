@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_07_133314) do
+ActiveRecord::Schema.define(version: 2019_12_09_171255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,10 +38,6 @@ ActiveRecord::Schema.define(version: 2019_12_07_133314) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "structure_id"
-    t.string "sentence"
-    t.string "english"
-    t.boolean "result"
-    t.integer "streak"
     t.string "hide_index", array: true
     t.index ["structure_id"], name: "index_exercices_on_structure_id"
   end
@@ -80,6 +76,19 @@ ActiveRecord::Schema.define(version: 2019_12_07_133314) do
     t.string "english"
     t.string "kind"
     t.string "gender"
+  end
+
+  create_table "sentences", force: :cascade do |t|
+    t.string "value"
+    t.string "english"
+    t.integer "word_indexes", array: true
+    t.bigint "user_id"
+    t.bigint "exercice_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "streak"
+    t.index ["exercice_id"], name: "index_sentences_on_exercice_id"
+    t.index ["user_id"], name: "index_sentences_on_user_id"
   end
 
   create_table "structure_elements", force: :cascade do |t|

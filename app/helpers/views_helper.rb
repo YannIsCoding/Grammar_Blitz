@@ -27,6 +27,12 @@ module ViewsHelper
     100
   end
 
+  def percentage_for_batch(sentence)
+    trials = sentence.trials.count
+    successes = sentence.trials.where(success: true).count
+    ((successes / trials.to_f) * 100).to_i
+  end
+
   def active_class(link_path)
     current_page?(link_path) ? "active" : ""
   end

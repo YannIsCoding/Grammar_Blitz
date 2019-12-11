@@ -4,14 +4,19 @@ class SentencesController < ApplicationController
 
   def update
     @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten) if @sentence.session_counter.zero?
-    params[:response_0] ? exercice_correction : @sentence.streak = 0 && @result = false
+    if params[:response_0]
+      exercice_correction
+    else
+      @sentence.update(streak: 0, session_counter: 0)
+      @result = false
+    end
     @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
     @sentence.increment!(:session_counter)
     redirect_to sentence_result_path if @sentence.session_counter > 10
   end
 
-  def result
-  end
+  # def result
+  # end
 
   private
 
@@ -31,7 +36,7 @@ class SentencesController < ApplicationController
   end
 
   def create_trial(success)
-    Trial.create!(user: current_user, exercice: @exercice, success: success)
+    Trial.create!(user: current_user, exercice: @exercice, success: success, sentence: @sentence)
     @sentence.streak = success ? @sentence.streak + 1 : 0
   end
 

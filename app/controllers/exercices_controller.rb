@@ -11,7 +11,7 @@ class ExercicesController < ApplicationController
   def setup
     @exercice = Exercice.find(params[:id])
     @sentence = Sentence.find_or_create_by(user: current_user, exercice: @exercice)
-    @sentence.update(word_indexes: @sentence.exercice.hide_index, session_counter: 0)
+    @sentence.update(word_indexes: @sentence.exercice.hide_index)
     @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
   end
 

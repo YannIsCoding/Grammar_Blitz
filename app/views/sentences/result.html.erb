@@ -1,0 +1,25 @@
+<div class='main-container'>
+  <h1><%= @exercice.name %></h1>
+  <p>Result for this session:</p>
+  <% batch_percent = percentage_for_batch(@sentence) %>
+
+
+  <h6>You had <%= @sentence.trials.where(success: true).count %> correct answers</h6>
+  <div class="progress mb-4 progressbar-container">
+    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= batch_percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= batch_percent %>%</div>
+    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - batch_percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - batch_percent %>%</div>
+  </div>
+
+  <p>Your progress so far today:</p>
+  <% percent = percentage_for_day(current_user, @exercice, 1) %>
+
+  <div class="progress mb-4 progressbar-container">
+    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= percent %>%</div>
+    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - percent %>%</div>
+  </div>
+  <div class="mt-5">
+    <%= link_to 'Change settings', exercice_setup_path(@exercice), class:'cool-button mx-3' %>
+    <%= link_to 'Try again!', sentence_path(@sentence), class:'cool-button mx-3', method:'patch' %>
+    <%= link_to 'Go back to exercises', exercices_path(@exercice), class:'cool-button mx-3' %>
+  </div>
+</div>

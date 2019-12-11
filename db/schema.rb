@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_09_171255) do
+ActiveRecord::Schema.define(version: 2019_12_11_115518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_171255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "streak"
+    t.integer "session_counter"
     t.index ["exercice_id"], name: "index_sentences_on_exercice_id"
     t.index ["user_id"], name: "index_sentences_on_user_id"
   end
@@ -113,7 +114,9 @@ ActiveRecord::Schema.define(version: 2019_12_09_171255) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.bigint "exercice_id"
+    t.bigint "sentence_id"
     t.index ["exercice_id"], name: "index_trials_on_exercice_id"
+    t.index ["sentence_id"], name: "index_trials_on_sentence_id"
     t.index ["user_id"], name: "index_trials_on_user_id"
   end
 
@@ -156,6 +159,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_171255) do
   add_foreign_key "structure_elements", "elements"
   add_foreign_key "structure_elements", "structures"
   add_foreign_key "trials", "exercices"
+  add_foreign_key "trials", "sentences"
   add_foreign_key "trials", "users"
   add_foreign_key "verb_noun_links", "nouns"
   add_foreign_key "verb_noun_links", "verbs"

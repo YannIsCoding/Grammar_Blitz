@@ -1,13 +1,14 @@
 .cool-button {
-    background-color: #FAE1E2;
+    background-color: $pink;
     padding: 15px;
-    box-shadow: 5px 6px 0px 3px #CC4481;
+    box-shadow: 5px 6px 0px 3px $red;
     font-size: 18px;
     font-weight: bold;
-    color: #CC4481;
+    color: $red;
 
     a {
-      color: $blue !important;
+      color: $dark-green !important;
+      text-decoration: none !important;
     }
 
     &:hover {

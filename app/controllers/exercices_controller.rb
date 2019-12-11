@@ -10,9 +10,9 @@ class ExercicesController < ApplicationController
 
   def setup
     @exercice = Exercice.find(params[:id])
-    @sentence = Sentence.find_or_create_by(user: current_user, exercice: @exercice)
-    @sentence.update(word_indexes: @sentence.exercice.hide_index)
-    @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
+    @sentence = Sentence.where(user: current_user, exercice: @exercice).last
+    @sentence = Sentence.new unless @sentence
+    # @sentence.update(word_indexes: Sentence.where(user: current_user, exercice: @exercice).last)
   end
 
   private

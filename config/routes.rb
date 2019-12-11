@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   resources :exercices, only: [:index, :show]
-  resources :sentences, only: [:update]
+  resources :sentences, only: [:new, :create, :update]
 
   get '/why', to: 'pages#why'
   get 'profile', to: 'pages#profile', as: 'profile'

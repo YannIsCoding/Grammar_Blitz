@@ -4,12 +4,14 @@ class SentencesController < ApplicationController
 
   def new
     @exercice = Exercice.find(params[:exercice])
+    last_sentence = Sentence.where(user: current_user, exercice: @exercice).last
     @sentence = Sentence.create!(user: current_user, exercice: @exercice)
-    @sentence.update(word_indexes: Sentence.where(user: current_user, exercice: @execice).last.word_indexes) if Sentence.where(user: current_user, exercice: @execice).last
+    @sentence.update(word_indexes: last_sentence.word_indexes) if last_sentence
     sentence_feeder
   end
 
   def update
+    @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten) if params[:setup]
     sentence_feeder
     redirect_to sentence_result_path if @sentence.session_counter > 10
   end

@@ -5,6 +5,7 @@
   <%= form_with(url: "/sentences/#{@sentence.id}", method: "patch", local: true, html: { autocomplete: "off" })  do %>
 
     <%= hidden_field_tag 'exercice_id', "#{@exercice.id}" %>
+    <%= hidden_field_tag 'setup', "true" %>
 
     <%= check_box_tag(:subject, 0, (true if @sentence.word_indexes.include?(0))) %>
     <%= label_tag(:subject, "Subject") %>

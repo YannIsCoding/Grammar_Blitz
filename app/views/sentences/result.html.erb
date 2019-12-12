@@ -19,7 +19,7 @@
   </div>
   <div class="mt-5">
     <%= link_to 'Change settings', exercice_setup_path(@exercice), class:'cool-button mx-3' %>
-    <%= link_to 'Try again!', sentence_path(@sentence), class:'cool-button mx-3', method:'patch' %>
+    <%= link_to 'Try again!', new_sentence_path(exercice: @exercice), class:'cool-button mx-3', method:'get' %>
     <%= link_to 'Go back to exercises', exercices_path(@exercice), class:'cool-button mx-3' %>
   </div>
 </div>

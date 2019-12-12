@@ -1,26 +1,33 @@
 <div class='main-container'>
   <h1><%= @exercice.name %></h1>
-  <p>Choose an option! They're optional!</p>
 
-  <%= form_with(url: "/sentences/new", method: "get", local: true, html: { autocomplete: "off" })  do %>
+  <% percent = (((@sentence.session_counter - 1) / 10.0) * 100) %>
 
-    <%= hidden_field_tag 'exercice_id', "#{@exercice.id}" %>
+  <div class="progress mb-4">
+    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> </div>
+    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
 
-    <%= check_box_tag(:subject, 0, (true if @sentence.word_indexes.include?(0))) %>
-    <%= label_tag(:subject, "Subject") %>
+  <div class="exercice-container mx-3">
+    <%= render partial: 'sentences/shared/result', locals: {sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result}  %>
 
-    <%= check_box_tag(:verb, 1, (true if @sentence.word_indexes.include?(1))) %>
-    <%= label_tag(:verb, "Verb") %>
-
-    <%= check_box_tag(:noun, 3, (true if @sentence.word_indexes.include?(3))) %>
-    <%= label_tag(:noun, "Noun") %>
-
-    <% if @sentence.exercice.structure.name == 's_v_io_do'  %>
-      <%= check_box_tag(:noun2, 5, (true if @sentence.word_indexes.include?(5))) %>
-      <%= label_tag(:noun2, "Noun 2") %>
+    <% if show_streak?(@sentence.streak) %>
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="streak-message blink-streak p-2">
+            <p> <%= @sentence.streak %>  correct answers in a row! </p>
+            <p class='font-weight-bold'> <%= streak_congratulation %> </p>
+          </div>
+        </div>
+      </div>
     <% end %>
 
-    <%= submit_tag("Los!", class:'cool-button') %>
-  <% end %>
+    <p class="mt-3 font-weight-bold">The next exercise sentence is:</p>
+    <p><%= @sentence.english %></p>
+    <p>
+    <%= hide_answer(@sentence.value, @sentence.word_indexes) %>
 
+    <%= render partial: 'sentences/shared/form', locals: {sentence: @sentence}  %>
+
+  </div>
 </div>

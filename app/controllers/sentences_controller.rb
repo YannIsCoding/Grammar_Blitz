@@ -1,27 +1,16 @@
 class SentencesController < ApplicationController
-  before_action :set_sentence, only: [:update, :result,]
-  before_action :set_exercice, only: [:update, :result, :new]
+  before_action :set_sentence, only: [:update, :result]
+  before_action :set_exercice, only: [:update, :result]
 
   def new
-
-  end
-
-  def create
-    @sentence = Sentence.create!(user: current_user, exercice: @exercice, word_indexes: @exercice.hide_index)
-    @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten) if params[:commit] == 'Los!'
+    @exercice = Exercice.find(params[:exercice])
+    @sentence = Sentence.create!(user: current_user, exercice: @exercice)
     @sentence.update(word_indexes: Sentence.where(user: current_user, exercice: @execice).last.word_indexes) if Sentence.where(user: current_user, exercice: @execice).last
-    redirect_to sentence_path(@sentence)
+    sentence_feeder
   end
 
   def update
-    if params[:response_0]
-      exercice_correction
-    else
-      @sentence.update(streak: 0, session_counter: 0)
-      @result = false
-    end
-    @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
-    @sentence.increment!(:session_counter)
+    sentence_feeder
     redirect_to sentence_result_path if @sentence.session_counter > 10
   end
 
@@ -58,6 +47,18 @@ class SentencesController < ApplicationController
   end
 
   def set_exercice
-    @exercice = Exercice.find(params[:exercice_id])
+    @exercice = @sentence.exercice
   end
+
+  def sentence_feeder
+    if params[:response_0]
+      exercice_correction
+    else
+      @sentence.update(streak: 0, session_counter: 0)
+      @result = false
+    end
+    @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
+    @sentence.increment!(:session_counter)
+  end
+
 end

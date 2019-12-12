@@ -2,7 +2,7 @@
   <h1><%= @exercice.name %></h1>
   <p>Choose an option! They're optional!</p>
 
-  <%= form_with(url: "/sentences/new", method: "get", local: true, html: { autocomplete: "off" })  do %>
+  <%= form_with(url: "/sentences/#{@sentence.id}", method: "patch", local: true, html: { autocomplete: "off" })  do %>
 
     <%= hidden_field_tag 'exercice_id', "#{@exercice.id}" %>
 

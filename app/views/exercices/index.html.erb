@@ -5,6 +5,7 @@
       <div class="row justify-content-center mb-4">
         <div class="empty">
           <%= link_to exercice.name, exercice_setup_path(exercice.id), { :class=>'btn cool-button mx-3' }  %>
+          <%= link_to exercice.name, new_sentence_path(exercice: exercice), { :class=>'btn cool-button mx-3' }  %>
         </div>
       </div>
     <% end %>

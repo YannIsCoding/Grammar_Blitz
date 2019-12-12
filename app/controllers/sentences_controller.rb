@@ -2,21 +2,17 @@ class SentencesController < ApplicationController
   before_action :set_sentence, only: [:update, :result]
   before_action :set_exercice, only: [:update, :result]
 
-  def update
-    @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten) if @sentence.session_counter.zero?
-    if params[:response_0]
-      exercice_correction
-    else
-      @sentence.update(streak: 0, session_counter: 0)
-      @result = false
-    end
-    @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
-    @sentence.increment!(:session_counter)
-    redirect_to sentence_result_path if @sentence.session_counter > 10
+  def new
+    @exercice = Exercice.find(params[:exercice])
+    @sentence = Sentence.create!(user: current_user, exercice: @exercice)
+    @sentence.update(word_indexes: Sentence.where(user: current_user, exercice: @execice).last.word_indexes) if Sentence.where(user: current_user, exercice: @execice).last
+    sentence_feeder
   end
 
-  # def result
-  # end
+  def update
+    sentence_feeder
+    redirect_to sentence_result_path if @sentence.session_counter > 10
+  end
 
   private
 
@@ -53,4 +49,16 @@ class SentencesController < ApplicationController
   def set_exercice
     @exercice = @sentence.exercice
   end
+
+  def sentence_feeder
+    if params[:response_0]
+      exercice_correction
+    else
+      @sentence.update(streak: 0, session_counter: 0)
+      @result = false
+    end
+    @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
+    @sentence.increment!(:session_counter)
+  end
+
 end

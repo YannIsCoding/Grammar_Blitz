@@ -18,3 +18,8 @@
 body{
   color: $dark-green;
 }
+
+a:hover {
+  color: $dark-green !important;
+  text-decoration: none !important;
+}

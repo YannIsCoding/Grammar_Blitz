@@ -4,7 +4,7 @@ pronouns = [%w[ich first_singular nominative I personal],
             %w[er third_masculin nominative he personal],
             %w[sie third_feminin nominative she personal],
             %w[wir first_plurial nominative we personal],
-            %w[ihr second_plurial nominative you personal],
+            %w[ihr second_plurial nominative you(plu.) personal],
             %w[Sie third_plurial nominative they personal],
             ################# DATIVE ##############
             %w[mir first_singular dative me personal],

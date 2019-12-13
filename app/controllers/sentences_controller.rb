@@ -11,16 +11,16 @@ class SentencesController < ApplicationController
   end
 
   def update
-    if params[:exercice_id]
+    if params[:setup]
       @exercice = Exercice.find(params[:exercice_id])
       @sentence = Sentence.create!(user: current_user, exercice: @exercice)
+      @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
     else
       @sentence = Sentence.find(params[:id])
       @exercice = @sentence.exercice
     end
-    if params[:setup]
-      @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
-    end
+    return render :update if params[:response_0]&.empty?
+
     sentence_feeder
     redirect_to sentence_result_path if @sentence.session_counter > 10
   end

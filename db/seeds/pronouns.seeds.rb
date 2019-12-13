@@ -1,3 +1,4 @@
+require 'seed_cleaner'
 pronouns = [%w[ich first_singular nominative I personal],
             %w[du second_singular nominative you personal],
             %w[er third_masculin nominative he personal],
@@ -81,8 +82,8 @@ pronouns = [%w[ich first_singular nominative I personal],
             %w[euren second_plurial dative your possessive(plu.) plurial],
             %w[ihren third_plurial dative their possessive plurial],
   ]
-pronouns.each do |array|
-  Pronoun.find_or_create_by!(
+pronoun_check_array = pronouns.map do |array|
+    Pronoun.find_or_create_by!(
     value: array[0],
     person: array[1],
     g_case: array[2],
@@ -92,5 +93,7 @@ pronouns.each do |array|
       )
 end
 
+puts 'The following nouns were deleted because they were neither found or created:'
+p SeedCleaner.clean(pronoun_check_array, Pronoun)
 
 puts 'Pronouns are seeded!'

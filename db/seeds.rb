@@ -2,15 +2,6 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 
-# User.delete_all
-# Verb.delete_all
-# Noun.delete_all
-# Preposition.delete_all
-# StructureElement.delete_all
-# Element.delete_all
-# Exercice.delete_all
-# Structure.delete_all
-
 # url = "https://www.scienceabc.com/wp-content/uploads/2015/12/alan-turing.jpg"
 # u = User.create!(
 #   email: 'me@me.me',
@@ -19,12 +10,6 @@
 #   )
 # u.remote_photo_url = url
 # u.save
-
-
-
-
-
-
 
 
 # prep = [

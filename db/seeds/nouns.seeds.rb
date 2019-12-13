@@ -1,3 +1,6 @@
+require 'seed_cleaner'
+# include SeedCleaner
+
 noun = [
   %w[freund masculin friend people],
   %w[mann masculin man people],
@@ -112,12 +115,11 @@ noun.each do |array|
       )
 end
 
-delete_array = []
-Noun.all.each do |noun|
-  delete_array << noun.destroy if !nouns_check_array.include?(noun)
-end
+
 
 puts 'The following nouns were deleted because they were neither found or created:'
-p delete_array
+p SeedCleaner.clean(nouns_check_array, Noun)
 
 puts 'Nouns are seeded!'
+
+

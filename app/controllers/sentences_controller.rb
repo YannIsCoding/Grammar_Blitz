@@ -1,6 +1,6 @@
 class SentencesController < ApplicationController
-  before_action :set_sentence, only: [:update, :result]
-  before_action :set_exercice, only: [:update, :result]
+  before_action :set_sentence, only: [:result]
+  before_action :set_exercice, only: [:result]
 
   def new
     @exercice = Exercice.find(params[:exercice])
@@ -11,7 +11,16 @@ class SentencesController < ApplicationController
   end
 
   def update
-    @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten) if params[:setup]
+    if params[:exercice_id]
+      @exercice = Exercice.find(params[:exercice_id])
+      @sentence = Sentence.create!(user: current_user, exercice: @exercice)
+    else
+      @sentence = Sentence.find(params[:id])
+      @exercice = @sentence.exercice
+    end
+    if params[:setup]
+      @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
+    end
     sentence_feeder
     redirect_to sentence_result_path if @sentence.session_counter > 10
   end

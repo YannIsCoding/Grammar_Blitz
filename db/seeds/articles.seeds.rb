@@ -1,4 +1,4 @@
-
+require 'seed_cleaner'
 articles = [
   %w[der masculin nominative true false the],
   %w[die feminin nominative true false the],
@@ -46,7 +46,7 @@ articles = [
   %w[keiner feminin dative false true] << 'a/an',
   ]
 
-articles.each do |article|
+article_check_array = articles.map do |article|
   Article.find_or_create_by!(
     value: article[0],
     gender: article[1],
@@ -56,5 +56,8 @@ articles.each do |article|
     english: article[5]
       )
 end
+
+puts 'The following nouns were deleted because they were neither found or created:'
+p SeedCleaner.clean(article_check_array, Article)
 
 puts 'Articles are seeded!'

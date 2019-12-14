@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   resources :sentences, only: [:new, :create, :update]
 
   get '/why', to: 'pages#why'
-  get '/keyboard', to: 'pages#keyboard'
   get 'profile', to: 'pages#profile', as: 'profile'
   get 'exercice_setup/:id', to: 'exercices#setup', as: :exercice_setup
   get 'sentence_result/:id', to: 'sentences#result', as: :sentence_result

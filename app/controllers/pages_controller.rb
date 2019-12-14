@@ -7,8 +7,4 @@ class PagesController < ApplicationController
     @ranking = User.ranking
     @exercices = @user.exercices.uniq
   end
-
-  def keyboard
-
-  end
 end

@@ -2,7 +2,7 @@
   <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off" }) do %>
     <%= hidden_field_tag sentence: sentence.value  %>
     <% sentence.word_indexes.each_with_index do |_value, index| %>
-      <%= text_field_tag "response_#{index}".to_sym, '', class:'input-field mr-3', autofocus: index.zero? ? true : false %>
+      <%= text_field_tag "response_#{index}".to_sym, '', class:'input-field mr-3 response' %>
     <% end %>
     <%= submit_tag "BANG!", class:'cool-button' %>
   <% end %>
@@ -10,7 +10,7 @@
 <% else %>
   <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off" }) do %>
     <% sentence.word_indexes.each_with_index do |_value, index| %>
-      <%= text_field_tag "response_#{index}".to_sym, '', class:'input-field mr-3', autofocus: index.zero? ? true : false %>
+      <%= text_field_tag "response_#{index}".to_sym, '', class:'input-field mr-3 response'%>
     <% end %>
     <%= submit_tag "BANG!", class:'cool-button' %>
   <% end %>

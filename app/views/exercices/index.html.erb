@@ -6,7 +6,7 @@
         <div class="container w-75 card-exercice">
           <div class="row my-2">
             <div class="col-9 text-left">
-              <%=  exercice.name %>
+              <h6> <%=  exercice.name %> </h6>
             </div>
             <div class="col-3">
               <%= link_to 'Play', new_sentence_path(exercice: exercice), { :class=>'btn cool-button mx-3' }  %>

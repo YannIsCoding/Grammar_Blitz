@@ -18,10 +18,12 @@ gem 'webpacker'
 gem 'cloudinary', '~> 1.9.1'
 gem 'carrierwave', '~> 1.2'
 gem "seedbank"
+gem 'postmark-rails'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'faker'
+  gem 'letter_opener'
 end
 
 group :test do

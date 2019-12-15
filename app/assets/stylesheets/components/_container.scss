@@ -60,5 +60,13 @@
   width: auto;
   background-color: $yellow;
   color: black;
+  overflow: scroll;
+  max-height: 548px;
 }
 
+.ranking-header{
+  background-color: $yellow;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}

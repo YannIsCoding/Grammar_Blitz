@@ -1,15 +1,19 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
+# require 'faker'
 
-# url = "https://www.scienceabc.com/wp-content/uploads/2015/12/alan-turing.jpg"
-# u = User.create!(
-#   email: 'me@me.me',
+# 200.times do
+#   u = User.create!(
+#   email: Faker::Internet.email,
 #   password: '123456',
-#   username: 'Alan'
+#   username: Faker::Name.name
 #   )
-# u.remote_photo_url = url
-# u.save
+#   e = Exercice.last
+#   s = Sentence.create!(user: u, exercice: e)
+#   Trial.create!(user: u, exercice: Exercice.all.sample, sentence: s, success: true)
+# end
+
 
 
 # prep = [

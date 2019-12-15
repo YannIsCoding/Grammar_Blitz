@@ -8,5 +8,16 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 64px;
+  width: 48px;
+}
+
+.navbar-brand{
+  padding: 0px;
+}
+
+
+@media only screen and (max-width: 400px) {
+  .navbar-lewagon .navbar-brand img {
+    width: 30px;
+  }
 }

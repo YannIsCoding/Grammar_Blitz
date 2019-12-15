@@ -22,6 +22,7 @@ gem "seedbank"
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'faker'
+  gem 'letter_opener'
 end
 
 group :test do

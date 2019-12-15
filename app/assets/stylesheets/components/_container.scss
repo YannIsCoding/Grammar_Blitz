@@ -4,6 +4,7 @@
   margin: auto;
   margin-top: 50px;
   padding-bottom: 80px;
+  margin-bottom: 1000px;
 }
 
 .width-500px{
@@ -26,7 +27,7 @@
 }
 
 .input-field{
-  height: 60px;
+  height: 44px;
   font-weight: bold;
   text-align: center;
   border-color: $green;
@@ -42,7 +43,8 @@
 .progressbar-container-profile{
   width: auto;
   margin: auto;
-  height: 56px;
+  height: 36px;
+  margin-top: -15px;
 }
 
 .exercice-container{
@@ -57,7 +59,6 @@
 
 .ranking-container{
   width: auto;
-  box-shadow: 4px 4px 0px 4px $red;
   background-color: $yellow;
   color: black;
 }

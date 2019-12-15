@@ -26,7 +26,7 @@
               <% { 'today' => 1, 'week' => 7, 'all of time' => 10_000 }.each do |key, value| %>
                 <% percent = percentage_for_day(current_user, exer, value)  %>
                 <div class="col-sm">
-                  <h6><%= key %>:</h6>
+                  <p><%= key %>:</p>
                   <div class="progress mb-4 progressbar-container-profile">
                     <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= percent %>%</div>
                     <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - percent %>%</div>

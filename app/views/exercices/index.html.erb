@@ -3,20 +3,22 @@
   <div class="container">
     <% @exercices.each do |exercice| %>
       <div class="row mb-4">
-        <div class="container w-75 card-exercice">
+        <div class="container card-exercice">
           <div class="row my-2">
-            <div class="col-9 text-left">
+            <div class="col-md-auto text-left">
               <h6> <%=  exercice.name %> </h6>
-            </div>
-            <div class="col-3">
-              <%= link_to 'Play', new_sentence_path(exercice: exercice), { :class=>'btn cool-button mx-3' }  %>
             </div>
           </div>
           <div class="row my-2">
             <div class="col-9 text-left">
               <%= exercice.description %>
             </div>
-            <div class="col-3">
+          </div>
+          <div class="row my-2 justify-content-end">
+            <div class="col-6 col-md-2">
+              <%= link_to 'Play', new_sentence_path(exercice: exercice), { :class=>'btn cool-button mx-3' }  %>
+            </div>
+            <div class="col-6 col-md-2">
               <%= link_to 'Settings', exercice_setup_path(exercice.id), { :class=>'btn cool-button mx-3' }  %>
             </div>
           </div>

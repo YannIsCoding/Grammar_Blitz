@@ -26,7 +26,7 @@
 }
 
 .input-field{
-  height: 60px;
+  height: 44px;
   font-weight: bold;
   text-align: center;
   border-color: $green;
@@ -42,7 +42,8 @@
 .progressbar-container-profile{
   width: auto;
   margin: auto;
-  height: 56px;
+  height: 36px;
+  margin-top: -15px;
 }
 
 .exercice-container{
@@ -57,7 +58,6 @@
 
 .ranking-container{
   width: auto;
-  box-shadow: 4px 4px 0px 4px $red;
   background-color: $yellow;
   color: black;
 }

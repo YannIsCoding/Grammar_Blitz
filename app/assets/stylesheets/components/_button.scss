@@ -10,10 +10,6 @@
       color: $dark-green !important;
       text-decoration: none !important;
     }
-
-    &:hover {
-
-    }
 }
 
 
@@ -47,4 +43,20 @@
     border: 4px solid $yellow;
     color: blue;
   }
+}
+
+
+.no-singin-button{
+      background-color: #dee2e6;
+      padding: 15px;
+      // box-shadow: 5px 6px 0px 3px $red;
+      font-size: 18px;
+      font-weight: bold;
+      color: #6c757d;
+
+      a {
+        color: $dark-green !important;
+        text-decoration: none !important;
+      }
+
 }

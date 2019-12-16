@@ -4,10 +4,11 @@
       <p>GUT GEMACHT!</p>
     </div>
   <% elsif already_tried(current_user, sentence.exercice) %>
-    <p>The answer was:  <%= highlight_solution(prev_sentence, sentence.word_indexes) %></p>
-    <p> <%= print_response(responses) %> </p>
-    <div  class='failure mb-3'>
-      <p> Versuch es nochmal, beim nächsten Mal schaffst du es!</p>
+    <p class="result-failure"> <%= highlight_solution(prev_sentence, sentence.word_indexes) %></p>
+    <div class="container">
+      <div class="row justify-content-center no-gutters result-failure">
+        <p class="py-1">You've answered:</p> <p class="failure py-1 px-3"><%= print_response(responses) %> </p>
+      </div>
     </div>
   <% end %>
 <% end %>

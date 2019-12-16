@@ -13,6 +13,23 @@ module ViewsHelper
     Trial.where(exercice: exercice, user: user).last&.success
   end
 
+  def global_success_for(user, number_days)
+    time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
+    Trial.where(user: user, success: true, created_at: time_frame).count
+  end
+
+  def global_precentage_for(user, number_days)
+    time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
+    trials = Trial.where(user: user,
+                         created_at: time_frame).count
+    successes = Trial.where(user: user,
+                            success: true,
+                            created_at: time_frame).count
+    return ((successes / trials.to_f) * 100).to_i if trials.positive?
+
+    100
+  end
+
   def percentage_for_day(user, exercice, number_days)
     time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
     trials = Trial.where(user: user,

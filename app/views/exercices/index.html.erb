@@ -1,29 +1,52 @@
 <div class='main-container'>
   <h1 class='mb-5'>Pick up your practice!</h1>
   <div class="container">
-    <% @exercices.each do |exercice| %>
-      <div class="row mb-4">
-        <div class="container card-exercice">
-          <div class="row my-2">
-            <div class="col-md-auto text-left">
-              <h6> <%=  exercice.name %> </h6>
-            </div>
-          </div>
-          <div class="row my-2">
-            <div class="col-9 text-left">
-              <%= exercice.description %>
-            </div>
-          </div>
-          <div class="row my-2 justify-content-end">
-            <div class="col-6 col-md-2">
-              <%= link_to 'Play', new_sentence_path(exercice: exercice), { :class=>'btn cool-button mx-3' }  %>
-            </div>
-            <div class="col-6 col-md-2">
-              <%= link_to 'Settings', exercice_setup_path(exercice.id), { :class=>'btn cool-button mx-3' }  %>
-            </div>
+    <div class="row justify-content-center">
+      <% if current_user %>
+        <div class="col-3">
+          <div class="profile-card p-3 border border-dark">
+          <%= image_tag profile_picture(current_user), class: "avatar" %>
+          <h4> <%= current_user.username %> </h4>
+
+          <p> Total number of correct answers today:
+          <%= global_success_for(current_user, 1) %> </p>
+
+          <p>  Correct answer today
+          <%= global_precentage_for(current_user, 1) %>%</p>
+
+          <p>Correct answers all of time:
+           <%= global_success_for(current_user, 10000) %> </p>
           </div>
         </div>
+      <% end %>
+      <div class="col-9">
+        <div class="container">
+          <% @exercices.each do |exercice| %>
+            <div class="row mb-4">
+              <div class="container card-exercice">
+                <div class="row my-2">
+                  <div class="col-md-auto text-left">
+                    <h6> <%=  exercice.name %> </h6>
+                  </div>
+                </div>
+                <div class="row my-2">
+                  <div class="col-9 text-left">
+                    <%= exercice.description %>
+                  </div>
+                </div>
+                <div class="row my-2 justify-content-end">
+                  <div class="col-6 col-md-3">
+                    <%= link_to 'Settings', exercice_setup_path(exercice.id), { :class=>'btn cool-button mx-3' }  %>
+                  </div>
+                  <div class="col-6 col-md-3">
+                    <%= link_to 'Play', new_sentence_path(exercice: exercice), { :class=>'btn cool-button mx-3' }  %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>

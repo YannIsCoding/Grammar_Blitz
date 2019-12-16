@@ -84,7 +84,7 @@ module ViewsHelper
   end
 
   def print_response(responses)
-    message = 'You answered:'
+    message = ''
     responses.each do |response|
       message << " #{response} -"
     end

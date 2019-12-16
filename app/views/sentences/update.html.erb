@@ -1,11 +1,11 @@
-<div class='main-container'>
-  <h1><%= @exercice.name %></h1>
+<div class='main-container main-container-exercice'>
+  <h3><%= @exercice.name %></h3>
 
   <% percent = (((@sentence.session_counter - 1) / 10.0) * 100) %>
 
   <div class="progress mb-4 mx-3">
-    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> </div>
-    <div class="progress-bar bg-danger" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> </div>
+    <div class="progress-bar bg-info" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"></div>
   </div>
 
   <div class="exercice-container mx-3">
@@ -22,10 +22,8 @@
       </div>
     <% end %>
 
-    <p class="mt-3 font-weight-bold">The next exercise sentence is:</p>
+    <p class="sentence"> <%= hide_answer(@sentence.value, @sentence.word_indexes) %> </p>
     <p><%= @sentence.english %></p>
-    <p>
-    <%= hide_answer(@sentence.value, @sentence.word_indexes) %>
 
     <%= render partial: 'sentences/shared/form', locals: {sentence: @sentence}  %>
 

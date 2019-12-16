@@ -9,6 +9,5 @@ Rails.application.routes.draw do
   get 'profile', to: 'pages#profile', as: 'profile'
   get 'exercice_setup/:id', to: 'exercices#setup', as: :exercice_setup
   get 'sentence_result/:id', to: 'sentences#result', as: :sentence_result
-  get 'trial', to: 'sentences#trial', as: :trial
 
 end

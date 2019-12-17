@@ -5,6 +5,21 @@
   margin-top: 50px;
   padding-bottom: 80px;
 }
+
+.homepage-container{
+  text-align: center;
+  width: 64%;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+@media only screen and (max-width: 375px){
+  .homepage-container{
+    width: 100%;
+    // margin: 0 auto;
+    // padding-bottom: 80px;
+  }
+}
 .go-back{
   text-align: left;
 }

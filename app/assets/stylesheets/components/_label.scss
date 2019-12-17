@@ -60,3 +60,59 @@
   color: $red;
   font-size: 30px;
 }
+
+
+
+@media only screen and (max-width: 767px){
+  .grammar-god img{
+    // max-width: 100vw;
+  }
+}
+
+  .grammar-god{
+    position: relative;
+    text-align: center;
+    margin-left: -33.33%;
+    margin-right: -33.33%;
+  }
+@media only screen and (max-width: 376px){
+  .grammar-god{
+    margin-left: -4.33%;
+    margin-right: -4.33%;
+    margin-bottom: 4rem;
+  }
+}
+
+.grammar-god img{
+  width: 100%
+}
+.over {
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 84%;
+  width: 76%;
+  font-size: 2.5vw;
+}
+
+@media only screen and (max-width: 376px){
+  .over{
+    font-size: 4.5vw;
+    border: 3px solid $green;
+    margin-bottom: 30px;
+    top: 119%;
+  }
+}
+
+// @media only screen and (max-width: 767px){
+//   .over {
+//     left: 9px;
+//     top: 187px;
+//     font-size: 13px;
+//     max-width: 358px;
+//   }
+// }
+
+

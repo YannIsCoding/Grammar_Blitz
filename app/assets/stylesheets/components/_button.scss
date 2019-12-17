@@ -32,8 +32,13 @@
   font-weight: bold;
   color: $green ;
   text-decoration: underline;
+  display: block;
 }
-
+@media only screen and (min-width: 1000px){
+  .home-button{
+  font-size: 34px;
+  }
+}
 .index-button{
   background: $light-green;
   text-align: center;

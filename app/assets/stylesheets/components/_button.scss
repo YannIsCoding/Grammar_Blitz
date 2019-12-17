@@ -9,7 +9,20 @@
       color: $green !important;
       text-decoration: none !important;
     }
+}
 
+.green-button {
+  background-color: $light-green;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  color: $green;
+  border: 0px solid $pink;
+  &:hover {
+    transform: scale(1.9);
+    text-decoration: none !important;
+    color: $green !important;
+  }
 }
 
 .home-button{

@@ -17,32 +17,28 @@
 
 .active-user{
   font-weight: bold;
-  color: white;
-  background-color: $red;
+  color: black;
+  background-color: $yellow;
   padding-right: 8px;
 }
 
 .streak-message{
-  background-color: $green;
+  background-color: $light-green;
   transform: rotate(20deg);
-  border: 3px solid $red;
+  border: 3px solid $pink;
 }
 
 
 .blink-streak {
-  animation: blinker 0.8s linear infinite;
+  animation: blinker 1s linear infinite;
 }
 
 @keyframes blinker {
-  0% {
-    opacity: 0.2;
-    background: $red;
-    text-align: center;
-    padding: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    border: 4px solid $yellow;
-    color: blue;
+  50% {
+    opacity: 0.5;
+    background: $pink;
+    border: 3px solid $light-green;
+    color: black;
   }
 }
 
@@ -58,4 +54,9 @@
 .result-failure{
   font-size: 18px;
   font-weight: bolder;
+}
+
+.rorocket{
+  color: $red;
+  font-size: 30px;
 }

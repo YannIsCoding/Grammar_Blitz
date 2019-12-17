@@ -1,9 +1,29 @@
-.signup-success input[type="submit"],
-.signup-success input[type="submit"]:active,
-.signup-success input[type="submit"]:focus {
-  width: 80%;
-  background: transparent;
-  color: #00AA66;
-  border-color: #00AA66;
-  border-style: solid;
+// .signup-success input[type="submit"],
+// .signup-success input[type="submit"]:active,
+// .signup-success input[type="submit"]:focus {
+//   width: 80%;
+//   background: transparent;
+//   color: #00AA66;
+//   border-color: #00AA66;
+//   border-style: solid;
+// }
+.no-display{
+  display: none;
+}
+
+
+.form-label{
+  background: $light-yellow;
+  padding: 20px;
+  width: 20%;
+  flex: 0 0 30%;
+  text-align: center;
+  color:  #FD1015;
+}
+
+.active-form{
+  background:  #FFD54D;
+  color:  white;
+  opacity: 1;
+  font-weight: bold;
 }

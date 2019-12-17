@@ -91,4 +91,8 @@ module ViewsHelper
     message[-2..-1] = ''
     message
   end
+
+  def active_tag(word_indexes, position)
+    word_indexes.include?(position)
+  end
 end

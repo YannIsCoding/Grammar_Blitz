@@ -6,6 +6,24 @@
   padding-bottom: 80px;
 }
 
+.homepage-container{
+  text-align: center;
+  width: 64%;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
+
+@media only screen and (max-width: 375px){
+  .homepage-container{
+    width: 100%;
+    // margin: 0 auto;
+    // padding-bottom: 80px;
+  }
+}
+.go-back{
+  text-align: left;
+}
+
 .main-container-exercice{
   max-width: 700px;
 }
@@ -32,7 +50,6 @@
   height: 44px;
   font-weight: bold;
   text-align: center;
-  // border-color: $green;
   border: 3px solid $green;
   background-color: $light-green;
   &:focus{
@@ -54,7 +71,6 @@
 }
 
 .exercice-container{
-  // background: white;
   border: 3px solid $pink;
   height: auto;
   padding: 24px;
@@ -66,15 +82,21 @@
 
 .ranking-container{
   width: auto;
-  background-color: $yellow;
+  background-color: $light-green;
   color: black;
   overflow: scroll;
   max-height: 548px;
 }
 
 .ranking-header{
-  background-color: $yellow;
+  background-color: $light-green;
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+.result-container{
+  border: 3px solid $pink;
+  max-width: 600px;
+  margin:auto;
 }

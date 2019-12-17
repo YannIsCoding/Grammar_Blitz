@@ -1,12 +1,15 @@
-<div class='main-container container'>
+<div class='homepage-container container'>
 
-  <div class="container mb-5">
-    <h1>
-        <%= image_tag "https://res.cloudinary.com/duw2hqlo3/image/upload/v1576435064/grammar_blitz_full_logo_fjjnmv.png", alt: "grammar-blitz logo", id:"logo-home" %>
-    </h1>
+  <%= image_tag "https://res.cloudinary.com/duw2hqlo3/image/upload/v1576435064/grammar_blitz_full_logo_fjjnmv.png", alt: "grammar-blitz logo", id:"logo-home"%>
+
+  <div class="grammar-god">
+    <%= image_tag "https://res.cloudinary.com/duw2hqlo3/image/upload/v1576600682/output_crop_ivm9fy.gif", alt: "German God of Grammar"%>
+    <h3 class="over px-3">Practice you cases with 10.000+ sentences and join the German Gods of Grammar.</h3>
   </div>
-  <h3 class="mb-5">Practice you cases with 10.000+ sentences and join the club of the German grammar God.</h3>
-  <%= link_to "LET'S GET THE FUN STARTED!",  exercices_path, {:class=>'home-button'} %>
-  <h2 class='mt-5 mb-3'>Or find out</h2>
-  <%= link_to "WHAT IS GRAMMAR BLITZ?!",  why_path, {:class=>'cool-button'} %>
+
+  <div class="home-content py-5">
+    <%= link_to "LET'S GET THE FUN STARTED!",  exercices_path, {:class=>'home-button'} %>
+    <h2 class='mt-5 mb-3'>Or find out</h2>
+    <%= link_to "WHAT IS GRAMMAR BLITZ?!",  why_path, {:class=>'cool-button'} %>
+  </div>
 </div>

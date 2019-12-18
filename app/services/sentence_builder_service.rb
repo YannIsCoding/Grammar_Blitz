@@ -57,8 +57,8 @@ class SentenceBuilderService
   end
 
   def fetch_subject
-    personal_pronoun = Pronoun.find_by(person: @person, kind: 'personal')
-    raise "No personal pronoun found with person #{@person}" if personal_pronoun.nil?
+    personal_pronoun = Pronoun.find_by(person: @person, kind: 'personal', g_case: 'nominative')
+    raise "No personal pronoun found with person #{@person} kind personal nominative" if personal_pronoun.nil?
 
     personal_pronoun
   end

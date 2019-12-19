@@ -65,7 +65,7 @@
 
 Exercice.find_or_create_by!(
   name: 'Sentence with direct object and accusative',
-  description: 'simple sentence structure with accusative and direct object',
+  description: 'Practice your German grammar with subject verb and accusative direct object. Practice with different determiner, definite and definite Article, possesive pronouns and negation.',
   structure: Structure.find_by(name: 's_v_do'),
   hide_index: [2]
   )

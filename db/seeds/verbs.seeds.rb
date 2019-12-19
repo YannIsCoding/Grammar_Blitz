@@ -4,6 +4,7 @@ percievable_things = (seeable_things + hearable_things).uniq
 interactive_things = %w[object vehicule animal food building]
 transportable_things = %w[object vehicule animal food]
 knowable_things = %w[people place object]
+makable_things = %w[object food]
 
 verbs = [
       %w[bin first_singular sein auxiliary am] << %w[people],
@@ -83,6 +84,13 @@ verbs = [
       %w[kauft second_plurial kaufen accu_dati buy] << interactive_things,
       %w[kaufen third_plurial kaufen accu_dati buy] << interactive_things,
       #
+      %w[verkaufe first_singular verkaufen accu_dati sell] << interactive_things,
+      %w[verkaufst second_singular verkaufen accu_dati sell] << interactive_things,
+      %w[verkauft third_singular verkaufen accu_dati sells] << interactive_things,
+      %w[verkaufen first_plurial verkaufen accu_dati sell] << interactive_things,
+      %w[verkauft second_plurial verkaufen accu_dati sell] << interactive_things,
+      %w[verkaufen third_plurial verkaufen accu_dati sell] << interactive_things,
+      #
       %w[gebe first_singular geben accu_dati give] << interactive_things,
       %w[gibst second_singular geben accu_dati give] << interactive_things,
       %w[gibt third_singular geben accu_dati gives] << interactive_things,
@@ -117,6 +125,34 @@ verbs = [
       %w[zeigen first_plurial zeigen accu_dati show] << seeable_things,
       %w[zeigt second_plurial zeigen accu_dati show] << seeable_things,
       %w[zeigen third_plurial zeigen accu_dati show] << seeable_things,
+      #
+      %w[mache first_singular machen accu_dati make] << makable_things,
+      %w[machst second_singular machen accu_dati make] << makable_things,
+      %w[macht third_singular machen accu_dati makes] << makable_things,
+      %w[machen first_plurial machen accu_dati make] << makable_things,
+      %w[macht second_plurial machen accu_dati make] << makable_things,
+      %w[machen third_plurial machen accu_dati make] << makable_things,
+      #
+      %w[bestelle first_singular bestellen accu_dati order] << ['object'],
+      %w[bestellst second_singular bestellen accu_dati order] << ['object'],
+      %w[bestellt third_singular bestellen accu_dati orders] << ['object'],
+      %w[bestellen first_plurial bestellen accu_dati order] << ['object'],
+      %w[bestellt second_plurial bestellen accu_dati order] << ['object'],
+      %w[bestellen third_plurial bestellen accu_dati order] << ['object'],
+      #
+      %w[koche first_singular kochen accu_dati cook] << ['object'],
+      %w[kochst second_singular kochen accu_dati cook] << ['object'],
+      %w[kocht third_singular kochen accu_dati cooks] << ['object'],
+      %w[kochen first_plurial kochen accu_dati cook] << ['object'],
+      %w[kocht second_plurial kochen accu_dati cook] << ['object'],
+      %w[kochen third_plurial kochen accu_dati cook] << ['object'],
+      #
+      %w[leihe first_singular leihen accu_dati lend] << ['object'],
+      %w[leihst second_singular leihen accu_dati lend] << ['object'],
+      %w[leiht third_singular leihen accu_dati lends] << ['object'],
+      %w[leihen first_plurial leihen accu_dati lend] << ['object'],
+      %w[leiht second_plurial leihen accu_dati lend] << ['object'],
+      %w[leihen third_plurial leihen accu_dati lend] << ['object'],
      ]
 
 verbs_check_array = []

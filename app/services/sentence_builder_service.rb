@@ -154,7 +154,7 @@ class SentenceBuilderService
     do_determiner = fetch_article('accusative', noun.gender, negation: negation)
     verb = fetch_verb('accu_dati', noun)
     { value: subject.to_s.capitalize + " #{verb} #{io_determiner} #{io_noun} #{do_determiner} #{noun} #{nicht_or_not(do_determiner, negation)}",
-      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(do_determiner, noun)} #{noun.english} (to/for) #{english_article(io_determiner, io_noun, 'dative')} #{io_noun.english}".capitalize, }
+      english: "#{subject.english} #{negation ? dont_or_doesnt(@person_verb, verb) : verb.english} #{english_article(do_determiner, noun)} #{noun.english} #{english_article(io_determiner, io_noun, 'dative')} #{io_noun.english}".capitalize, }
   end
 
   def conjug

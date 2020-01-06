@@ -56,6 +56,13 @@ verbs = [
       %w[trinkt second_plurial trinken accusative drink] << ['drink'],
       %w[trinken third_plurial trinken accusative drink] << ['drink'],
       #
+      %w[lese first_singular lesen accusative read] << ['read'],
+      %w[liest second_singular lesen accusative read] << ['read'],
+      %w[liest third_singular lesen accusative reads] << ['read'],
+      %w[lesen first_plurial lesen accusative read] << ['read'],
+      %w[lest second_plurial lesen accusative read] << ['read'],
+      %w[lesen third_plurial lesen accusative read] << ['read'],
+      #
       %w[antworte first_singular antworten dative answer] << %w[people],
       %w[antwortest second_singular antworten dative answer] << %w[people],
       %w[antwortet third_singular antworten dative answers] << %w[people],

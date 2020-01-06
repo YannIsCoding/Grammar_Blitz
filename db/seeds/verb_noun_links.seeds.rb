@@ -12,12 +12,7 @@ after :nouns, :verbs do
     end
   end
 
-  # if check_array.length != VerbNounLink.all.length
-  #   puts '################# WARNING ##########################'
-  #   puts 'The verb_noun_links table contains a different number of entry then the check array!'
-  #   puts "Table contains #{VerbNounLinks.length} entries"
-  #   puts "check_array contains #{check_array.length} entries"
-  # end
+p 'Verb_noun_links created'
 
   puts 'The following nouns were deleted because they were neither found or created:'
   p SeedCleaner.clean(check_array, VerbNounLink)

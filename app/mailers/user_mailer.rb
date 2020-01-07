@@ -10,4 +10,5 @@ class UserMailer < ApplicationMailer
     @user = user
     mail to: user.email, subject: 'Welcome to Grammar Blitz!'
   end
+
 end

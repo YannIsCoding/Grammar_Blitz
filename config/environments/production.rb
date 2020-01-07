@@ -73,7 +73,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method     = :smtp
   # config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }
-  config.action_mailer.default_url_options = { host: "www.grammar-blitz.fun" }
+  config.action_mailer.default_url_options = { host: "http://www.grammar-blitz.fun" }
 
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

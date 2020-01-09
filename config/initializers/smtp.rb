@@ -1,9 +1,10 @@
 ActionMailer::Base.smtp_settings = {
-  domain:        'grammar-blitz.fun',
-  address:        "smtp.sendgrid.net",
-  port:            465,
-  user_name:      'TM2DtlBvSF-mfoM3ucQacQ',
+  from:           'moinmoin@grammar-blitz.fun',
+  user_name:      'apikey',
   password:       ENV['SENDGRID_API_KEY'],
-  authentication: :login,
+  domain:         'grammar-blitz.fun',
+  address:        "smtp.sendgrid.net",
+  port:            587,
+  authentication: :plain,
   enable_starttls_auto: true
 }

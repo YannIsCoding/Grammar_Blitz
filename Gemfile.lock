@@ -107,11 +107,6 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-    json (2.3.0)
-    launchy (2.4.3)
-      addressable (~> 2.3)
-    letter_opener (1.7.0)
-      launchy (~> 2.2)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -137,11 +132,6 @@ GEM
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
     pg (0.21.0)
-    postmark (1.15.0)
-      json
-    postmark-rails (0.19.0)
-      actionmailer (>= 3.0.0)
-      postmark (~> 1.15.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -213,7 +203,6 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
-    ruby_http_client (3.3.0)
     sassc (2.2.1)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -224,8 +213,6 @@ GEM
       tilt
     seedbank (0.5.0)
       rake (>= 10.0)
-    sendgrid-ruby (6.0.1)
-      ruby_http_client (~> 3.3.0)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
     simple_form (5.0.1)
@@ -285,10 +272,9 @@ DEPENDENCIES
   faker
   font-awesome-sass (~> 5.6.1)
   jbuilder (~> 2.0)
-  letter_opener
   listen (~> 3.0.5)
+  mail
   pg (~> 0.21)
-  postmark-rails
   pry-byebug
   pry-rails
   puma
@@ -297,7 +283,6 @@ DEPENDENCIES
   rspec-rails (~> 3.8)
   sassc-rails
   seedbank
-  sendgrid-ruby
   shoulda-matchers
   simple_form
   spring

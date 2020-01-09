@@ -63,40 +63,40 @@
 #     )
 # end
 
-Exercice.find_or_create_by!(
-  name: 'Sentence with direct object and accusative',
-  description: 'Practice your German grammar with subject verb and accusative direct object. Practice with different determiner, definite and definite Article, possesive pronouns and negation.',
-  structure: Structure.find_by(name: 's_v_do'),
-  hide_index: [2]
-  )
+# Exercice.find_or_create_by!(
+#   name: 'Sentence with direct object and accusative',
+#   description: 'Practice your German grammar with subject verb and accusative direct object. Practice with different determiner, definite and definite Article, possesive pronouns and negation.',
+#   structure: Structure.find_by(name: 's_v_do'),
+#   hide_index: [2]
+#   )
 # Exercice.find_or_create_by!(
 #   name: 'Sentence with direct object and accusative with preposition',
 #   description: 'simple sentence structure with accusative and preposition',
 #   structure: Structure.find_by(name: 's_v_prep_do')
 #   )
-Exercice.find_or_create_by!(
-  name: ' Questions with direct object and accusative',
-  description: 'Questions with accusative and preposition',
-  structure: Structure.find_by(name: 'v_s_do'),
-  hide_index: [2]
-  )
-Exercice.find_or_create_by!(
-  name: ' Sentence with direct object and dative',
-  description: 'Sentence with dative and preposition',
-  structure: Structure.find_by(name: 's_v_do_dative'),
-  hide_index: [2]
-  )
-Exercice.find_or_create_by!(
-  name: ' Sentence with direct and indirect object ',
-  description: 'Sentence with direct and indirect object',
-  structure: Structure.find_by(name: 's_v_io_do'),
-  hide_index: [2, 4]
-  )
-Exercice.find_or_create_by!(
-  name: 'Conjugation practice',
-  description: 'Practice conjugaison on all sort of verbs',
-  structure: Structure.find_by(name: 'conjug'),
-  hide_index: [1]
-  )
+# Exercice.find_or_create_by!(
+#   name: ' Questions with direct object and accusative',
+#   description: 'Questions with accusative and preposition',
+#   structure: Structure.find_by(name: 'v_s_do'),
+#   hide_index: [2]
+#   )
+# Exercice.find_or_create_by!(
+#   name: ' Sentence with direct object and dative',
+#   description: 'Sentence with dative and preposition',
+#   structure: Structure.find_by(name: 's_v_do_dative'),
+#   hide_index: [2]
+#   )
+# Exercice.find_or_create_by!(
+#   name: ' Sentence with direct and indirect object ',
+#   description: 'Sentence with direct and indirect object',
+#   structure: Structure.find_by(name: 's_v_io_do'),
+#   hide_index: [2, 4]
+#   )
+# Exercice.find_or_create_by!(
+#   name: 'Conjugation practice',
+#   description: 'Practice conjugaison on all sort of verbs',
+#   structure: Structure.find_by(name: 'conjug'),
+#   hide_index: [1]
+#   )
 
 puts 'Root seeds file DONE!'

@@ -19,14 +19,14 @@ let exercice = document.getElementById("exercice")
 addEventListener("keypress", function(event){
   solution.style.display = "none";
   exercice.style.display = "block";
-  const firstField = document.querySelector("#response_0")
-  firstField.focus()
+  // const firstField = document.querySelector("#response_0")
+  // firstField.focus()
 })
 
 button.addEventListener("click", (event) => {
   solution.style.display = "none";
   exercice.style.display = "block";
-  const firstField = document.querySelector("#response_0")
-  firstField.focus()
+  // const firstField = document.querySelector("#response_0")
+  // firstField.focus()
 })
 

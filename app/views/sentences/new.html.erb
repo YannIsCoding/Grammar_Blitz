@@ -22,8 +22,8 @@
       </div>
     <% end %>
 
+    <p id="english-sentence"><%= @sentence.english %></p>
     <p class="sentence"> <%= hide_answer(@sentence.value, @sentence.word_indexes) %> </p>
-    <p class="english-sentence"><%= @sentence.english %></p>
 
     <%= render partial: 'sentences/shared/form', locals: {sentence: @sentence}  %>
 

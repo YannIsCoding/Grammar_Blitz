@@ -1,5 +1,5 @@
 <% if already_tried(current_user, sentence.exercice) %>
-  <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off" }) do %>
+  <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off", autocapitalize: 'off' }) do %>
     <%= hidden_field_tag sentence: sentence.value  %>
     <div class="container ">
       <div class="row justify-content-center">
@@ -12,7 +12,7 @@
   <% end %>
 
 <% else %>
-  <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off" }) do %>
+  <%= form_with(url: "/sentences/#{sentence.id}", method: 'patch', local: true, html: { autocomplete: "off", autocapitalize: 'off'  }) do %>
     <% sentence.word_indexes.each_with_index do |_value, index| %>
       <%= text_field_tag "response_#{index}".to_sym, '', class:'input-field mx-2 mb-2 response col-5 col-md'%>
     <% end %>

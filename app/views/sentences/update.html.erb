@@ -9,12 +9,13 @@
   </div>
 
   <div class="exercice-container mx-3">
-    <div id="solution">
+    <div class="<%= 'd-none' if params[:setup]%>", id="solution" >
       <%= render partial: 'sentences/shared/result', locals: {sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result}  %>
       <a href='#' id="next-sentence" class="cool-button d-block mt-3">NEXT !</a>
+      <p class='user-hint d-none d-sm-block'>Or press the space bar</p>
     </div>
 
-    <div id="exercice">
+    <div style="<%= "display: none;" unless params[:setup] %>", id="exercice">
       <% if show_streak?(@sentence.streak) %>
         <div class="container">
           <div class="row justify-content-end">

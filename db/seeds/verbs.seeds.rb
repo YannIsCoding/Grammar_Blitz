@@ -147,12 +147,12 @@ verbs = [
       %w[bestellt second_plurial bestellen accu_dati order] << ['object'],
       %w[bestellen third_plurial bestellen accu_dati order] << ['object'],
       #
-      %w[koche first_singular kochen accu_dati cook] << ['object'],
-      %w[kochst second_singular kochen accu_dati cook] << ['object'],
-      %w[kocht third_singular kochen accu_dati cooks] << ['object'],
-      %w[kochen first_plurial kochen accu_dati cook] << ['object'],
-      %w[kocht second_plurial kochen accu_dati cook] << ['object'],
-      %w[kochen third_plurial kochen accu_dati cook] << ['object'],
+      %w[koche first_singular kochen accu_dati cook] << ['food'],
+      %w[kochst second_singular kochen accu_dati cook] << ['food'],
+      %w[kocht third_singular kochen accu_dati cooks] << ['food'],
+      %w[kochen first_plurial kochen accu_dati cook] << ['food'],
+      %w[kocht second_plurial kochen accu_dati cook] << ['food'],
+      %w[kochen third_plurial kochen accu_dati cook] << ['food'],
       #
       %w[leihe first_singular leihen accu_dati lend] << ['object'],
       %w[leihst second_singular leihen accu_dati lend] << ['object'],

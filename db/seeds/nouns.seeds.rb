@@ -71,7 +71,7 @@ noun = [
   %w[fahrrad neutral bike vehicule],
   %w[Schiff neutral ship vehicule],
   %w[Lkw masculin truck vehicule],
-  %w[Boot masculin boat vehicule],
+  %w[Boot neutral boat vehicule],
   %w[Zug masculin train vehicule],
   %w[Bus masculin bus vehicule],
   #

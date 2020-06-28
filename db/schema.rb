@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_115518) do
+ActiveRecord::Schema.define(version: 2020_06_28_130129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 2019_12_11_115518) do
     t.datetime "updated_at", null: false
     t.string "english"
     t.boolean "negation"
+  end
+
+  create_table "edicts", force: :cascade do |t|
+    t.string "value"
+    t.string "english"
+    t.bigint "structure_id"
+    t.index ["structure_id"], name: "index_edicts_on_structure_id"
   end
 
   create_table "elements", force: :cascade do |t|
@@ -106,6 +113,7 @@ ActiveRecord::Schema.define(version: 2019_12_11_115518) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "edicted"
   end
 
   create_table "trials", force: :cascade do |t|
@@ -155,6 +163,7 @@ ActiveRecord::Schema.define(version: 2019_12_11_115518) do
     t.string "go_with", array: true
   end
 
+  add_foreign_key "edicts", "structures"
   add_foreign_key "exercices", "structures"
   add_foreign_key "structure_elements", "elements"
   add_foreign_key "structure_elements", "structures"

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :exercices, only: [:index, :show]
   resources :sentences, only: [:new, :create, :update]
+  resources :edicts, only:  [:index, :create, :update]
+  resources :structures, only:  [:new, :create]
 
   get '/why', to: 'pages#why'
   get 'profile', to: 'pages#profile', as: 'profile'

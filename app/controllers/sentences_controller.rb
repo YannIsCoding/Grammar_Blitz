@@ -68,7 +68,14 @@ class SentencesController < ApplicationController
       @sentence.update(streak: 0, session_counter: 0)
       @result = false
     end
-    @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
+
+    if @exercice.structure.try(:edicts)
+      @edict = Edict.where(structure: @exercice.structure).sample
+      @sentence.update_attributes(value: @edict.value, english:@edict.english)
+    else
+      @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
+    end
+
     @sentence.increment!(:session_counter)
   end
 

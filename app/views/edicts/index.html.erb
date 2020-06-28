@@ -1,0 +1,24 @@
+<div class="container text-center">
+  <% @structures.each do |structure| %>
+    <%= link_to structure.name, edicts_path(structure: structure), class: 'btn btn-success'  %>
+  <% end %>
+  <%= link_to 'New category', new_structure_path, class: 'btn-warning' %>
+</div>
+
+<div class="container text-center mt-2">
+  <% @edicts.each do |edict| %>
+    <%= render 'form', edict: edict %>
+  <% end %>
+
+  <%= simple_form_for @edict, html: { class: 'mt-1' } do |f|  %>
+
+    <div class="d-inline">
+      <%= f.input_field :value  %>
+      <%= f.input_field :english  %>
+      <%= f.input_field :structure_id, value: @structure.id, class: 'd-none'  %>
+      <%= f.button :submit, value: 'Create', class: 'btn-primary' %>
+    </div>
+
+  <% end %>
+
+</div>

@@ -1,5 +1,5 @@
   <%= simple_form_for edict, remote: true, html: { method: :put, class: 'mt-1' } do |f|  %>
-
+<%= edict.errors[:value] %>
     <div class="d-inline">
       <%= f.input_field :value  %>
       <%= f.input_field :english  %>

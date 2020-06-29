@@ -13,8 +13,8 @@
   <%= simple_form_for @edict, html: { class: 'mt-1' } do |f|  %>
 
     <div class="d-inline">
-      <%= f.input_field :value  %>
-      <%= f.input_field :english  %>
+      <%= f.input :value  %>
+      <%= f.input :english  %>
       <%= f.input_field :structure_id, value: @structure.id, class: 'd-none'  %>
       <%= f.button :submit, value: 'Create', class: 'btn-primary' %>
     </div>

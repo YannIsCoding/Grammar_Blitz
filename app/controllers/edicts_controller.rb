@@ -12,6 +12,7 @@ class EdictsController < ApplicationController
     if @edict.save
       redirect_to edicts_path
     else
+      p @edict.errors
       @edicts = Edict.where(structure: @structure)
       render :index
     end

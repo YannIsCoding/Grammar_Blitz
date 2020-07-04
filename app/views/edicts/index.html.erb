@@ -1,17 +1,21 @@
-<div class="container text-center">
+<div class="container text-center mt-2">
   <% @structures.each do |structure| %>
     <%= link_to structure.name, edicts_path(structure: structure), class: 'btn btn-success'  %>
   <% end %>
-  <%= link_to 'New category', new_structure_path, class: 'btn-warning' %>
+  <%= link_to 'New category', new_structure_path, class: 'btn btn-warning' %>
 </div>
 
+<!-- Update form -->
 <div class="container text-center mt-2">
   <% @edicts.each do |edict| %>
-    <%= render 'form', edict: edict %>
+    <div class="d-flex justify-content-around">
+      <%= render 'form', edict: edict %>
+      <%= link_to 'Delete', edict_path(edict), method: :delete, class: 'btn btn-warning' %>
+    </div>
   <% end %>
 
+<!-- Form for new Edicts -->
   <%= simple_form_for @edict, html: { class: 'mt-1' } do |f|  %>
-
     <div class="d-inline">
       <%= f.input :value  %>
       <%= f.input :english  %>

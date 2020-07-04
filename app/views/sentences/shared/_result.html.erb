@@ -1,14 +1,16 @@
-<% if result %>
-  <% if success(current_user, sentence.exercice) %>
-  <div  class='success mb-3'>
-    <p>GUT GEMACHT!</p>
-  </div>
-  <% elsif already_tried(current_user, sentence.exercice) %>
+<% unless @start %>
+  <% if @success %>
+    <div  class='success mb-3'>
+      <p>GUT GEMACHT!</p>
+    </div>
+  <% else %>
     <div class="container">
       <div class="row justify-content-center no-gutters result-failure">
-        <p class="py-1">You've answered:</p> <p class="failure py-1 px-3"><%= print_response(responses) %> </p>
+        <p>Schade Marmelade...</p>
+        <p class="py-1">You've answered:</p>
+        <p class="failure py-1 px-3"> <%= print_response(@responses) %> </p>
       </div>
     </div>
   <% end %>
-  <p class="result-failure"> <%= highlight_solution(prev_sentence, sentence.word_indexes) %></p>
+  <p class="result-failure"> <%= highlight_solution(@prev_sentence, @sentence.word_indexes) %></p>
 <% end %>

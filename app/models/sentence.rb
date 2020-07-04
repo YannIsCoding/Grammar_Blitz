@@ -3,11 +3,13 @@ class Sentence < ApplicationRecord
   belongs_to :exercice
   has_many :trials
 
-  before_create :default_word_indexes
+  before_save :default_word_indexes
+
+  # validates :word_indexes, presence: true
 
   private
 
   def default_word_indexes
-    self.word_indexes = exercice.hide_index
+    self.word_indexes ||= exercice.hide_index
   end
 end

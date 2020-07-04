@@ -9,23 +9,10 @@
   </div>
 
   <div class="exercice-container mx-3">
-    <%= render partial: 'sentences/shared/result', locals: {sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result}  %>
+    <div id="sentence-container">
 
-    <% if show_streak?(@sentence.streak) %>
-      <div class="container">
-        <div class="row justify-content-end">
-          <div class="streak-message blink-streak p-2">
-            <p> <%= @sentence.streak %>  correct answers in a row! </p>
-            <p class='font-weight-bold'> <%= streak_congratulation %> </p>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <p id="english-sentence"><%= @sentence.english %></p>
-    <p class="sentence"> <%= hide_answer(@sentence.value, @sentence.word_indexes) %> </p>
-
-    <%= render partial: 'sentences/shared/form', locals: {sentence: @sentence}  %>
+      <%= render partial: 'sentences/shared/form', locals: {sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result}  %>
+    </div>
 
     <%= render partial: 'sentences/shared/keyboard' %>
 

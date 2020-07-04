@@ -31,6 +31,12 @@ class EdictsController < ApplicationController
     end
   end
 
+  def destroy
+    @edict = Edict.find params[:id]
+    @edict.destroy
+    redirect_to edicts_path
+  end
+
 private
 
   def edict_params

@@ -1,12 +1,19 @@
 class SentencesController < ApplicationController
-  before_action :set_sentence, only: [:result]
-  before_action :set_exercice, only: [:result]
+  before_action :set_sentence, only: [:result, :save_setup]
+  before_action :set_exercice, only: [:result, :save_setup]
+
+  COMMIT_MESSAGE = 'BANG!'
 
   def new
-    @exercice = Exercice.find(params[:exercice])
-    last_sentence = Sentence.where(user: current_user, exercice: @exercice).last
+    # || cases are for when the action is called from the setup_save
+    @exercice ||= Exercice.find(params[:exercice])
+    last_sentence = @sentence || Sentence.where(user: current_user, exercice: @exercice).last
+
     @sentence = Sentence.create!(user: current_user, exercice: @exercice)
+
+    # Fetch the parameter from last time user practice
     @sentence.update(word_indexes: last_sentence.word_indexes) if last_sentence
+    @start = true
     sentence_feeder
   end
 
@@ -22,17 +29,28 @@ class SentencesController < ApplicationController
     return render :update if params[:response_0]&.empty?
 
     sentence_feeder
-    redirect_to sentence_result_path if @sentence.session_counter > 10
+    redirect_to sentence_result_path if @sentence.session_counter > SESSION_LENGTH
+  end
+
+  def save_setup
+    # this is updating the last sentence given by the exercice setup form
+    @sentence.update(word_indexes: setup_params)
+
+    new
+    render :new
   end
 
   private
 
   def exercice_correction
-    if RegexMachine.new(response_params).generate =~ @sentence.value
+    # compare the answer given by to the original sentences using Regex
+    @responses = response_params
+    if RegexMachine.new(@responses).generate =~ @sentence.value
+      @success = true
       create_trial(true)
     else
+      @success = false
       create_trial(false)
-      @responses = response_params
     end
     @prev_sentence = @sentence.value
     @result = true
@@ -48,8 +66,13 @@ class SentencesController < ApplicationController
   end
 
   def response_params
-    @sentence.word_indexes.map.with_index do |_el, index|
-      params["response_#{index}"]&.strip&.empty? ? 'nothing' : params["response_#{index}"]&.gsub(/[^0-9A-Za-zäÄöÖüÜß]/, '')
+    @sentence.word_indexes.map do |index|
+      if params["response_#{index}"]&.strip&.empty?
+        'nothing'
+      else
+        # filter anything that isnt allowed characters
+        params["response_#{index}"]&.gsub(/[^0-9A-Za-zäÄöÖüÜß]/, '')
+      end
     end
   end
 
@@ -59,19 +82,21 @@ class SentencesController < ApplicationController
 
   def set_exercice
     @exercice = @sentence.exercice
+    # @exercice = Exercice.find_by_id params[:id] || @sentence.exercice
   end
 
   def sentence_feeder
-    if params[:response_0]
+    if params[:commit] == COMMIT_MESSAGE
       exercice_correction
     else
+      # initilize / re-initialize
       @sentence.update(streak: 0, session_counter: 0)
       @result = false
     end
 
-    if @exercice.structure.try(:edicts)
+    if @exercice.structure.edicted?
       @edict = Edict.where(structure: @exercice.structure).sample
-      @sentence.update_attributes(value: @edict.value, english:@edict.english)
+      @sentence.update_attributes(value: @edict.value, english: @edict.english)
     else
       @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
     end

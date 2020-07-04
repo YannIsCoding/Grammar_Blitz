@@ -8,14 +8,6 @@ class ExercicesController < ApplicationController
 
   def setup
     @exercice = Exercice.find(params[:id])
-    last_sentence = Sentence.where(user: current_user, exercice: @exercice).last
-    @sentence = Sentence.create(user: current_user, exercice: @exercice)
-    @sentence.update(word_indexes: last_sentence.word_indexes) if last_sentence
-  end
-
-  private
-
-  def setup_params
-    ['subject', 'verb', '_article', 'noun', 'noun2'].map { |el| params[el] if params.key?(el) }.compact
+    @sentence = Sentence.where(user: current_user, exercice: @exercice).last || Sentence.create(user: current_user, exercice: @exercice)
   end
 end

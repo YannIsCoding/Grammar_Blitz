@@ -2,29 +2,32 @@
   <h1><%= @exercice.name %></h1>
   <p class="mt-4">Select more elements of the sentence to be tested on!</p>
 
-  <%= form_with(url: "/sentences/#{@sentence.id}", method: "patch", local: true, html: { autocomplete: "off" })  do %>
+  <%= form_with url: sentence_setup_path(@sentence&.id), method: :patch, local: true, html: { autocomplete: "off" }  do %>
 
     <%= hidden_field_tag 'exercice_id', "#{@exercice.id}" %>
     <%= hidden_field_tag 'setup', "true" %>
 
-    <%= check_box_tag(:subject, 0, (active_tag(@sentence.word_indexes, 0)), class:"no-display") %>
-    <%= label_tag(:subject, "Subject", class:"form-label #{'active-form' if active_tag(@sentence.word_indexes, 0)}") %>
+  <% @exercice.index_mapping.each do |el| %>
+    <%= check_box_tag(el.first, el.second, (active_element?(@sentence.word_indexes, el.second)), class:"no-display") %>
+    <%= label_tag(el.first, el.first.to_s, class:"form-label #{'active-form' if active_element?(@sentence.word_indexes, el.second)}") %>
+  <% end %>
+    <%# if @exercice.structure.name != 'conjug' %>
+      <%#= check_box_tag(:verb, 1, (active_tag(@sentence.word_indexes, 1)), class:"no-display") %>
+      <%#= label_tag(:verb, "Verb", class:"form-label #{'active-form' if active_tag(@sentence.word_indexes, 1)}") %>
 
-    <% if @exercice.structure.name != 'conjug' %>
-      <%= check_box_tag(:verb, 1, (active_tag(@sentence.word_indexes, 1)), class:"no-display") %>
-      <%= label_tag(:verb, "Verb", class:"form-label #{'active-form' if active_tag(@sentence.word_indexes, 1)}") %>
+      <%#= check_box_tag(:noun, 3, (active_tag(@sentence.word_indexes, 3)), class:"no-display") %>
+      <%#= label_tag(:noun, "Noun", class:"form-label #{'active-form' if active_tag(@sentence.word_indexes, 3)}") %>
 
-      <%= check_box_tag(:noun, 3, (active_tag(@sentence.word_indexes, 3)), class:"no-display") %>
-      <%= label_tag(:noun, "Noun", class:"form-label #{'active-form' if active_tag(@sentence.word_indexes, 3)}") %>
+      <%# if @sentence.exercice.structure.name == 's_v_io_do'  %>
+        <%#= check_box_tag(:noun2, 5, (active_tag(@sentence.word_indexes, 5)), class:"no-display") %>
+        <%#= label_tag(:noun2, "Noun 2", class:"form-label #{'active-form' if active_tag(@sentence.word_indexes, 5)}") %>
+      <%# end %>
+    <%# end %>
 
-      <% if @sentence.exercice.structure.name == 's_v_io_do'  %>
-        <%= check_box_tag(:noun2, 5, (active_tag(@sentence.word_indexes, 5)), class:"no-display") %>
-        <%= label_tag(:noun2, "Noun 2", class:"form-label #{'active-form' if active_tag(@sentence.word_indexes, 5)}") %>
-      <% end %>
-    <% end %>
     <div class="mt-4">
       <%= submit_tag("Los!", class:'cool-button px-5') %>
     </div>
+
   <% end %>
 
 </div>

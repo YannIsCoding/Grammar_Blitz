@@ -13,13 +13,16 @@ document.querySelectorAll(".form-label").forEach((label) => {
 let button = document.getElementById("next-sentence");
 let solution = document.getElementById("solution");
 let exercice = document.getElementById("exercice");
+console.log(button)
+console.log(solution)
+console.log(exercice)
 
 document.addEventListener("keydown", function (e) {
   if (e.keyCode === 32) {  //checks whether the pressed key is "Enter"
     solution.style.display = "none";
     exercice.style.display = "block";
-    const firstField = document.querySelector("#response_0");
-    firstField.focus();
+    const response = document.querySelector(".response");
+    response.focus();
     console.log('key down enter');
   }
 });
@@ -27,8 +30,8 @@ document.addEventListener("keydown", function (e) {
 button.addEventListener("click", (event) => {
   solution.style.display = "none";
   exercice.style.display = "block";
-  const firstField = document.querySelector("#response_0")
-  firstField.focus()
+  const response = document.querySelector(".response")
+  response.focus()
   console.log('click')
 })
 

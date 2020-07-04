@@ -1,0 +1,11 @@
+<div class="container text-center">
+  <%= simple_form_for @structure, html: { class: 'mt-1' } do |f|  %>
+
+    <div class="d-inline">
+      <%= f.input :name  %>
+      <%= f.button :submit, value: 'Create', class: 'btn-primary' %>
+    </div>
+
+  <% end %>
+
+</div>

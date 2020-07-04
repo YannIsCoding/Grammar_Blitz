@@ -5,14 +5,6 @@ module ViewsHelper
     'https://res.cloudinary.com/duw2hqlo3/image/upload/v1576242617/no_photo_icon_yeh1fp.png'
   end
 
-  def already_tried(user, exercice)
-    Trial.where(exercice: exercice, user: user).length.positive?
-  end
-
-  def success(user, exercice)
-    Trial.where(exercice: exercice, user: user).last&.success
-  end
-
   def global_success_for(user, number_days)
     time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
     Trial.where(user: user, success: true, created_at: time_frame).count
@@ -58,21 +50,6 @@ module ViewsHelper
     current_user == user ? "active-user" : ""
   end
 
-  def show_streak?(streak)
-    (streak % 5).zero? && !streak.zero?
-  end
-
-  def streak_congratulation
-    ['Du bist der hammer!', 'Du bist MEGA geil!', 'bärenstark!'].sample
-  end
-
-  def hide_answer(sentence, positions)
-    splited_sentence = sentence.split(' ')
-    positions.each do |position|
-      splited_sentence[position.to_i] = '_____'#splited_sentence[position.to_i].split(//).map! { '_' }.join
-    end
-    splited_sentence.join(' ')
-  end
 
   def highlight_solution(sentence, positions)
     # splited_sentence = sentence.split(' ')
@@ -83,16 +60,7 @@ module ViewsHelper
     sentence
   end
 
-  def print_response(responses)
-    message = ''
-    responses.each do |response|
-      message << " #{response} -"
-    end
-    message[-2..-1] = ''
-    message
-  end
-
-  def active_tag(word_indexes, position)
+  def active_element?(word_indexes, position)
     word_indexes.include?(position)
   end
 end

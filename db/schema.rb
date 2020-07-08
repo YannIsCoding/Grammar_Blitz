@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_28_130129) do
+ActiveRecord::Schema.define(version: 2020_07_05_154027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2020_06_28_130129) do
   create_table "edicts", force: :cascade do |t|
     t.string "value"
     t.string "english"
-    t.bigint "structure_id"
-    t.index ["structure_id"], name: "index_edicts_on_structure_id"
+    t.bigint "exercice_id"
+    t.index ["exercice_id"], name: "index_edicts_on_exercice_id"
   end
 
   create_table "elements", force: :cascade do |t|
@@ -44,9 +44,9 @@ ActiveRecord::Schema.define(version: 2020_06_28_130129) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "structure_id"
     t.string "hide_index", array: true
-    t.index ["structure_id"], name: "index_exercices_on_structure_id"
+    t.string "structure"
+    t.boolean "edicted"
   end
 
   create_table "nouns", force: :cascade do |t|
@@ -104,16 +104,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_130129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "element_id"
-    t.bigint "structure_id"
     t.index ["element_id"], name: "index_structure_elements_on_element_id"
-    t.index ["structure_id"], name: "index_structure_elements_on_structure_id"
-  end
-
-  create_table "structures", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "edicted"
   end
 
   create_table "trials", force: :cascade do |t|
@@ -163,10 +154,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_130129) do
     t.string "go_with", array: true
   end
 
-  add_foreign_key "edicts", "structures"
-  add_foreign_key "exercices", "structures"
   add_foreign_key "structure_elements", "elements"
-  add_foreign_key "structure_elements", "structures"
   add_foreign_key "trials", "exercices"
   add_foreign_key "trials", "sentences"
   add_foreign_key "trials", "users"

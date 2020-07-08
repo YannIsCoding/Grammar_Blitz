@@ -1,11 +1,13 @@
 class Exercice < ApplicationRecord
-  belongs_to :structure
   has_many :trials
   has_many :users, through: :trials
   has_many :sentences
+  has_many :edicts
 
   validates :name, :description, presence: true
   validates :name, :description, uniqueness: true
+  scope :edicted, -> { where(edicted: true) }
+
 
   def index_mapping
     return [[:subject, 0], [:verb, 1], [:noun, 4]] if structure.edicted?

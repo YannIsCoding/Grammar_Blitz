@@ -1,1 +1,2 @@
-$("edict_edict<%= @edict.id %>").replaceWith("<%= render 'form', edict: @edict %>")
+$("edict_edict<%= @edict.id %>")
+.replaceWith("<%= render 'form', edict: @edict %>")

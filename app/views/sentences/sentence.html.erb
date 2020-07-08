@@ -9,10 +9,8 @@
   </div>
 
   <div class="exercice-container mx-3">
-    <div id="sentence-container">
 
-      <%= render partial: 'sentences/shared/form', locals: {sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result}  %>
-    </div>
+    <%= render partial: 'sentences/shared/form', sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result %>
 
     <%= render partial: 'sentences/shared/keyboard' %>
 

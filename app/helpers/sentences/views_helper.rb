@@ -16,7 +16,7 @@ module Sentences
     def split_sentence(sentence, positions)
       # transform in array
       sentence_array = sentence.split(' ')
-      positions.each { |position| sentence_array[position] = nil }
+      positions.each { |position| sentence_array[position.to_i] = nil }
       sentence_array
     end
 

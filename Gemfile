@@ -18,8 +18,7 @@ gem 'webpacker'
 gem 'cloudinary', '~> 1.9.1'
 gem 'carrierwave', '~> 1.2'
 gem "seedbank"
-# gem 'postmark-rails'
-# gem 'sendgrid-ruby'
+gem 'jquery-rails'
 gem 'mail'
 
 group :development do

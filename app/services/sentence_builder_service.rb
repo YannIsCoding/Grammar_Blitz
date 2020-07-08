@@ -3,18 +3,18 @@ class SentenceBuilderService
   def initialize(exercice)
     @exercice = exercice
     @vowel = ('aeiou')
-    @g_case = @exercice.structure.name == 's_v_do_dative' ? 'dative' : 'accusative'
+    @g_case = @exercice.structure == 's_v_do_dative' ? 'dative' : 'accusative'
     @person = Pronoun.where(kind: 'personal').map(&:person).uniq.sample
     @person_verb = fetch_person_verb(@person)
   end
 
   def generate
-    @preposition = fetch_preposition if @exercice.structure.name == 's_v_prep_do'
+    @preposition = fetch_preposition if @exercice.structure == 's_v_prep_do'
     @subject = fetch_subject
-    if @exercice.structure.name == 's_v_io_do'
-      send(@exercice.structure.name)
+    if @exercice.structure == 's_v_io_do'
+      send(@exercice.structure)
     else
-      if @exercice.structure.name == 's_v_do_dative'
+      if @exercice.structure == 's_v_do_dative'
         @noun_kind = 'people'
       elsif @preposition
         @noun_kind = 'idea'
@@ -23,7 +23,7 @@ class SentenceBuilderService
       end
       @noun = fetch_noun(@noun_kind)
       @article = fetch_article(@g_case, @noun.gender)
-      send(@exercice.structure.name)
+      send(@exercice.structure)
     end
   end
 

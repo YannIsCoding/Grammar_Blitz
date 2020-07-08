@@ -1,4 +1,9 @@
-console.log('choco pizza')
-console.log($("sentence-container"))
-// $("sentence-container").replaceWith("<%= j render 'sentences/shared/form' %>")
-// console.log('is this triggered?')
+console.log('<%= @sentence.value %>')
+console.log($("#sentence-container"))
+if ('<% @redirect.blank? %>'){
+$("#sentence-container")
+.replaceWith("<%= j render 'sentences/shared/form', sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result %>")
+} else {
+ window.location = ('<%= @redirect %>')
+}
+

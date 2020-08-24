@@ -11,16 +11,40 @@
     <div class="mt-4">
       <h6>You had <%= @sentence.trials.where(success: true).count %> correct answers</h6>
       <div class="progress mb-4 progressbar-container">
-        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= batch_percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= batch_percent %>%</div>
-        <div class="progress-bar bg-warning" role="progressbar" style="width: <%= 100 - batch_percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - batch_percent %>%</div>
+        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style="width: <%= batch_percent %>%"
+              aria-valuemin="0"
+               aria-valuemax="100">
+               <%= batch_percent %>%
+        </div>
+        <div class="progress-bar bg-warning"
+             role="progressbar"
+             style="width: <%= 100 - batch_percent %>%"
+             aria-valuemin="0"
+             aria-valuemax="100">
+             <%= 100 - batch_percent %>%
+        </div>
       </div>
 
       <p>Your progress so far today:</p>
       <% percent = percentage_for_day(current_user, @exercice, 1) %>
 
       <div class="progress mb-4 progressbar-container">
-        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= percent %>%</div>
-        <div class="progress-bar bg-warning" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - percent %>%</div>
+        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+             role="progressbar"
+             style="width: <%= percent %>%"
+             aria-valuemin="0"
+             aria-valuemax="100">
+             <%= percent %>%
+        </div>
+        <div class="progress-bar bg-warning"
+             role="progressbar"
+             style="width: <%= 100 - percent %>%"
+             aria-valuemin="0"
+             aria-valuemax="100">
+             <%= 100 - percent %>%
+        </div>
       </div>
       <div class="container">
         <div class="row justify-content-end mt-5">

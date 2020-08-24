@@ -37,7 +37,7 @@ class SentenceBuilderService
   end
 
   def fetch_person_verb(person)
-    if person == 'third_masculin' || person == 'third_feminin'
+    if ['third_masculin', 'third_feminin'].include? person
       person_verb = 'third_singular'
     else
       person_verb = person

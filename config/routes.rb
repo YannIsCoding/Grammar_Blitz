@@ -7,6 +7,14 @@ Rails.application.routes.draw do
   resources :edicts, only:  [:index, :create, :update, :destroy]
   resources :structures, only:  [:new, :create]
 
+  resources :exercices, only: [] do
+    # resources :sentences, only: [:new, :create]
+    get 'verb_practice', to: 'verb_practices#new'
+    put 'verb_practice/:id', to: 'verb_practices#update', as: :update_verb
+  end
+
+
+
   get '/why', to: 'pages#why'
   get 'profile', to: 'pages#profile', as: 'profile'
   get 'exercice_setup/:id', to: 'exercices#setup', as: :exercice_setup

@@ -20,6 +20,7 @@ class ExercicesController < ApplicationController
     @exercices = Exercice.all.order(:created_at)
   end
 
+  # deprecated
   def setup
     @exercice = Exercice.find(params[:id])
     @sentence = Sentence.where(user: current_user, exercice: @exercice).last || Sentence.create(user: current_user, exercice: @exercice)

@@ -1,10 +1,11 @@
 const disgustingjs = () => {
-
-  const firstField = document.querySelector("#response_0")
+  // Grab the first input field
+  var firstField = $('[id^="response"]')[0];
+  // const firstField = document.querySelector("#response_0")
   firstField.focus()
+  firstField.select();
   firstField.classList.add("focus-field");
   const elements = document.querySelectorAll(".letter");
-
 
   focusedField()
   elements.forEach((element) => {
@@ -13,6 +14,7 @@ const disgustingjs = () => {
       let focused = document.querySelector(".focus-field");
       focused.value = focused.value + element.innerText;
       focused.focus();
+      focused.select();
     })
 
   });

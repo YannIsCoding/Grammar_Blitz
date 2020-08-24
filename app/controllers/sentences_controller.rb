@@ -5,6 +5,7 @@ class SentencesController < ApplicationController
   COMMIT_MESSAGE = 'BANG!'
 
   def new
+    @start = true
     @exercice = Exercice.find(params[:exercice])
     # last_sentence = @sentence || Sentence.where(user: current_user, exercice: @exercice).last
 
@@ -73,6 +74,7 @@ class SentencesController < ApplicationController
   end
 
   def response_params
+    # Sanitize the user's answers
     @sentence.word_indexes.map do |index|
       if params["response_#{index}"]&.strip&.empty?
         'nothing'

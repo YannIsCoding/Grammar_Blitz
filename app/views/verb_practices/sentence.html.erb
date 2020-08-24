@@ -1,0 +1,14 @@
+<div class='main-container main-container-exercice'>
+  <h3><%= @exercice.name %></h3>
+
+    <%= render partial: 'sentences/shared/progress_bar' %>
+
+  <div class="exercice-container mx-3">
+    <%= render 'sentences/shared/single_result' %>
+
+    <%= render partial: 'form', sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result %>
+
+    <%= render partial: 'sentences/shared/keyboard' %>
+
+  </div>
+</div>

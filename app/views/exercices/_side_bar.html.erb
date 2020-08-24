@@ -1,0 +1,18 @@
+<div class="col-12 col-md-3">
+  <div class="profile-card p-3 font-weight-bold">
+    <h4> <%= current_user.username %> </h4>
+    <%= image_tag profile_picture(current_user), class: "avatar-medium mb-3" %>
+
+    <p><i class="fas fa-rocket rorocket"></i>
+    <%= global_success_for(current_user, 1) * 88 %> points today. </p>
+
+    <p>  <i class="fas fa-fire rorocket"></i></i>
+    <%= global_precentage_for(current_user, 1) %>% correct answer today.</p>
+
+    <p><i class="fas fa-rocket rorocket"></i>
+    <%= global_success_for(current_user, 10000) * 88 %> points total. </p>
+
+    <p><i class="fas fa-fire rorocket"></i></i>
+     <%= global_precentage_for(current_user, 10000) %>% Correct answers total. </p>
+  </div>
+</div>

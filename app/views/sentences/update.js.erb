@@ -1,4 +1,14 @@
-console.log('choco pizza')
-console.log($("sentence-container"))
-// $("sentence-container").replaceWith("<%= j render 'sentences/shared/form' %>")
-// console.log('is this triggered?')
+if ('<%= @redirect %>' === ''){
+  $("#sentence-container")
+  .replaceWith("<%= j render 'form', \
+                             sentence: @sentence, \
+                             prev_sentence: @prev_sentence, \
+                             responses: @responses, \
+                             result: @result %>")
+  $("#progress_bar_container")
+  .replaceWith("<%= j render 'sentences/shared/progress_bar', counter: @sentence.session_counter %>")
+  showResult()
+} else {
+  window.location = ('<%= @redirect %>')
+}
+

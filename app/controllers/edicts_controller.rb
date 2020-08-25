@@ -1,9 +1,8 @@
 class EdictsController < ApplicationController
-
-  before_action :set_structure, only: [:index, :create]
+  before_action :set_exercice, only: [:index, :create]
 
   def index
-    @edicts = Edict.where(structure: @structure)
+    @edicts = Edict.where(exercice: @exercice)
     @edict = Edict.new
   end
 
@@ -12,8 +11,7 @@ class EdictsController < ApplicationController
     if @edict.save
       redirect_to edicts_path
     else
-      p @edict.errors
-      @edicts = Edict.where(structure: @structure)
+      @edicts = Edict.where(exercice: @exercice)
       render :index
     end
   end
@@ -22,9 +20,7 @@ class EdictsController < ApplicationController
     @edict = Edict.find_by_id params[:id] || Edict.new
     if @edict.update(edict_params)
       respond_to do
-
-        format.js { render :update  , status: :ok }
-        # render 'update.js.erb'
+        format.js { render :update , status: :ok }
       end
     else
       render :index
@@ -37,15 +33,14 @@ class EdictsController < ApplicationController
     redirect_to edicts_path
   end
 
-private
+  private
 
   def edict_params
-    params.require(:edict).permit(:value, :english, :structure_id)
+    params.require(:edict).permit(:value, :english, :exercice_id)
   end
 
-  def set_structure
-    @structure = Structure.find_by_id(params[:structure])
-    @structure ||= Structure.find_by_name('s_v_do_mit')
-    @structures = Structure.where(edicted: true)
+  def set_exercice
+    @exercice = Exercice.find_by_id(params[:exercice]) || Exercice.find_by(structure: 's_v_do_mit')
+    @exercices = Exercice.edicted
   end
 end

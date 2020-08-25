@@ -1,5 +1,5 @@
 class Edict < ApplicationRecord
-  belongs_to :structure
+  belongs_to :exercice
 
   validates :value, :english, uniqueness: true
 end

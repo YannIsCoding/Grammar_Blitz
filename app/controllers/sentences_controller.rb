@@ -1,44 +1,55 @@
 class SentencesController < ApplicationController
+  protect_from_forgery unless: -> { request.format.js? }
+
   before_action :set_sentence, only: [:result, :save_setup]
   before_action :set_exercice, only: [:result, :save_setup]
 
   COMMIT_MESSAGE = 'BANG!'
 
+
   def new
-    # || cases are for when the action is called from the setup_save
-    @exercice ||= Exercice.find(params[:exercice])
-    last_sentence = @sentence || Sentence.where(user: current_user, exercice: @exercice).last
+    @start = true
+    @exercice = Exercice.find(params[:exercice])
+    # last_sentence = @sentence || Sentence.where(user: current_user, exercice: @exercice).last
 
     @sentence = Sentence.create!(user: current_user, exercice: @exercice)
 
     # Fetch the parameter from last time user practice
-    @sentence.update(word_indexes: last_sentence.word_indexes) if last_sentence
-    @start = true
+    # @sentence.update(word_indexes: last_sentence.word_indexes) if last_sentence
     sentence_feeder
+    render :sentence
   end
 
   def update
-    if params[:setup]
-      @exercice = Exercice.find(params[:exercice_id])
-      @sentence = Sentence.create!(user: current_user, exercice: @exercice)
-      @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
-    else
-      @sentence = Sentence.find(params[:id])
-      @exercice = @sentence.exercice
-    end
-    return render :update if params[:response_0]&.empty?
+    # if params[:exercice]
+    #   @exercice = Exercice.find(params[:exercice])
+    #   @sentence = Sentence.create!(user: current_user, exercice: @exercice)
+    #   # @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
+    # else
+    # end
+    @sentence = Sentence.find(params[:id])
+    @exercice = @sentence.exercice
+    # return render :update if params[:response_0]&.empty?
 
     sentence_feeder
-    redirect_to sentence_result_path if @sentence.session_counter > SESSION_LENGTH
+    # @start = true if params[:commit] == COMMIT_MESSAGE
+
+    if @sentence.session_counter > SESSION_LENGTH - 1
+      p @redirect = sentence_result_path
+    end
+
+    respond_to do |format|
+      format.js { render :update }
+    end
   end
 
-  def save_setup
-    # this is updating the last sentence given by the exercice setup form
-    @sentence.update(word_indexes: setup_params)
+  # def save_setup
+  #   # this is updating the last sentence given by the exercice setup form
+  #   @sentence.update(word_indexes: setup_params)
 
-    new
-    render :new
-  end
+  #   new
+  #   render :new
+  # end
 
   private
 
@@ -66,6 +77,7 @@ class SentencesController < ApplicationController
   end
 
   def response_params
+    # Sanitize the user's answers
     @sentence.word_indexes.map do |index|
       if params["response_#{index}"]&.strip&.empty?
         'nothing'
@@ -82,7 +94,6 @@ class SentencesController < ApplicationController
 
   def set_exercice
     @exercice = @sentence.exercice
-    # @exercice = Exercice.find_by_id params[:id] || @sentence.exercice
   end
 
   def sentence_feeder
@@ -90,12 +101,12 @@ class SentencesController < ApplicationController
       exercice_correction
     else
       # initilize / re-initialize
-      @sentence.update(streak: 0, session_counter: 0)
-      @result = false
+      # @sentence.update(streak: 0, session_counter: 0)
+      # @result = false
     end
 
-    if @exercice.structure.edicted?
-      @edict = Edict.where(structure: @exercice.structure).sample
+    if @exercice.edicted?
+      @edict = @exercice.edicts.sample
       @sentence.update_attributes(value: @edict.value, english: @edict.english)
     else
       @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate

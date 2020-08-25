@@ -1,0 +1,17 @@
+<div class='main-container main-container-exercice'>
+  <h3><%= @exercice.name %></h3>
+  <%= render 'sentences/shared/progress_bar', counter: @sentence.session_counter %>
+
+
+  <div class="exercice-container mx-3">
+
+    <%= render 'form',
+                sentence: @sentence,
+                prev_sentence: @prev_sentence,
+                responses: @responses,
+                result: @result %>
+
+    <%= render 'sentences/shared/keyboard' %>
+
+  </div>
+</div>

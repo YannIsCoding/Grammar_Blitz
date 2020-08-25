@@ -1,0 +1,21 @@
+<% unless @start %>
+  <div id="solution">
+    <% if @success %>
+      <div  class='success mb-3'>
+        <p>GUT GEMACHT!</p>
+      </div>
+    <% else %>
+      <div class="container">
+        <div class="row justify-content-center no-gutters result-failure">
+          <p>Schade Marmelade...</p>
+          <p class="py-1">You've answered:</p>
+          <p class="failure py-1 px-3"> <%= print_response(@responses) %> </p>
+        </div>
+      </div>
+    <% end %>
+    <p class="result-failure"> <%= highlight_solution(@prev_sentence, @sentence.word_indexes) %></p>
+    <button id="next-sentence" class="btn-primary cool-button">
+      Los!
+    </button>
+  </div>
+<% end %>

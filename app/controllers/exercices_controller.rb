@@ -1,6 +1,11 @@
-require_relative '../services/sentence_builder_service'
+# require_relative '../services/sentence_builder_service'
 class ExercicesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
+
+  def index
+    @exercices = Exercice.all.order(:created_at)
+    @verb_exercices = Exercice.with_verb
+  end
 
   def new
     @exercice = Exercice.new
@@ -16,19 +21,17 @@ class ExercicesController < ApplicationController
     end
   end
 
-  def index
-    @exercices = Exercice.all.order(:created_at)
-  end
-
   # deprecated
-  def setup
-    @exercice = Exercice.find(params[:id])
-    @sentence = Sentence.where(user: current_user, exercice: @exercice).last || Sentence.create(user: current_user, exercice: @exercice)
-  end
+  # def setup
+  #   @exercice = Exercice.find(params[:id])
+  #   @sentence = Sentence.where(user: current_user, exercice: @exercice).last || Sentence.create(user: current_user, exercice: @exercice)
+  # end
 
   private
 
   def exercice_params
-    params.require(:exercice).permit(:structure, :name, :description)
+    params.require(:exercice).permit(:structure,
+                                     :name,
+                                     :description)
   end
 end

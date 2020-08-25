@@ -1,8 +1,11 @@
 class SentencesController < ApplicationController
+  protect_from_forgery unless: -> { request.format.js? }
+
   before_action :set_sentence, only: [:result, :save_setup]
   before_action :set_exercice, only: [:result, :save_setup]
 
   COMMIT_MESSAGE = 'BANG!'
+
 
   def new
     @start = true
@@ -32,7 +35,7 @@ class SentencesController < ApplicationController
     # @start = true if params[:commit] == COMMIT_MESSAGE
 
     if @sentence.session_counter > SESSION_LENGTH - 1
-      @redirect = sentence_result_path
+      p @redirect = sentence_result_path
     end
 
     respond_to do |format|

@@ -6,7 +6,9 @@ class Exercice < ApplicationRecord
 
   validates :name, :description, presence: true
   validates :name, :description, uniqueness: true
+
   scope :edicted, -> { where(edicted: true) }
+  scope :with_verb, -> { where("structure like ?", "%_present") }
 
   def index_mapping
     return [[:subject, 0], [:verb, 1], [:noun, 4]] if structure.edicted?

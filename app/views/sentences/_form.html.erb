@@ -1,28 +1,26 @@
 <div id="sentence-container">
 
+
   <%= render 'sentences/shared/streak_congrat' %>
   <%= render 'sentences/shared/single_result' %>
 
   <div id="form-container" style= <%=  "display:none;" unless @start %> >
-
     <p id="english-sentence"> <%= @sentence.english %> </p>
 
-    <%= form_tag(exercice_update_verb_path(@exercice, @sentence),
-                 method: :put,
+    <%= form_for(@sentence,
+                 method: :patch,
                  remote: true,
-                 autocomplete: "off",
-                 autocapitalize: 'off' ) do %>
+                 html: { autocomplete: "off", autocapitalize: 'off' }) do %>
         <div class='d-flex flex-row'>
 
           <% split_sentence(@sentence.value, @exercice.hide_index).each_with_index do |fragment, index| %>
-              <%# Is this to be shown? %>
               <% if @sentence.word_indexes.include?(index)  %>
                 <%= text_field_tag "response_#{index}".to_sym, '',
                                    class:'input-field mx-2 mb-2 response flex-grow-1' %>
               <% else %>
-            <p class="sentence d-inline flex-grow-1 mr-2">
-                <%= fragment %>
-            </p>
+              <p class="sentence d-inline flex-grow-1 mr-2">
+                  <%= fragment %>
+              </p>
               <% end %>
           <% end %>
         </div>

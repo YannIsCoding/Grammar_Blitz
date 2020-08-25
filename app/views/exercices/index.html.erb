@@ -37,7 +37,9 @@
             </div>
           <% end %>
 
-          <%= link_to 'test', exercice_verb_practice_path(exercice_id: Exercice.find_by(structure: 'sein_present'))  %>
+          <% @verb_exercices.each do |verb_exercice| %>
+            <%= link_to verb_exercice.name, exercice_verb_practice_path(verb_exercice)  %>
+          <% end %>
         </div>
       </div>
 

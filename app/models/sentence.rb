@@ -16,4 +16,5 @@ class Sentence < ApplicationRecord
     self.streak = 0
     self.session_counter = 0
   end
+
 end

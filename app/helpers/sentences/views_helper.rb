@@ -25,7 +25,7 @@ module Sentences
     end
 
     def streak_congratulation
-      ['Du bist der hammer!', 'Du bist MEGA geil!', 'bärenstark!'].sample
+      ['Du bist der Hammer!', 'Du bist MEGA geil!', 'bärenstark!'].sample
     end
 
     def print_response(responses)

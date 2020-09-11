@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_05_154027) do
+ActiveRecord::Schema.define(version: 2020_09_11_211108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 2020_07_05_154027) do
     t.datetime "updated_at", null: false
     t.string "english"
     t.boolean "negation"
+  end
+
+  create_table "buckets", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "level"
+    t.bigint "verb_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_buckets_on_user_id"
+    t.index ["verb_id"], name: "index_buckets_on_verb_id"
   end
 
   create_table "edicts", force: :cascade do |t|
@@ -108,15 +118,17 @@ ActiveRecord::Schema.define(version: 2020_07_05_154027) do
   end
 
   create_table "trials", force: :cascade do |t|
-    t.boolean "success"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.bigint "exercice_id"
     t.bigint "sentence_id"
+    t.bigint "verb_id"
+    t.integer "result"
     t.index ["exercice_id"], name: "index_trials_on_exercice_id"
     t.index ["sentence_id"], name: "index_trials_on_sentence_id"
     t.index ["user_id"], name: "index_trials_on_user_id"
+    t.index ["verb_id"], name: "index_trials_on_verb_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -154,10 +166,13 @@ ActiveRecord::Schema.define(version: 2020_07_05_154027) do
     t.string "go_with", array: true
   end
 
+  add_foreign_key "buckets", "users"
+  add_foreign_key "buckets", "verbs"
   add_foreign_key "structure_elements", "elements"
   add_foreign_key "trials", "exercices"
   add_foreign_key "trials", "sentences"
   add_foreign_key "trials", "users"
+  add_foreign_key "trials", "verbs"
   add_foreign_key "verb_noun_links", "nouns"
   add_foreign_key "verb_noun_links", "verbs"
 end

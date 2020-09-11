@@ -1,41 +1,29 @@
 class SentencesController < ApplicationController
   protect_from_forgery unless: -> { request.format.js? }
 
-  before_action :set_sentence, only: [:result, :save_setup]
-  before_action :set_exercice, only: [:result, :save_setup]
+  before_action :set_sentence, only: %i[result save_setup]
+  before_action :set_exercice, only: %i[result save_setup]
 
   COMMIT_MESSAGE = 'BANG!'
-
 
   def new
     @start = true
     @exercice = Exercice.find(params[:exercice])
-    # last_sentence = @sentence || Sentence.where(user: current_user, exercice: @exercice).last
 
     @sentence = Sentence.create!(user: current_user, exercice: @exercice)
 
-    # Fetch the parameter from last time user practice
-    # @sentence.update(word_indexes: last_sentence.word_indexes) if last_sentence
     sentence_feeder
     render :sentence
   end
 
   def update
-    # if params[:exercice]
-    #   @exercice = Exercice.find(params[:exercice])
-    #   @sentence = Sentence.create!(user: current_user, exercice: @exercice)
-    #   # @sentence.update(word_indexes: (@sentence.word_indexes << setup_params).flatten)
-    # else
-    # end
     @sentence = Sentence.find(params[:id])
     @exercice = @sentence.exercice
-    # return render :update if params[:response_0]&.empty?
 
     sentence_feeder
-    # @start = true if params[:commit] == COMMIT_MESSAGE
 
     if @sentence.session_counter > SESSION_LENGTH - 1
-      p @redirect = sentence_result_path
+      @redirect = sentence_result_path
     end
 
     respond_to do |format|
@@ -43,13 +31,12 @@ class SentencesController < ApplicationController
     end
   end
 
-  # def save_setup
-  #   # this is updating the last sentence given by the exercice setup form
-  #   @sentence.update(word_indexes: setup_params)
+  def result
+    @failed_trial = Trial.where(sentence: @sentence,
+                                result: 'fail')
+    @failed_verb = @failed_trial.map(&:verb)
 
-  #   new
-  #   render :new
-  # end
+  end
 
   private
 
@@ -58,10 +45,10 @@ class SentencesController < ApplicationController
     @responses = response_params
     if RegexMachine.new(@responses).generate =~ @sentence.value
       @success = true
-      create_trial(true)
+      create_trial(:success)
     else
       @success = false
-      create_trial(false)
+      create_trial(:fail)
     end
     @prev_sentence = @sentence.value
     @result = true
@@ -71,9 +58,12 @@ class SentencesController < ApplicationController
     ['subject', 'verb', '_article', 'noun', 'noun2'].map { |el| params[el] if params.key?(el) }.compact
   end
 
-  def create_trial(success)
-    Trial.create!(user: current_user, exercice: @exercice, success: success, sentence: @sentence)
-    @sentence.streak = success ? @sentence.streak + 1 : 0
+  def create_trial(type)
+    trial = Trial.create!(user: current_user,
+                          exercice: @exercice,
+                          result: type,
+                          sentence: @sentence)
+    @sentence.streak = trial.success? ? @sentence.streak + 1 : 0
   end
 
   def response_params
@@ -97,13 +87,7 @@ class SentencesController < ApplicationController
   end
 
   def sentence_feeder
-    if params[:commit] == COMMIT_MESSAGE
-      exercice_correction
-    else
-      # initilize / re-initialize
-      # @sentence.update(streak: 0, session_counter: 0)
-      # @result = false
-    end
+    exercice_correction if params[:commit] == COMMIT_MESSAGE
 
     if @exercice.edicted?
       @edict = @exercice.edicts.sample
@@ -114,5 +98,4 @@ class SentencesController < ApplicationController
 
     @sentence.increment!(:session_counter)
   end
-
 end

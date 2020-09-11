@@ -3,7 +3,7 @@ class ExercicesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
 
   def index
-    @exercices = Exercice.all.order(:created_at)
+    @exercices = Exercice.not_verb.order(:created_at)
     @verb_exercices = Exercice.with_verb
   end
 

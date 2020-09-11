@@ -6,41 +6,38 @@
     <div class="row justify-content-center">
 
       <div class="col-12 col-md-9">
-        <div class="container">
-          <% @exercices.each do |exercice| %>
-            <div class="row mb-4">
-              <div class="container card-exercice">
-
-                <div class="row my-2">
-                  <div class="col-md-auto text-left">
-                    <h6> <%=  exercice.name %> </h6>
-                  </div>
-                </div>
-
-                <div class="row my-2">
-                  <div class="col-9 text-left">
-                    <%= exercice.description %>
-                  </div>
-                </div>
-
-                <div class="row my-4 justify-content-end">
-                  <div class="col-6 col-md-2">
-                    <%#= link_to 'Settings', exercice_setup_path(exercice.id), { :class=>'index-button mx-3' }  %>
-                  </div>
-
-                  <div class="col-6 col-md-3">
-                    <%= link_to 'Play', new_sentence_path(exercice: exercice.id), { :class=>'index-button mx-3' }  %>
-                  </div>
-                </div>
-
-              </div>
+        <h2>Verb practice</h2>
+        <div class="verb-exercices mb-2">
+          <% @verb_exercices.each do |verb_exercice| %>
+            <div class="exercice mr-2">
+              <h6> <%=  verb_exercice.name %> </h6>
+              <%= link_to "Play",
+                          exercice_verb_practice_path(verb_exercice),
+                          class: "index-button"  %>
             </div>
           <% end %>
+        </div>
 
-          <% @verb_exercices.each do |verb_exercice| %>
-            <%= link_to verb_exercice.name, exercice_verb_practice_path(verb_exercice)  %>
+        <h2>Automated practice</h2>
+        <div class="verb-exercices">
+
+          <% @exercices.each do |exercice| %>
+            <div class="exercice mr-2 mb-2">
+
+              <h6 class=" text-left"> <%=  exercice.name %> </h6>
+
+              <div class=" my-2">
+                <%= exercice.description %>
+              </div>
+
+              <%= link_to 'Play',
+                          new_sentence_path(exercice: exercice.id),
+                          class: 'index-button mx-3 my-4' %>
+
+            </div>
           <% end %>
         </div>
+
       </div>
 
       <% if current_user %>

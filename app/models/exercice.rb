@@ -8,7 +8,10 @@ class Exercice < ApplicationRecord
   validates :name, :description, uniqueness: true
 
   scope :edicted, -> { where(edicted: true) }
-  scope :with_verb, -> { where("structure like ?", "%_present") }
+  scope :with_verb, -> { where("structure LIKE ?", "%_present") }
+  scope :not_verb, -> { where("structure NOT LIKE ?", "%_present") }
+
+  # scope :automated, -> { where(edicted: false).where("structure NOT LIKE ?", "%_present") }
 
   def index_mapping
     return [[:subject, 0], [:verb, 1], [:noun, 4]] if structure.edicted?

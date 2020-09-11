@@ -18,19 +18,21 @@ const showResult = () => {
   let exercice = document.getElementById("form-container");
 
   document.addEventListener("keydown", function (e) {
-    if (e.keyCode === 32) {  //checks whether the pressed key is "Enter"
-      solution.style.display = "none";
-      exercice.style.display = "block";
-      const response = document.querySelector(".response");
-      response.focus();
+    if (e.code === 'Enter' && exercice.style.display != "block") {  //checks whether the pressed key is "Enter"
+      e.preventDefault();
+      showNextExercice();
     }
   });
 
   button.addEventListener("click", (event) => {
+    showNextExercice();
+  })
+
+  const showNextExercice = () => {
     solution.style.display = "none";
     exercice.style.display = "block";
     const response = document.querySelector(".response")
     response.focus()
-  })
+  }
 
 }

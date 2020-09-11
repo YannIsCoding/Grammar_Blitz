@@ -1,20 +1,21 @@
 const disgustingjs = () => {
   // Grab the first input field
-  var firstField = $('[id^="response"]')[0];
-  // const firstField = document.querySelector("#response_0")
+  // var firstField = $('[id^="response"]')[0];
+  var firstField = document.querySelectorAll(".input-field")[0];
   firstField.focus()
   firstField.select();
   firstField.classList.add("focus-field");
   const elements = document.querySelectorAll(".letter");
 
+  // Which of the field is the user filling in now?
   focusedField()
   elements.forEach((element) => {
 
     element.addEventListener("click", (event) => {
       let focused = document.querySelector(".focus-field");
-      focused.value = focused.value + element.innerText;
-      focused.focus();
-      focused.select();
+      firstField.value = firstField.value + element.innerText;
+      firstField.select();
+      firstField.focus();
     })
 
   });
@@ -23,9 +24,8 @@ const disgustingjs = () => {
 
 const focusedField = () => {
   // select all fields
-  const fields = document.querySelectorAll(".response")
+  const fields = document.querySelectorAll(".input-field")
   //find the one focus
-
   fields.forEach((el) => {
     el.addEventListener('focus', (event) => {
       fields.forEach((elx) => {

@@ -6,13 +6,12 @@ class VerbPracticesController < SentencesController
     @exercice = Exercice.find(params[:exercice_id])
 
     @sentence = Sentence.create!(user: current_user, exercice: @exercice)
-
     sentence_feeder
+
     render :sentence
   end
 
   def update
-
     @sentence = Sentence.find(params[:id])
     @exercice = @sentence.exercice
 
@@ -29,15 +28,25 @@ class VerbPracticesController < SentencesController
 
   private
 
-  def sentence_feeder
-    exercice_correction if params[:commit] == COMMIT_MESSAGE
-
-    @sentence.update_attributes VerbPractice.new(preterit: @exercice.preterit).generate
-    @sentence.increment!(:session_counter)
+  def create_trial(type)
+    trial = Trial.find_by(sentence: @sentence,
+                          result: 'temp')
+    trial.update(result: type)
+    super
   end
 
-  # def fetch_preterit
-  #   @preterit = @sentence.exercice
-  # end
+  def sentence_feeder
+    exercice_correction if params[:commit] == COMMIT_MESSAGE
+    @verb_practice = VerbPractice.new(preterit: @exercice.preterit)
+
+    @sentence.update_attributes @verb_practice.generate
+    @sentence.increment!(:session_counter)
+
+    Trial.create!(user: current_user,
+                  exercice: @exercice,
+                  result: 'temp',
+                  sentence: @sentence,
+                  verb: @verb_practice.verb)
+  end
 
 end

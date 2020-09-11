@@ -1,4 +1,16 @@
 FactoryBot.define do
+  factory :bucket do
+    user { nil }
+    level { 1 }
+    verb { nil }
+  end
+
+  factory :verb_error do
+    preterit { "MyString" }
+    person { "MyString" }
+    trial { nil }
+  end
+
   factory :sentence do
     value { "Ich bin ein Berliner" }
     english { "I am the president" }

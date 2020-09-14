@@ -1,5 +1,5 @@
 console.log('choco pizza')
 $("#edicts-container")
-.append("<%= render 'form', edict: @edict %>")
+.insertBefore("<%= render 'form', edict: @edict %>")
 $("#create_form")
 .replaceWith("<%= render 'form', edict: Edict.new, method: :post %>")

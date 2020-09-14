@@ -7,7 +7,7 @@ module ViewsHelper
 
   def global_success_for(user, number_days)
     time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
-    Trial.where(user: user, result: :success, created_at: time_frame).count
+    Trial.where(user: user, result: :correct, created_at: time_frame).count
   end
 
   def global_precentage_for(user, number_days)

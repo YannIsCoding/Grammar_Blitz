@@ -20,7 +20,7 @@ FactoryBot.define do
   end
 
   factory :trial do
-    result { :fail }
+    result { :wrong }
     association :user
     association :exercice
     association :sentence

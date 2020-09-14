@@ -12,9 +12,10 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
-  def successes
-    Trial.where(user: self, success: true).count
-  end
+  # def corrects
+  #   # Trial.where(user: self, result: :correct).count
+  #   self.trials.correct
+  # end
 
   def self.ranking
     shameful_array = []

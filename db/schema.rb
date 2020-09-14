@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_12_095522) do
+ActiveRecord::Schema.define(version: 2020_09_14_185053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_09_12_095522) do
     t.string "value"
     t.string "english"
     t.bigint "exercice_id"
+    t.string "hide_index", array: true
     t.index ["exercice_id"], name: "index_edicts_on_exercice_id"
   end
 
@@ -56,7 +57,7 @@ ActiveRecord::Schema.define(version: 2020_09_12_095522) do
     t.datetime "updated_at", null: false
     t.string "hide_index", array: true
     t.string "structure"
-    t.boolean "edicted"
+    t.boolean "edicted", default: false
   end
 
   create_table "nouns", force: :cascade do |t|

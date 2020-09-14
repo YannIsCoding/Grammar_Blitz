@@ -3,13 +3,14 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   resources :exercices, only: [:index, :show, :new, :create]
-  resources :sentences, only: [:new, :update]
-  resources :edicts, only:  [:index, :create, :update, :destroy]
+  # resources :sentences, only: [:new, :update]
   resources :structures, only:  [:new, :create]
 
   resources :exercices, only: [] do
     get 'verb_practice', to: 'verb_practices#new'
     put 'verb_practice/:id', to: 'verb_practices#update', as: :update_verb
+    resources :sentences, only: [:new, :update]
+    resources :edicts, only:  [:index, :create, :update, :destroy]
   end
 
   get 'verb_result/:id', to: 'verb_practices#result', as: :verb_result

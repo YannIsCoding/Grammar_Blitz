@@ -7,7 +7,7 @@
   <div id="form-container" style= <%=  "display:none;" unless @start %> >
     <p id="english-sentence"> <%= @sentence.english %> </p>
 
-    <%= form_for(@sentence,
+    <%= form_for([@exercice, @sentence],
                  method: :patch,
                  remote: true,
                  html: { autocomplete: "off", autocapitalize: 'off' }) do %>

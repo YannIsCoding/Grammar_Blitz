@@ -10,6 +10,7 @@ class Exercice < ApplicationRecord
   scope :edicted, -> { where(edicted: true) }
   scope :with_verb, -> { where("structure LIKE ?", "%_present") }
   scope :not_verb, -> { where("structure NOT LIKE ?", "%_present") }
+  scope :automated, -> { not_verb.where(edicted: false) }
 
   # scope :automated, -> { where(edicted: false).where("structure NOT LIKE ?", "%_present") }
 

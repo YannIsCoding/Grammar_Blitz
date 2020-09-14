@@ -7,7 +7,7 @@ class BucketFiller
     trials_by_verbs = @trials.group_by(&:verb)
     trials_by_verbs.each do |verb, trials|
       @bucket = Bucket.find_or_create_by!(user: trials.first.user, verb: verb)
-      if trials.any?(&:fail?)
+      if trials.any?(&:wrong?)
         @bucket.zero!
       elsif @bucket.short?
         @bucket.long!

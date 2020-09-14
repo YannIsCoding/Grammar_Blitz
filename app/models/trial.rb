@@ -6,5 +6,5 @@ class Trial < ApplicationRecord
 
   enum result: %i[correct wrong running]
 
-  scope :permanent, -> { where.not(result: :temp) }
+  scope :permanent, -> { where.not(result: :running) }
 end

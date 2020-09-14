@@ -12,9 +12,9 @@ RSpec.describe BucketFiller do
 
     create(:trial, verb: @first_verb, sentence: @sentence,
                    exercice: exercice, user: @user)
-    create(:trial, result: :success, verb: @second_verb, sentence: @sentence,
+    create(:trial, result: :correct, verb: @second_verb, sentence: @sentence,
                    exercice: exercice, user: @user)
-    create(:trial, result: :success, verb: @third_verb, sentence: @sentence,
+    create(:trial, result: :correct, verb: @third_verb, sentence: @sentence,
                    exercice: exercice, user: @user)
 
     create(:bucket, user: @user, level: :short, verb: @third_verb)

@@ -1,5 +1,12 @@
-<%= simple_form_for edict, remote: true, html: { method: :put, class: 'mt-1 w-50' } do |f|  %>
-  <%= f.input_field :value  %>
-  <%= f.input_field :english  %>
-  <%= f.button :submit, value: 'Update', class: 'btn-primary' %>
+<% method ||= :put %>
+<% remote ||= false %>
+<%= simple_form_for [@exercice, edict],
+                    remote: remote,
+                    html: { method: method, class: 'mt-1' } do |f|  %>
+  <div class="d-flex justify-content-around">
+    <%= f.input_field :value, class: 'mr-1'  %>
+    <%= f.input_field :english, class: 'mr-1'  %>
+    <%= f.input_field :hide_index, value: @exercice.hide_index, class: 'mr-1'  %>
+    <%= f.button :submit, value: 'Submit', class: 'btn-primary' %>
+  </div>
 <% end %>

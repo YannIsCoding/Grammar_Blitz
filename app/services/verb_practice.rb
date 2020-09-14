@@ -1,76 +1,53 @@
 class VerbPractice < SentenceBuilderService
-  attr_reader :verb
+  attr_reader :verb, :trials
 
   def initialize(preterit:, user:, trials:)
     @preterit = preterit
     @user =     user
     @verbs =    Verb.where(preterit: @preterit)
     @buckets =  Bucket.where(user: @user, verb: @verbs)
-    @verb =     fetch_verb
-    @person =   Person.fetch(@verb.person)
-    @subject =  Pronoun.find_by(person: @person, kind: 'personal', g_case: 'nominative')
-    @trials = trials
+    @trials =   trials
+
+    @zeros = @buckets.zero
+    @shorts = @buckets.short
+    @longs = @buckets.long
   end
 
   def generate
+    verb_and_subject
     @value = { value: "#{@subject} #{@verb}".capitalize,
                english: "#{@subject.english} #{@verb.english}".capitalize }
+  end
+
+  def verbs_prob
+    @verbs_prob ||= [@zeros.pluck(:verb_id).to_a * 4,
+                     @shorts.pluck(:verb_id).to_a * 2,
+                     @longs.pluck(:verb_id)].flatten
+  end
+
+  def verb_and_subject
+    @verb =     fetch_verb
+    @person =   Person.fetch(@verb.person)
+    @subject =  Pronoun.find_by(person: @person, kind: 'personal', g_case: 'nominative')
   end
 
   private
 
   def fetch_verb
-    @zeros = @buckets.zero
-    @shorts = @buckets.short
-    @longs = @buckets.long
+    return lowest_element if @trials.blank?
 
-    p 'HERE IS THE SHIT'
-    p @trials
-
-
-    # if @trials.present?
-    #   grouped = @trials.group_by(:verb)
-    # else
-    #   if @zeros.present?
-    #     return @zeros.sample.verb
-    #   elsif @shorts.present?
-    #     return @shorts.sample.verb
-    #   else
-    #     return @long.sample.verb
-    #   end
-    # end
-
-    verbs_prob = [@zeros.pluck(:verb_id).to_a * 4, @shorts.pluck(:verb_id).to_a * 2, @longs.pluck(:verb_id)].flatten
-
-    # @zeros.each do |zero|
-    #   if grouped[zero.verb].count < coeficient * 4
-    #     return zero.verb
-    #   end
-    # end
-
-    # @shorts.each do |short|
-    #   if grouped[short.verb].count < coeficient * 2
-    #     return short.verb
-    #   end
-    # end
-
-    # @longs.sample
-    to_be_substracted = @trials&.pluck(:verb_id)
-
-    to_be_substracted.each do |verb_id|
+    @trials.pluck(:verb_id).each do |verb_id|
       verbs_prob.delete_at(verbs_prob.index(verb_id))
     end
 
-    Verb.find verbs.prob.sample
+    Verb.find gimme_verb
   end
 
-  # def coeficient
-  #   unless coeff
-  #     sum = @zeros.count * 4.0 + @shorts.count * 2 + @long.count
-  #     coeff = 100 / sum
-  #   end
-  #   coeff
-  # end
+  def gimme_verb
+    verbs_prob.sample || @verbs.sample.id
+  end
 
-
+  def lowest_element
+    (@zeros.sample || @shorts.sample || @longs.sample || @verbs.sample).verb
+  end
 end

@@ -10,7 +10,7 @@ class VerbPracticesController < SentencesController
 
     Trial.create!(user: current_user,
                   exercice: @exercice,
-                  result: 'temp',
+                  result: :running,
                   sentence: @sentence,
                   verb: @verb_practice.verb)
 
@@ -23,14 +23,14 @@ class VerbPracticesController < SentencesController
 
     sentence_feeder
 
-    Trial.create!(user: current_user,
-                  exercice: @exercice,
-                  result: 'temp',
-                  sentence: @sentence,
-                  verb: @verb_practice.verb)
-
     if @sentence.session_counter > SESSION_LENGTH - 1
       @redirect = verb_result_path(@sentence)
+    else
+      Trial.create!(user: current_user,
+                    exercice: @exercice,
+                    result: :running,
+                    sentence: @sentence,
+                    verb: @verb_practice.verb)
     end
 
     respond_to do |format|
@@ -45,21 +45,18 @@ class VerbPracticesController < SentencesController
 
   private
 
-  def create_trial(type)
+  def fetch_trial(type)
     @trial = Trial.find_by(sentence: @sentence,
-                          result: 'temp')
+                           result: :running)
     @trial.update(result: type)
     super
   end
 
   def sentence_feeder
     exercice_correction if params[:commit] == COMMIT_MESSAGE
-    p "HERE IS ANOTHER SHIT:"
-    stuff = Trial.where(sentence_id: @sentence.id)
-    p stuff
     @verb_practice = VerbPractice.new(preterit: @exercice.preterit,
                                       user: current_user,
-                                      trials: Trial.where(sentence_id: @sentence.id))
+                                      trials: Trial.where(sentence: @sentence))
 
     @sentence.update_attributes @verb_practice.generate
     @sentence.increment!(:session_counter)

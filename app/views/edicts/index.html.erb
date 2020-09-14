@@ -1,28 +1,22 @@
 <div class="container text-center mt-2">
   <% @exercices.each do |exercice| %>
-    <%= link_to exercice.structure, edicts_path(exercice: exercice), class: 'btn btn-success'  %>
+    <%= link_to exercice.structure, exercice_edicts_path(exercice), class: 'btn btn-success'  %>
   <% end %>
   <%= link_to 'New Exercice', new_exercice_path, class: 'btn btn-warning' %>
 </div>
 
 <!-- Update form -->
-<div class="container text-center mt-2">
+<div id="edicts-container" class="container text-center mt-2">
   <% @edicts.each do |edict| %>
     <div class="d-flex justify-content-around">
-      <%= render 'form', edict: edict %>
-      <%= link_to 'Delete', edict_path(edict), method: :delete, class: 'btn btn-warning' %>
+      <%= render 'form', edict: edict, remote: true %>
+      <%= link_to 'Delete', exercice_edict_path(@exercice, edict), method: :delete, class: 'btn btn-warning' %>
     </div>
   <% end %>
 
 <!-- Form for new Edicts -->
-  <%= simple_form_for @edict, html: { class: 'mt-1' } do |f|  %>
-    <div class="d-inline">
-      <%= f.input :value  %>
-      <%= f.input :english  %>
-      <%= f.input_field :exercice_id, value: @exercice.id, class: 'd-none'  %>
-      <%= f.button :submit, value: 'Create', class: 'btn-primary' %>
-    </div>
-
-  <% end %>
-
+  <div id="create_form" class="d-flex justify-content-around">
+    <%= render 'form', edict: @edict, method: :post %>
+    <div></div>
+  </div>
 </div>

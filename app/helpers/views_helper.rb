@@ -15,7 +15,7 @@ module ViewsHelper
     trials = Trial.where(user: user,
                          created_at: time_frame).count
     successes = Trial.where(user: user,
-                            result: :success,
+                            result: :correct,
                             created_at: time_frame).count
     return ((successes / trials.to_f) * 100).to_i if trials.positive?
 
@@ -29,7 +29,7 @@ module ViewsHelper
                          created_at: time_frame).count
     successes = Trial.where(user: user,
                             exercice: exercice,
-                            result: :success,
+                            result: :correct,
                             created_at: time_frame).count
     return ((successes / trials.to_f) * 100).to_i if trials.positive?
 
@@ -38,7 +38,7 @@ module ViewsHelper
 
   def percentage_for_batch(sentence)
     trials = sentence.trials.count
-    successes = sentence.trials.where(result: :success).count
+    successes = sentence.trials.where(result: :correct).count
     ((successes / trials.to_f) * 100).to_i
   end
 

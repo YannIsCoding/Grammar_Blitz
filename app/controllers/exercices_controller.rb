@@ -3,8 +3,9 @@ class ExercicesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
 
   def index
-    @exercices = Exercice.not_verb.order(:created_at)
+    @exercices = Exercice.automated.order(:created_at)
     @verb_exercices = Exercice.with_verb
+    @edicted = Exercice.edicted
   end
 
   def new
@@ -20,12 +21,6 @@ class ExercicesController < ApplicationController
       render :new
     end
   end
-
-  # deprecated
-  # def setup
-  #   @exercice = Exercice.find(params[:id])
-  #   @sentence = Sentence.where(user: current_user, exercice: @exercice).last || Sentence.create(user: current_user, exercice: @exercice)
-  # end
 
   private
 

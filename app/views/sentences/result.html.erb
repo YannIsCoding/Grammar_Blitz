@@ -9,7 +9,7 @@
     <% batch_percent = percentage_for_batch(@sentence) %>
 
     <div class="mt-4">
-      <h6>You had <%= @sentence.trials.where(success: true).count %> correct answers</h6>
+      <h6>You had <%= @sentence.trials.where(result: :success).count %> correct answers</h6>
       <div class="progress mb-4 progressbar-container">
         <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
               role="progressbar"
@@ -48,11 +48,8 @@
       </div>
       <div class="container">
         <div class="row justify-content-end mt-5">
-          <div class="col-12 col-md-5 py-4">
-            <%#= link_to 'Change settings', exercice_setup_path(@exercice), class:'green-button mx-3' %>
-          </div>
           <div class="col-12 col-md-4 py-4">
-            <%= link_to 'Try again!', new_sentence_path(exercice: @exercice), class:'cool-button mx-3', method:'get' %>
+            <%= link_to 'Try again!', @try_again_link, class:'cool-button mx-3', method:'get' %>
           </div>
         </div>
       </div>

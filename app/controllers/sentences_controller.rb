@@ -32,10 +32,7 @@ class SentencesController < ApplicationController
   end
 
   def result
-    @failed_trial = Trial.where(sentence: @sentence,
-                                result: 'fail')
-    @failed_verb = @failed_trial.map(&:verb)
-
+    @try_again_link = new_sentence_path(exercice)
   end
 
   private
@@ -59,11 +56,11 @@ class SentencesController < ApplicationController
   end
 
   def create_trial(type)
-    trial = Trial.create!(user: current_user,
+    @trial ||= Trial.create!(user: current_user,
                           exercice: @exercice,
                           result: type,
                           sentence: @sentence)
-    @sentence.streak = trial.success? ? @sentence.streak + 1 : 0
+    @sentence.streak = @trial.success? ? @sentence.streak + 1 : 0
   end
 
   def response_params

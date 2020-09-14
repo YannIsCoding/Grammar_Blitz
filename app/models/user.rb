@@ -28,6 +28,8 @@ class User < ApplicationRecord
   private
 
   def send_welcome_email
-    UserMailer.welcome(self).deliver_now
+    unless Rails.env == 'test'
+      UserMailer.welcome(self).deliver_now
+    end
   end
 end

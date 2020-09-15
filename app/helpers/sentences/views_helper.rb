@@ -1,26 +1,27 @@
 module Sentences
   module ViewsHelper
-    def hide_answer(sentence, positions)
-      # transform in array
-      splited_sentence = sentence.split(' ')
+    # def hide_answer(sentence, positions)
+    #   # transform in array
+    #   splited_sentence = sentence.split(' ')
 
-      # each word marked is replaced
-      positions.each do |position|
-        splited_sentence[position.to_i] = '_____'
-      end
+    #   # each word marked is replaced
+    #   positions.each do |position|
+    #     splited_sentence[position.to_i] = '_____'
+    #   end
 
-      # joined back
-      splited_sentence.join(' ')
-    end
+    #   # joined back
+    #   splited_sentence.join(' ')
+    # end
 
     def split_sentence(sentence, positions)
-      # transform in array
+      # Hide the words the user is tested for
       sentence_array = sentence.split(' ')
       positions.each { |position| sentence_array[position.to_i] = nil }
       sentence_array
     end
 
     def show_streak?(streak)
+      # Show congrats every 5 corrects answers
       (streak % 5).zero? && !streak.zero?
     end
 

@@ -7,8 +7,18 @@
 
 <!-- Update form -->
 <div id="edicts-container" class="container text-center mt-2">
+    <div class="d-flex justify-content-around">
+      <p>The user will see</p>
+      <p>German</p>
+      <p>English</p>
+      <p>Hidden words index</p>
+      <div></div>
+    </div>
   <% @edicts.each do |edict| %>
     <div class="d-flex justify-content-around">
+      <div>
+        <%= highlight_hidden_word(edict.value, edict.hide_index) %>
+      </div>
       <%= render 'form', edict: edict, remote: true %>
       <%= link_to 'Delete', exercice_edict_path(@exercice, edict), method: :delete, class: 'btn btn-warning' %>
     </div>

@@ -50,16 +50,6 @@ module ViewsHelper
     current_user == user ? "active-user" : ""
   end
 
-
-  def highlight_solution(sentence, positions)
-    # splited_sentence = sentence.split(' ')
-    # positions.each do |position|
-    #   splited_sentence[position.to_i] = splited_sentence[position.to_i].upcase
-    # end
-    # splited_sentence.join(' ')
-    sentence
-  end
-
   def active_element?(word_indexes, position)
     word_indexes.include?(position)
   end

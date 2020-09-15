@@ -24,16 +24,28 @@
           <% @exercices.each do |exercice| %>
             <div class="exercice mr-2 mb-2">
 
-              <h6 class=" text-left"> <%=  exercice.name %> </h6>
+              <h6> <%=  exercice.name %> </h6>
 
               <div class=" my-2">
                 <%= exercice.description %>
               </div>
 
               <%= link_to 'Play',
-                          new_sentence_path(exercice: exercice.id),
+                          new_exercice_sentence_path(exercice),
                           class: 'index-button mx-3 my-4' %>
 
+            </div>
+          <% end %>
+        </div>
+
+        <h2>Edict practice</h2>
+        <div class="verb-exercices mb-2">
+          <% @edicted.each do |edict_exercice| %>
+            <div class="exercice mr-2">
+              <h6> <%=  edict_exercice.name %> </h6>
+              <%= link_to "Play",
+                          new_exercice_sentence_path(edict_exercice),
+                          class: "index-button"  %>
             </div>
           <% end %>
         </div>

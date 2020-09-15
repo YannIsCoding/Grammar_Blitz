@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :bucket do
     user { nil }
-    level { 1 }
+    level { 0 }
     verb { nil }
   end
 
@@ -20,9 +20,11 @@ FactoryBot.define do
   end
 
   factory :trial do
-    success { false }
-    user
-    exercice
+    result { :wrong }
+    association :user
+    association :exercice
+    association :sentence
+    association :verb
   end
 
   factory :user do
@@ -37,31 +39,31 @@ FactoryBot.define do
     end
   end
 
-  factory :structure do
-    name { 's_v_do' }
+  # factory :structure do
+  #   name { 's_v_do' }
 
-    trait :v_s_do do
-      name { 'v_s_do' }
-    end
+  #   trait :v_s_do do
+  #     name { 'v_s_do' }
+  #   end
 
-    trait :s_v_do_dative do
-      name { 's_v_do_dative' }
-    end
+  #   trait :s_v_do_dative do
+  #     name { 's_v_do_dative' }
+  #   end
 
-    trait :s_v_prep_do do
-      name { 's_v_prep_do' }
-    end
+  #   trait :s_v_prep_do do
+  #     name { 's_v_prep_do' }
+  #   end
 
-    trait :s_v_io_do do
-      name { 's_v_io_do' }
-    end
-  end
+  #   trait :s_v_io_do do
+  #     name { 's_v_io_do' }
+  #   end
+  # end
 
   factory :exercice do
     name { 'accusative with direct object' }
     description { 'Very interesting description of the exercice goes here' }
     hide_index { [2] }
-    structure
+    structure { 'kaufen_present' }
 
     trait :question_accusative do
       name { 'question with accusative direct object' }

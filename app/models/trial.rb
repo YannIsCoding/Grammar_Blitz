@@ -4,5 +4,7 @@ class Trial < ApplicationRecord
   belongs_to :sentence
   belongs_to :verb, optional: true
 
-  enum result: %i[success fail temp]
+  enum result: %i[correct wrong running]
+
+  scope :permanent, -> { where.not(result: :running) }
 end

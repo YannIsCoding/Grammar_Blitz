@@ -1,0 +1,10 @@
+<%= simple_form_for @exercice, html: { class: 'mt-1' } do |f|  %>
+
+  <div class="d-inline">
+    <%= f.input :name  %>
+    <%= f.input :description  %>
+    <%= f.input :structure  %>
+    <%= f.button :submit, value: 'Create', class: 'btn-primary' %>
+  </div>
+
+<% end %>

@@ -1,15 +1,18 @@
 class EdictsController < ApplicationController
-  before_action :set_exercice, only: [:index, :create]
+  before_action :set_exercice, only: %i[index create update destroy]
+  before_action :set_edict, only: %i[update destroy]
 
   def index
     @edicts = Edict.where(exercice: @exercice)
-    @edict = Edict.new
+    @edict = Edict.new(exercice: @exercice)
   end
 
   def create
-    @edict = Edict.new(edict_params)
+    @edict = Edict.new(edict_params.merge(exercice: @exercice))
+    @edict.hide_index = edict_params[:hide_index].scan(/\d/)
+
     if @edict.save
-      redirect_to edicts_path
+      redirect_to exercice_edicts_path(@exercice)
     else
       @edicts = Edict.where(exercice: @exercice)
       render :index
@@ -17,10 +20,14 @@ class EdictsController < ApplicationController
   end
 
   def update
-    @edict = Edict.find_by_id params[:id] || Edict.new
+    array = edict_params[:hide_index].scan(/\d/)
+    @edict.hide_index = array
+
     if @edict.update(edict_params)
-      respond_to do
-        format.js { render :update , status: :ok }
+       @edict.hide_index = edict_params[:hide_index].scan(/\d/)
+       @edict.save
+      respond_to do |format|
+        format.js { render :update, status: :ok }
       end
     else
       render :index
@@ -28,19 +35,22 @@ class EdictsController < ApplicationController
   end
 
   def destroy
-    @edict = Edict.find params[:id]
     @edict.destroy
-    redirect_to edicts_path
+    redirect_to exercice_edicts_path(@exercice)
   end
 
   private
 
   def edict_params
-    params.require(:edict).permit(:value, :english, :exercice_id)
+    params.require(:edict).permit(:value, :english, :hide_index)
+  end
+
+  def set_edict
+    @edict = Edict.find params[:id] #|| Edict.new
   end
 
   def set_exercice
-    @exercice = Exercice.find_by_id(params[:exercice]) || Exercice.find_by(structure: 's_v_do_mit')
+    @exercice = Exercice.find(params[:exercice_id])
     @exercices = Exercice.edicted
   end
 end

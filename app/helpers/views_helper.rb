@@ -7,7 +7,7 @@ module ViewsHelper
 
   def global_success_for(user, number_days)
     time_frame = (Time.zone.now.midnight - number_days.day)..Time.zone.now.midnight + 1.day
-    Trial.where(user: user, result: :success, created_at: time_frame).count
+    Trial.where(user: user, result: :correct, created_at: time_frame).count
   end
 
   def global_precentage_for(user, number_days)
@@ -15,7 +15,7 @@ module ViewsHelper
     trials = Trial.where(user: user,
                          created_at: time_frame).count
     successes = Trial.where(user: user,
-                            result: :success,
+                            result: :correct,
                             created_at: time_frame).count
     return ((successes / trials.to_f) * 100).to_i if trials.positive?
 
@@ -29,7 +29,7 @@ module ViewsHelper
                          created_at: time_frame).count
     successes = Trial.where(user: user,
                             exercice: exercice,
-                            result: :success,
+                            result: :correct,
                             created_at: time_frame).count
     return ((successes / trials.to_f) * 100).to_i if trials.positive?
 
@@ -38,7 +38,7 @@ module ViewsHelper
 
   def percentage_for_batch(sentence)
     trials = sentence.trials.count
-    successes = sentence.trials.where(result: :success).count
+    successes = sentence.trials.where(result: :correct).count
     ((successes / trials.to_f) * 100).to_i
   end
 
@@ -48,16 +48,6 @@ module ViewsHelper
 
   def active_user_class(user)
     current_user == user ? "active-user" : ""
-  end
-
-
-  def highlight_solution(sentence, positions)
-    # splited_sentence = sentence.split(' ')
-    # positions.each do |position|
-    #   splited_sentence[position.to_i] = splited_sentence[position.to_i].upcase
-    # end
-    # splited_sentence.join(' ')
-    sentence
   end
 
   def active_element?(word_indexes, position)

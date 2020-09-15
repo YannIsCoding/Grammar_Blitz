@@ -8,8 +8,7 @@ class SentencesController < ApplicationController
 
   def new
     @start = true
-    @exercice = Exercice.find(params[:exercice])
-
+    @exercice = Exercice.find(params[:exercice_id])
     @sentence = Sentence.create!(user: current_user, exercice: @exercice)
 
     sentence_feeder
@@ -32,10 +31,7 @@ class SentencesController < ApplicationController
   end
 
   def result
-    @failed_trial = Trial.where(sentence: @sentence,
-                                result: 'fail')
-    @failed_verb = @failed_trial.map(&:verb)
-
+    @try_again_link = new_sentence_path(@exercice)
   end
 
   private
@@ -45,25 +41,25 @@ class SentencesController < ApplicationController
     @responses = response_params
     if RegexMachine.new(@responses).generate =~ @sentence.value
       @success = true
-      create_trial(:success)
+      fetch_trial(:correct)
     else
       @success = false
-      create_trial(:fail)
+      fetch_trial(:wrong)
     end
     @prev_sentence = @sentence.value
     @result = true
   end
 
-  def setup_params
-    ['subject', 'verb', '_article', 'noun', 'noun2'].map { |el| params[el] if params.key?(el) }.compact
-  end
+  # def setup_params
+  #   ['subject', 'verb', '_article', 'noun', 'noun2'].map { |el| params[el] if params.key?(el) }.compact
+  # end
 
-  def create_trial(type)
-    trial = Trial.create!(user: current_user,
-                          exercice: @exercice,
-                          result: type,
-                          sentence: @sentence)
-    @sentence.streak = trial.success? ? @sentence.streak + 1 : 0
+  def fetch_trial(type)
+    @trial ||= Trial.create!(user: current_user,
+                             exercice: @exercice,
+                             result: type,
+                             sentence: @sentence)
+    @sentence.streak = @trial.correct? ? @sentence.streak + 1 : 0
   end
 
   def response_params
@@ -78,13 +74,13 @@ class SentencesController < ApplicationController
     end
   end
 
-  def set_sentence
-    @sentence = Sentence.find(params[:id])
-  end
+  # def set_sentence
+  #   @sentence = Sentence.find(params[:id])
+  # end
 
-  def set_exercice
-    @exercice = @sentence.exercice
-  end
+  # def set_exercice
+  #   @exercice = @sentence.exercice
+  # end
 
   def sentence_feeder
     exercice_correction if params[:commit] == COMMIT_MESSAGE

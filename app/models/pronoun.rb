@@ -1,5 +1,5 @@
 class Pronoun < ApplicationRecord
   def to_s
-   value
+    value
   end
 end

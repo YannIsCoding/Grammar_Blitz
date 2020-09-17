@@ -15,7 +15,7 @@ class EdictsController < ApplicationController
       redirect_to exercice_edicts_path(@exercice)
     else
       @edicts = Edict.where(exercice: @exercice)
-      render :index
+      # render :index
     end
   end
 
@@ -24,12 +24,13 @@ class EdictsController < ApplicationController
     @edict.hide_index = array
 
     if @edict.update(edict_params)
-       @edict.hide_index = edict_params[:hide_index].scan(/\d/)
-       @edict.save
+      @edict.hide_index = edict_params[:hide_index].scan(/\d/)
+      @edict.save
       respond_to do |format|
         format.js { render :update, status: :ok }
       end
     else
+      @edicts = Edict.where(exercice: @exercice)
       render :index
     end
   end
@@ -46,7 +47,7 @@ class EdictsController < ApplicationController
   end
 
   def set_edict
-    @edict = Edict.find params[:id] #|| Edict.new
+    @edict = Edict.find params[:id]
   end
 
   def set_exercice

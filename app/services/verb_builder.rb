@@ -1,9 +1,9 @@
-class VerbPractice < SentenceBuilderService
+class VerbBuilder < SentenceBuilderService
   attr_reader :verb, :trials
 
   def initialize(preterit:, user:, trials:)
     @preterit = preterit
-    @user =     user
+    @user =     user #TODO Remove user and replace with buckets direcly
     @verbs =    Verb.where(preterit: @preterit)
     @buckets =  Bucket.where(user: @user, verb: @verbs)
     @trials =   trials
@@ -15,6 +15,7 @@ class VerbPractice < SentenceBuilderService
 
   def generate
     verb_and_subject
+    p @subject
     @value = { value: "#{@subject} #{@verb}".capitalize,
                english: "#{@subject.english} #{@verb.english}".capitalize }
   end
@@ -48,6 +49,6 @@ class VerbPractice < SentenceBuilderService
   end
 
   def lowest_element
-    (@zeros.sample || @shorts.sample || @longs.sample || @verbs.sample).verb
+    (@zeros.sample || @shorts.sample || @longs.sample)&.verb || @verbs.sample
   end
 end

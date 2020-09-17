@@ -4,22 +4,26 @@ class VerbPracticesController < SentencesController
   def new
     @start = true
     @exercice = Exercice.find(params[:exercice_id])
+    @sentence = Sentence.create(user: @user, exercice: @exercice)
 
-    @sentence = Sentence.create!(user: current_user, exercice: @exercice)
-    sentence_feeder
+    # @sentence = Sentence.create!(user: current_user, exercice: @exercice)
+    # sentence_feeder
 
-    Trial.create!(user: current_user,
-                  exercice: @exercice,
-                  result: :running,
-                  sentence: @sentence,
-                  verb: @verb_practice.verb)
-
+    # Trial.create!(user: current_user,
+    #               exercice: @exercice,
+    #               result: :running,
+    #               sentence: @sentence,
+    #               verb: @verb_builder.verb)
+    @sentence = VerbPractice.new(sentence: @sentence).launch
     render :sentence
   end
 
   def update
     @sentence = Sentence.find(params[:id])
     @exercice = @sentence.exercice
+
+    result = ExerciceCorrector.review
+    @sentence = VerbPractice.new(sentence: @sentence).continue(result)
 
     sentence_feeder
 
@@ -30,7 +34,7 @@ class VerbPracticesController < SentencesController
                     exercice: @exercice,
                     result: :running,
                     sentence: @sentence,
-                    verb: @verb_practice.verb)
+                    verb: @verb_builder.verb)
     end
 
     respond_to do |format|
@@ -53,15 +57,13 @@ class VerbPracticesController < SentencesController
   end
 
   def sentence_feeder
+    # unless first time exercice correction
     exercice_correction if params[:commit] == COMMIT_MESSAGE
-    @verb_practice = VerbPractice.new(preterit: @exercice.preterit,
+    @verb_builder = VerbBuilder.new(preterit: @exercice.preterit,
                                       user: current_user,
                                       trials: Trial.where(sentence: @sentence))
 
-    @sentence.update_attributes @verb_practice.generate
+    @sentence.update_attributes @verb_builder.generate
     @sentence.increment!(:session_counter)
-
-
   end
-
 end

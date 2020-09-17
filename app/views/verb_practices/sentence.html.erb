@@ -5,7 +5,10 @@
 
   <div class="exercice-container mx-3">
     <%= render 'sentences/shared/single_result' %>
-    <%= render 'form', sentence: @sentence, prev_sentence: @prev_sentence, responses: @responses, result: @result %>
+    <%= render 'form', sentence: @sentence,
+                       prev_sentence: @prev_sentence,
+                       responses: @responses %>
+                       <!-- result: @result -->
 
     <%= render 'sentences/shared/keyboard' %>
 

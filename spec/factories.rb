@@ -5,12 +5,6 @@ FactoryBot.define do
     verb { nil }
   end
 
-  factory :verb_error do
-    preterit { "MyString" }
-    person { "MyString" }
-    trial { nil }
-  end
-
   factory :sentence do
     value { "Ich bin ein Berliner" }
     english { "I am the president" }

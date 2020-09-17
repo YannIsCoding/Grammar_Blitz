@@ -1,8 +1,8 @@
 class SentencesController < ApplicationController
   protect_from_forgery unless: -> { request.format.js? }
 
-  before_action :set_sentence, only: %i[result save_setup]
-  before_action :set_exercice, only: %i[result save_setup]
+  # before_action :set_sentence, only: %i[result save_setup]
+  # before_action :set_exercice, only: %i[result]
 
   COMMIT_MESSAGE = 'BANG!'
 
@@ -31,7 +31,9 @@ class SentencesController < ApplicationController
   end
 
   def result
-    @try_again_link = new_sentence_path(@exercice)
+    set_sentence
+    set_exercice
+    @try_again_link = new_exercice_sentence_path(@exercice)
   end
 
   private
@@ -40,19 +42,13 @@ class SentencesController < ApplicationController
     # compare the answer given by to the original sentences using Regex
     @responses = response_params
     if RegexMachine.new(@responses).generate =~ @sentence.value
-      @success = true
       fetch_trial(:correct)
     else
-      @success = false
       fetch_trial(:wrong)
     end
     @prev_sentence = @sentence.value
-    @result = true
+    # @result = true
   end
-
-  # def setup_params
-  #   ['subject', 'verb', '_article', 'noun', 'noun2'].map { |el| params[el] if params.key?(el) }.compact
-  # end
 
   def fetch_trial(type)
     @trial ||= Trial.create!(user: current_user,
@@ -74,20 +70,23 @@ class SentencesController < ApplicationController
     end
   end
 
-  # def set_sentence
-  #   @sentence = Sentence.find(params[:id])
-  # end
+  def set_sentence
+    @sentence = Sentence.find(params[:id])
+  end
 
-  # def set_exercice
-  #   @exercice = @sentence.exercice
-  # end
+  def set_exercice
+    @exercice = @sentence.exercice
+  end
 
   def sentence_feeder
+    # unless first time exercice correction
     exercice_correction if params[:commit] == COMMIT_MESSAGE
 
     if @exercice.edicted?
       @edict = @exercice.edicts.sample
-      @sentence.update_attributes(value: @edict.value, english: @edict.english)
+      @sentence.update_attributes(value: @edict.value,
+                                  english: @edict.english,
+                                  word_indexes: @edict.hide_index)
     else
       @sentence.update_attributes SentenceBuilderService.new(@sentence.exercice).generate
     end

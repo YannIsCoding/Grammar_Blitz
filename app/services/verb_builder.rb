@@ -15,7 +15,6 @@ class VerbBuilder < SentenceBuilderService
 
   def generate
     verb_and_subject
-    p @subject
     @value = { value: "#{@subject} #{@verb}".capitalize,
                english: "#{@subject.english} #{@verb.english}".capitalize }
   end

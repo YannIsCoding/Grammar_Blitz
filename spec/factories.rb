@@ -15,7 +15,7 @@ FactoryBot.define do
 
   factory :trial do
     result { :wrong }
-    association :user
+    association :user, strategy: :build
     association :exercice
     association :sentence
     association :verb

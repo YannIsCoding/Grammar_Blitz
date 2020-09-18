@@ -5,18 +5,23 @@ class VerbPractice
 
   def launch
     update_sentence
-    generate_trial
+    # generate_trial
 
     @sentence
   end
 
   def continue(result)
-    update_sentence(Trial.where(sentence: @sentence))
-    @trial = Trial.find_by(sentence: @sentence,
-                           result: :running)
-    @trial.update(result: (result ? :correct : :wrong))
-    generate_trial unless @sentence.session_finish?
+    # @trial = Trial.find_by(sentence: @sentence,
+    #                        result: :running)
+    # @trial.update(result: (result ? :correct : :wrong))
+    # generate_trial #unless @sentence.session_finish?
+    Trial.create!(user: @sentence.user,
+                  exercice: @sentence.exercice,
+                  result: (result ? :correct : :wrong),
+                  sentence: @sentence,
+                  verb: @verb_builder.verb)
 
+    update_sentence(Trial.where(sentence: @sentence))
     @sentence
   end
 
@@ -31,8 +36,8 @@ class VerbPractice
   end
 
   def generate_trial
-    Trial.create!(user: @user,
-                  exercice: @exercice,
+    Trial.create!(user: @sentence.user,
+                  exercice: @sentence.exercice,
                   result: :running,
                   sentence: @sentence,
                   verb: @verb_builder.verb)

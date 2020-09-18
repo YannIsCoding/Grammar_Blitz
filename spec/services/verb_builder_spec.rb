@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe VerbPractice do
+RSpec.describe VerbBuilder do
   before(:each) do
     @user = create(:user)
     @exercice = create(:exercice)
@@ -17,54 +17,54 @@ RSpec.describe VerbPractice do
 
   describe 'with 3 buckets representing each 3 levels' do
     it 'returns the correct proportion' do
-      verb_practice = VerbPractice.new(preterit: 'kaufen',
+      verb_builder = VerbBuilder.new(preterit: 'kaufen',
                                        user: @user,
                                        trials: [])
-      expect(verb_practice.verbs_prob.count(@first_verb.id)).to eq 4
-      expect(verb_practice.verbs_prob.count(@second_verb.id)).to eq 2
-      expect(verb_practice.verbs_prob.count(@third_verb.id)).to eq 1
+      expect(verb_builder.verbs_prob.count(@first_verb.id)).to eq 4
+      expect(verb_builder.verbs_prob.count(@second_verb.id)).to eq 2
+      expect(verb_builder.verbs_prob.count(@third_verb.id)).to eq 1
     end
 
     it 'removes 1 verb element when 1 trials exist' do
       create(:trial, verb: @first_verb, sentence: @sentence,
                      exercice: @exercice, user: @user)
 
-      verb_practice = VerbPractice.new(preterit: 'kaufen',
+      verb_builder = VerbBuilder.new(preterit: 'kaufen',
                                        user: @user,
                                        trials: Trial.where(sentence: @sentence))
-      verb_practice.verb_and_subject
+      verb_builder.verb_and_subject
 
-      expect(verb_practice.verbs_prob.count(@first_verb.id)).to eq 3
-      expect(verb_practice.verbs_prob.count(@second_verb.id)).to eq 2
-      expect(verb_practice.verbs_prob.count(@third_verb.id)).to eq 1
+      expect(verb_builder.verbs_prob.count(@first_verb.id)).to eq 3
+      expect(verb_builder.verbs_prob.count(@second_verb.id)).to eq 2
+      expect(verb_builder.verbs_prob.count(@third_verb.id)).to eq 1
     end
 
     it 'removes 2 verb element when 2 trials exist' do
       create_list(:trial, 2, verb: @first_verb, sentence: @sentence,
                              exercice: @exercice, user: @user)
 
-      verb_practice = VerbPractice.new(preterit: 'kaufen',
+      verb_builder = VerbBuilder.new(preterit: 'kaufen',
                                        user: @user,
                                        trials: Trial.where(sentence: @sentence))
-      verb_practice.verb_and_subject
+      verb_builder.verb_and_subject
 
-      expect(verb_practice.verbs_prob.count(@first_verb.id)).to eq 2
-      expect(verb_practice.verbs_prob.count(@second_verb.id)).to eq 2
-      expect(verb_practice.verbs_prob.count(@third_verb.id)).to eq 1
+      expect(verb_builder.verbs_prob.count(@first_verb.id)).to eq 2
+      expect(verb_builder.verbs_prob.count(@second_verb.id)).to eq 2
+      expect(verb_builder.verbs_prob.count(@third_verb.id)).to eq 1
     end
 
     it 'removes all verb element when 4 trials exist' do
       create_list(:trial, 4, verb: @first_verb, sentence: @sentence,
                              exercice: @exercice, user: @user)
 
-      verb_practice = VerbPractice.new(preterit: 'kaufen',
+      verb_builder = VerbBuilder.new(preterit: 'kaufen',
                                        user: @user,
                                        trials: Trial.where(sentence: @sentence))
-      verb_practice.verb_and_subject
+      verb_builder.verb_and_subject
 
-      expect(verb_practice.verbs_prob.count(@first_verb.id)).to eq 0
-      expect(verb_practice.verbs_prob.count(@second_verb.id)).to eq 2
-      expect(verb_practice.verbs_prob.count(@third_verb.id)).to eq 1
+      expect(verb_builder.verbs_prob.count(@first_verb.id)).to eq 0
+      expect(verb_builder.verbs_prob.count(@second_verb.id)).to eq 2
+      expect(verb_builder.verbs_prob.count(@third_verb.id)).to eq 1
     end
   end
 end

@@ -9,7 +9,7 @@ class Sentence < ApplicationRecord
   before_create :init_streak_and_counter
 
   def session_finish?
-    session_conter > (SESSION_LENGTH - 1)
+    session_counter > (SESSION_LENGTH - 1)
   end
 
   private

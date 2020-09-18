@@ -4,7 +4,7 @@ class VerbPracticesController < SentencesController
   def new
     @start = true
     @exercice = Exercice.find(params[:exercice_id])
-    @sentence = Sentence.create(user: @user, exercice: @exercice)
+    @sentence = Sentence.create(user: current_user, exercice: @exercice)
 
     # @sentence = Sentence.create!(user: current_user, exercice: @exercice)
     # sentence_feeder
@@ -27,14 +27,8 @@ class VerbPracticesController < SentencesController
 
     sentence_feeder
 
-    if @sentence.session_counter > SESSION_LENGTH - 1
+    if @sentence.session_finish?
       @redirect = verb_result_path(@sentence)
-    else
-      Trial.create!(user: current_user,
-                    exercice: @exercice,
-                    result: :running,
-                    sentence: @sentence,
-                    verb: @verb_builder.verb)
     end
 
     respond_to do |format|

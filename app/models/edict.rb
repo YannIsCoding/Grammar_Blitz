@@ -3,11 +3,15 @@ class Edict < ApplicationRecord
 
   validates :value, :english, uniqueness: true
 
-  # after_initialize :hide_index_default
+  after_initialize :set_hide_index
 
-  # private
+  private
 
-  # def hide_index_default
-  #   self.hide_index ||= exercice.hide_index
-  # end
+  def set_hide_index
+    # set default value
+    unless persisted?
+      assign_attributes(hide_index: exercice.hide_index)
+    end
+  end
+
 end

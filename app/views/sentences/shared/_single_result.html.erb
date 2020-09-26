@@ -1,6 +1,6 @@
 <% unless @start %>
   <div id="solution">
-    <% if @success %>
+    <% if @trial.correct? %>
       <div  class='success mb-3'>
         <p>GUT GEMACHT!</p>
       </div>

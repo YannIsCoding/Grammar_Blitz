@@ -5,23 +5,19 @@ FactoryBot.define do
     verb { nil }
   end
 
-  factory :verb_error do
-    preterit { "MyString" }
-    person { "MyString" }
-    trial { nil }
-  end
-
   factory :sentence do
     value { "Ich bin ein Berliner" }
     english { "I am the president" }
     word_indexes { [2] }
     association :user
     association :exercice
+
+    association :atomizable, factory: :verb
   end
 
   factory :trial do
     result { :wrong }
-    association :user
+    association :user, strategy: :build
     association :exercice
     association :sentence
     association :verb

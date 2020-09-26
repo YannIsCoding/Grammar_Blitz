@@ -1,5 +1,8 @@
 <% method ||= :put %>
 <% remote ||= false %>
+<% edict.errors.each do |error| %>
+  <%= error %>
+<% end %>
 <%= simple_form_for [@exercice, edict],
                     remote: remote,
                     html: { method: method, class: 'mt-1' } do |f|  %>
@@ -7,7 +10,8 @@
     <%= f.input_field :value, class: 'mr-1'  %>
     <%= f.input_field :english, class: 'mr-1'  %>
     <%= f.input_field :hide_index,
-                      input_html: { value: edict.hide_index || @exercice.hide_index },
+                      input_html: {
+                        value: ('1' unless f.object.persisted?) },
                       class: 'mr-1'  %>
     <%= f.button :submit, value: 'Submit', class: 'btn-primary' %>
   </div>

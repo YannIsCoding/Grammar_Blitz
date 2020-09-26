@@ -7,9 +7,9 @@
 
     <%= render 'form',
                 sentence: @sentence,
-                prev_sentence: @prev_sentence,
-                responses: @responses,
-                result: @result %>
+                prev_sentence: @sentence.previous_value,
+                responses: @responses %>
+                <!-- result: @result  -->
 
     <%= render 'sentences/shared/keyboard' %>
 

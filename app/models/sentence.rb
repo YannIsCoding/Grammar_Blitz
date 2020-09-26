@@ -1,10 +1,22 @@
 class Sentence < ApplicationRecord
-  belongs_to :user
+  SESSION_LENGTH = 10
+
   belongs_to :exercice
+  belongs_to :user
+  belongs_to :atomizable, polymorphic: true, optional: true
   has_many :trials
 
   before_save :default_word_indexes
   before_create :init_streak_and_counter
+
+  def session_finish?
+    session_counter > (SESSION_LENGTH - 1)
+  end
+
+  def value=(new_value)
+    update(previous_value: value)
+    super(new_value)
+  end
 
   private
 
@@ -16,5 +28,4 @@ class Sentence < ApplicationRecord
     self.streak = 0
     self.session_counter = 0
   end
-
 end

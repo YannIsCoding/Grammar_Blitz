@@ -1,19 +1,9 @@
 class VerbPracticesController < SentencesController
-  # before_action :fetch_preterit
-
   def new
     @start = true
     @exercice = Exercice.find(params[:exercice_id])
-
-    @sentence = Sentence.create!(user: current_user, exercice: @exercice)
-    sentence_feeder
-
-    Trial.create!(user: current_user,
-                  exercice: @exercice,
-                  result: :running,
-                  sentence: @sentence,
-                  verb: @verb_practice.verb)
-
+    @sentence = Sentence.create(user: current_user, exercice: @exercice)
+    @sentence = VerbPractice.new(sentence: @sentence).launch
     render :sentence
   end
 
@@ -21,16 +11,20 @@ class VerbPracticesController < SentencesController
     @sentence = Sentence.find(params[:id])
     @exercice = @sentence.exercice
 
-    sentence_feeder
+    correction = ExerciceCorrector.new(sentence: @sentence, params: params)
+    result = correction.review
+    @responses = correction.answers
+    @trial = Trial.create!(user: @sentence.user,
+                           exercice: @sentence.exercice,
+                           result: result,
+                           sentence: @sentence,
+                           verb: @sentence.atomizable)
 
-    if @sentence.session_counter > SESSION_LENGTH - 1
-      @redirect = verb_result_path(@sentence)
+    unless @sentence.session_finish?
+      @verb_practice = VerbPractice.new(sentence: @sentence)
+      @sentence = @verb_practice.continue
     else
-      Trial.create!(user: current_user,
-                    exercice: @exercice,
-                    result: :running,
-                    sentence: @sentence,
-                    verb: @verb_practice.verb)
+      @redirect = verb_result_path(@sentence)
     end
 
     respond_to do |format|
@@ -51,17 +45,4 @@ class VerbPracticesController < SentencesController
     @trial.update(result: type)
     super
   end
-
-  def sentence_feeder
-    exercice_correction if params[:commit] == COMMIT_MESSAGE
-    @verb_practice = VerbPractice.new(preterit: @exercice.preterit,
-                                      user: current_user,
-                                      trials: Trial.where(sentence: @sentence))
-
-    @sentence.update_attributes @verb_practice.generate
-    @sentence.increment!(:session_counter)
-
-
-  end
-
 end

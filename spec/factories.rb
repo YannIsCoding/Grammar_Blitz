@@ -11,6 +11,8 @@ FactoryBot.define do
     word_indexes { [2] }
     association :user
     association :exercice
+
+    association :atomizable, factory: :verb
   end
 
   factory :trial do

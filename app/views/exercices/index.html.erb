@@ -23,17 +23,11 @@
 
           <% @exercices.each do |exercice| %>
             <div class="exercice mr-2 mb-2">
-
               <h6> <%=  exercice.name %> </h6>
-
-              <div class=" my-2">
-                <%= exercice.description %>
-              </div>
-
+              <div class=" my-2"> <%= exercice.description %> </div>
               <%= link_to 'Play',
                           new_exercice_sentence_path(exercice),
                           class: 'index-button mx-3 my-4' %>
-
             </div>
           <% end %>
         </div>

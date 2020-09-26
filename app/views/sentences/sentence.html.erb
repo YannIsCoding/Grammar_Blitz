@@ -7,7 +7,7 @@
 
     <%= render 'form',
                 sentence: @sentence,
-                prev_sentence: @prev_sentence,
+                prev_sentence: @sentence.previous_value,
                 responses: @responses %>
                 <!-- result: @result  -->
 

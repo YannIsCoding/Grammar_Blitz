@@ -1,13 +1,16 @@
 class ExerciceCorrector
+  attr_reader :answers
+
   def initialize(sentence:, params:)
     @sentence = sentence
     @params = params
+    @answers = extract_answers
   end
 
   def review
     # compare the answer to the sentences using Regex
-    regex = RegexMachine.new(extract_answers).generate
-    !!(regex =~ @sentence.value)
+    regex = RegexMachine.new(@answers).generate
+    (regex =~ @sentence.value) ? :correct : :wrong
   end
 
   private

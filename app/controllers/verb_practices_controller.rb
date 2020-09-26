@@ -1,19 +1,8 @@
 class VerbPracticesController < SentencesController
-  # before_action :fetch_preterit
-
   def new
     @start = true
     @exercice = Exercice.find(params[:exercice_id])
     @sentence = Sentence.create(user: current_user, exercice: @exercice)
-
-    # @sentence = Sentence.create!(user: current_user, exercice: @exercice)
-    # sentence_feeder
-
-    # Trial.create!(user: current_user,
-    #               exercice: @exercice,
-    #               result: :running,
-    #               sentence: @sentence,
-    #               verb: @verb_builder.verb)
     @sentence = VerbPractice.new(sentence: @sentence).launch
     render :sentence
   end
@@ -22,12 +11,19 @@ class VerbPracticesController < SentencesController
     @sentence = Sentence.find(params[:id])
     @exercice = @sentence.exercice
 
-    result = ExerciceCorrector.review
-    @sentence = VerbPractice.new(sentence: @sentence).continue(result)
+    correction = ExerciceCorrector.new(sentence: @sentence, params: params)
+    result = correction.review
+    @responses = correction.answers
+    @trial = Trial.create!(user: @sentence.user,
+                           exercice: @sentence.exercice,
+                           result: result,
+                           sentence: @sentence,
+                           verb: @sentence.atomizable)
 
-    sentence_feeder
-
-    if @sentence.session_finish?
+    unless @sentence.session_finish?
+      @verb_practice = VerbPractice.new(sentence: @sentence)
+      @sentence = @verb_practice.continue
+    else
       @redirect = verb_result_path(@sentence)
     end
 
@@ -48,16 +44,5 @@ class VerbPracticesController < SentencesController
                            result: :running)
     @trial.update(result: type)
     super
-  end
-
-  def sentence_feeder
-    # unless first time exercice correction
-    exercice_correction if params[:commit] == COMMIT_MESSAGE
-    @verb_builder = VerbBuilder.new(preterit: @exercice.preterit,
-                                      user: current_user,
-                                      trials: Trial.where(sentence: @sentence))
-
-    @sentence.update_attributes @verb_builder.generate
-    @sentence.increment!(:session_counter)
   end
 end

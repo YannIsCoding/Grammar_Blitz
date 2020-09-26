@@ -4,8 +4,8 @@ RSpec.describe VerbPractice do
   before(:each) do
     @user = create(:user)
     @exercice = create(:exercice, structure: 'kaufen_present')
-    @sentence = create(:sentence, exercice: @exercice, user: @user)
-    create(:verb, person: 'third_singular', value: 'kauft')
+    verb = create(:verb, person: 'third_singular', value: 'kauft')
+    @sentence = create(:sentence, exercice: @exercice, user: @user, atomizable: verb)
     create(:pronoun)
     create(:pronoun, person: 'third_masculin', value: 'er')
   end
@@ -14,7 +14,6 @@ RSpec.describe VerbPractice do
     it 'update the sentence and create a trial' do
       VerbBuilder.any_instance.stub(:generate).and_return(value: 'ich bin',
                                                           english: 'I am')
-      # Trial.any_instance.stub(:valid?).and_return(true)
 
       @sentence = VerbPractice.new(sentence: @sentence).launch
 
@@ -29,9 +28,8 @@ RSpec.describe VerbPractice do
       old_trial = create(:trial, result: :correct, exercice: @exercice, sentence: @sentence)
       VerbBuilder.any_instance.stub(:generate).and_return(value: 'ich bin',
                                                           english: 'I am')
-      # Trial.any_instance.stub(:valid?).and_return(true)
 
-      @sentence = VerbPractice.new(sentence: @sentence).continue(false)
+      @sentence = VerbPractice.new(sentence: @sentence).continue(:wrong)
 
       expect(@sentence.value).to eq 'ich bin'
       expect(@sentence.session_counter).to be 1
@@ -44,9 +42,8 @@ RSpec.describe VerbPractice do
       old_trial = create(:trial, result: :wrong, exercice: @exercice, sentence: @sentence)
       VerbBuilder.any_instance.stub(:generate).and_return(value: 'ich bin',
                                                           english: 'I am')
-      # Trial.any_instance.stub(:valid?).and_return(true)
 
-      @sentence = VerbPractice.new(sentence: @sentence).continue(true)
+      @sentence = VerbPractice.new(sentence: @sentence).continue(:correct)
 
       expect(@sentence.value).to eq 'ich bin'
       expect(@sentence.session_counter).to be 1

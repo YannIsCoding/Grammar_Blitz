@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_185053) do
+ActiveRecord::Schema.define(version: 2020_09_26_172309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,10 @@ ActiveRecord::Schema.define(version: 2020_09_14_185053) do
     t.datetime "updated_at", null: false
     t.integer "streak"
     t.integer "session_counter"
+    t.string "atomizable_type"
+    t.bigint "atomizable_id"
+    t.string "previous_value"
+    t.index ["atomizable_type", "atomizable_id"], name: "index_sentences_on_atomizable_type_and_atomizable_id"
     t.index ["exercice_id"], name: "index_sentences_on_exercice_id"
     t.index ["user_id"], name: "index_sentences_on_user_id"
   end

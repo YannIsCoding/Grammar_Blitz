@@ -1,34 +1,38 @@
 class VerbPracticesController < SentencesController
   def new
-    @start = true
+    @start = true # TODO: Replace with existence of predecessor on @trial
     @exercice = Exercice.find(params[:exercice_id])
     @sentence = Sentence.create(user: current_user, exercice: @exercice)
-    @sentence = VerbPractice.new(sentence: @sentence).launch
+    @trial = Trial.create(user: current_user,
+                          exercice: @exercice,
+                          sentence: @sentence)
+    @trial = VerbPractice.new(trial: @trial).launch
+    @sentence.increment!(:session_counter)
     render :sentence
   end
 
   def update
     @sentence = Sentence.find(params[:id])
     @exercice = @sentence.exercice
+    @sentence.increment!(:session_counter)
+    @previous_trial = @sentence.trials.last
 
-    correction = ExerciceCorrector.new(sentence: @sentence, params: params)
-    result = correction.review
+    correction = ExerciceCorrector.new(trial: @previous_trial, params: params)
+    @previous_trial.update(result: correction.review)
     @responses = correction.answers
-    @trial = Trial.create!(user: @sentence.user,
-                           exercice: @sentence.exercice,
-                           result: result,
-                           sentence: @sentence,
-                           verb: @sentence.atomizable)
 
-    unless @sentence.session_finish?
-      @verb_practice = VerbPractice.new(sentence: @sentence)
-      @sentence = @verb_practice.continue
+    if @sentence.not_finished?
+      @trial = Trial.create!(user: current_user,
+                             exercice: @exercice,
+                             sentence: @sentence,
+                             predecessor: @previous_trial)
+      @trial = VerbPractice.new(trial: @trial).continue
+      respond_to do |format|
+        format.js { render :update }
+      end
     else
       @redirect = verb_result_path(@sentence)
-    end
-
-    respond_to do |format|
-      format.js { render :update }
+      render js: "window.location='#{@redirect}'"
     end
   end
 
@@ -37,12 +41,12 @@ class VerbPracticesController < SentencesController
     @try_again_link = exercice_verb_practice_path(@exercice)
   end
 
-  private
+  # private
 
-  def fetch_trial(type)
-    @trial = Trial.find_by(sentence: @sentence,
-                           result: :running)
-    @trial.update(result: type)
-    super
-  end
+  # def fetch_trial(type)
+  #   @trial = Trial.find_by(sentence: @sentence,
+  #                          result: :running)
+  #   @trial.update(result: type)
+  #   super
+  # end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_26_172309) do
+ActiveRecord::Schema.define(version: 2020_09_27_095654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,12 +44,6 @@ ActiveRecord::Schema.define(version: 2020_09_26_172309) do
     t.index ["exercice_id"], name: "index_edicts_on_exercice_id"
   end
 
-  create_table "elements", force: :cascade do |t|
-    t.string "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "exercices", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -69,6 +63,17 @@ ActiveRecord::Schema.define(version: 2020_09_26_172309) do
     t.string "kind"
   end
 
+  create_table "practice_sessions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "exercice_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "streak"
+    t.integer "counter"
+    t.index ["exercice_id"], name: "index_practice_sessions_on_exercice_id"
+    t.index ["user_id"], name: "index_practice_sessions_on_user_id"
+  end
+
   create_table "prepositions", force: :cascade do |t|
     t.string "value"
     t.string "g_case"
@@ -77,12 +82,6 @@ ActiveRecord::Schema.define(version: 2020_09_26_172309) do
     t.string "english"
     t.string "verbs", array: true
     t.string "kind_nouns", array: true
-  end
-
-  create_table "progress_trackers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "counter"
   end
 
   create_table "pronouns", force: :cascade do |t|
@@ -96,32 +95,6 @@ ActiveRecord::Schema.define(version: 2020_09_26_172309) do
     t.string "gender"
   end
 
-  create_table "sentences", force: :cascade do |t|
-    t.string "value"
-    t.string "english"
-    t.integer "word_indexes", array: true
-    t.bigint "user_id"
-    t.bigint "exercice_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "streak"
-    t.integer "session_counter"
-    t.string "atomizable_type"
-    t.bigint "atomizable_id"
-    t.string "previous_value"
-    t.index ["atomizable_type", "atomizable_id"], name: "index_sentences_on_atomizable_type_and_atomizable_id"
-    t.index ["exercice_id"], name: "index_sentences_on_exercice_id"
-    t.index ["user_id"], name: "index_sentences_on_user_id"
-  end
-
-  create_table "structure_elements", force: :cascade do |t|
-    t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "element_id"
-    t.index ["element_id"], name: "index_structure_elements_on_element_id"
-  end
-
   create_table "trials", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -130,7 +103,16 @@ ActiveRecord::Schema.define(version: 2020_09_26_172309) do
     t.bigint "sentence_id"
     t.bigint "verb_id"
     t.integer "result"
+    t.string "value"
+    t.string "english"
+    t.string "atomizable_type"
+    t.bigint "atomizable_id"
+    t.bigint "predecessor_id"
+    t.bigint "edict_id"
+    t.index ["atomizable_type", "atomizable_id"], name: "index_trials_on_atomizable_type_and_atomizable_id"
+    t.index ["edict_id"], name: "index_trials_on_edict_id"
     t.index ["exercice_id"], name: "index_trials_on_exercice_id"
+    t.index ["predecessor_id"], name: "index_trials_on_predecessor_id"
     t.index ["sentence_id"], name: "index_trials_on_sentence_id"
     t.index ["user_id"], name: "index_trials_on_user_id"
     t.index ["verb_id"], name: "index_trials_on_verb_id"
@@ -173,9 +155,9 @@ ActiveRecord::Schema.define(version: 2020_09_26_172309) do
 
   add_foreign_key "buckets", "users"
   add_foreign_key "buckets", "verbs"
-  add_foreign_key "structure_elements", "elements"
+  add_foreign_key "trials", "edicts"
   add_foreign_key "trials", "exercices"
-  add_foreign_key "trials", "sentences"
+  add_foreign_key "trials", "practice_sessions", column: "sentence_id"
   add_foreign_key "trials", "users"
   add_foreign_key "trials", "verbs"
   add_foreign_key "verb_noun_links", "nouns"

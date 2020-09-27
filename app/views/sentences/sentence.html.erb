@@ -7,9 +7,8 @@
 
     <%= render 'form',
                 sentence: @sentence,
-                prev_sentence: @sentence.previous_value,
+                previous_value: @previous_trial&.value,
                 responses: @responses %>
-                <!-- result: @result  -->
 
     <%= render 'sentences/shared/keyboard' %>
 

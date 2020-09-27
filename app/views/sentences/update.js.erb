@@ -1,10 +1,10 @@
+console.log("wtfffffffffffffffffffffffffffffffffffffF")
 if ('<%= @redirect %>' === ''){
   $("#sentence-container")
   .replaceWith("<%= j render 'form', \
-                             sentence: @sentence, \
-                             prev_sentence: @prev_sentence, \
+                             trial: @trial, \
+                             previous_value: @previous_trial&.value, \
                              responses: @responses %>")
-                             // result: @result %>")
   $("#progress_bar_container")
   .replaceWith("<%= j render 'sentences/shared/progress_bar', counter: @sentence.session_counter %>")
   showResult()

@@ -5,7 +5,7 @@
 
   <div id="form-container" style= <%=  "display:none;" unless @start %> >
 
-    <p id="english-sentence"> <%= @sentence.english %> </p>
+    <p id="english-sentence"> <%= @trial.english %> </p>
 
     <%= form_tag(exercice_update_verb_path(@exercice, @sentence),
                  method: :put,
@@ -13,10 +13,9 @@
                  autocomplete: "off",
                  autocapitalize: 'off' ) do %>
         <div class='d-flex flex-row'>
-
-          <% split_sentence(@sentence.value, @exercice.hide_index).each_with_index do |fragment, index| %>
+          <% split_sentence(@trial.value, @exercice.hide_index).each_with_index do |fragment, index| %>
               <%# Is this to be shown? %>
-              <% if @sentence.word_indexes.include?(index)  %>
+              <% if @exercice.hide_index.include?(index.to_s)  %>
                 <%= text_field_tag "response_#{index}".to_sym, '',
                                    class:'input-field mx-2 mb-2 response flex-grow-1' %>
               <% else %>

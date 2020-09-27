@@ -1,6 +1,6 @@
 <% unless @start %>
   <div id="solution">
-    <% if @trial.correct? %>
+    <% if @previous_trial.correct? %>
       <div  class='success mb-3'>
         <p>GUT GEMACHT!</p>
       </div>
@@ -13,7 +13,7 @@
         </div>
       </div>
     <% end %>
-    <p class="result-failure"> <%= @prev_sentence %></p>
+    <p class="result-failure"> <%= @previous_trial.value %></p>
     <button id="next-sentence" class="btn-primary cool-button">
       Los!
     </button>

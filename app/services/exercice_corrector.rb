@@ -1,8 +1,8 @@
 class ExerciceCorrector
   attr_reader :answers
 
-  def initialize(sentence:, params:)
-    @sentence = sentence
+  def initialize(trial:, params:)
+    @trial = trial
     @params = params
     @answers = extract_answers
   end
@@ -10,14 +10,15 @@ class ExerciceCorrector
   def review
     # compare the answer to the sentences using Regex
     regex = RegexMachine.new(@answers).generate
-    (regex =~ @sentence.value) ? :correct : :wrong
+    (regex =~ @trial.value) ? :correct : :wrong
   end
 
   private
 
   def extract_answers
     # Extract the answers from the params
-    @sentence.word_indexes.map do |index|
+    @hide_index = @trial.edict.hide_index || @trial.exercice.word_indexes
+    @hide_index.map do |index|
       if @params["response_#{index}"]&.strip&.empty?
         # answer is blank
         'nothing'

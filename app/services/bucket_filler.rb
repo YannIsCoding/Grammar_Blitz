@@ -4,7 +4,7 @@ class BucketFiller
   end
 
   def go
-    trials_by_verbs = @trials.group_by(&:verb)
+    trials_by_verbs = @trials.group_by(&:atomizable)
     trials_by_verbs.each do |verb, trials|
       @bucket = Bucket.find_or_create_by!(user: trials.first.user, verb: verb)
       if trials.any?(&:wrong?)

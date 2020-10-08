@@ -1,8 +1,8 @@
 class VerbPractice
   attr_reader :trial
 
-  def initialize(sentence:)
-    @sentence = sentence
+  def initialize(trial:)
+    @trial = trial
   end
 
   def launch
@@ -10,18 +10,17 @@ class VerbPractice
   end
 
   def continue
-    update_sentence(Trial.where(sentence: @sentence))
+    update_sentence(Trial.completed.where(sentence: @trial.sentence))
   end
 
   private
 
   def update_sentence(trials = [])
-    @verb_builder = VerbBuilder.new(preterit: @sentence.exercice.preterit,
-                                    user: @sentence.user,
+    @verb_builder = VerbBuilder.new(preterit: @trial.exercice.preterit,
+                                    user: @trial.user,
                                     trials: trials)
-    @sentence.update_attributes @verb_builder.generate
-    @sentence.update(atomizable: @verb_builder.verb)
-    @sentence.increment!(:session_counter)
-    @sentence
+    @trial.update_attributes @verb_builder.generate
+    @trial.update(atomizable: @verb_builder.verb)
+    @trial
   end
 end

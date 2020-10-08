@@ -10,7 +10,7 @@ class Edict < ApplicationRecord
   def set_hide_index
     # set default value
     unless persisted?
-      assign_attributes(hide_index: exercice.hide_index)
+      assign_attributes(hide_index: exercice&.hide_index)
     end
   end
 

@@ -3,7 +3,7 @@ class VerbBuilder < SentenceBuilderService
 
   def initialize(preterit:, user:, trials:)
     @preterit = preterit
-    @user =     user #TODO Remove user and replace with buckets direcly
+    @user =     user # TODO: Remove user and replace with buckets direcly
     @verbs =    Verb.where(preterit: @preterit)
     @buckets =  Bucket.where(user: @user, verb: @verbs)
     @trials =   trials
@@ -19,10 +19,10 @@ class VerbBuilder < SentenceBuilderService
                english: "#{@subject.english} #{@verb.english}".capitalize }
   end
 
-  def verbs_prob
-    @verbs_prob ||= [@zeros.pluck(:verb_id).to_a * 40,
-                     @shorts.pluck(:verb_id).to_a * 20,
-                     @longs.pluck(:verb_id).to_a * 10].flatten
+  def learning_priority
+    @learning_priority ||= [@zeros.pluck(:verb_id).to_a * 40,
+                            @shorts.pluck(:verb_id).to_a * 20,
+                            @longs.pluck(:verb_id).to_a * 10].flatten
   end
 
   def verb_and_subject
@@ -36,19 +36,19 @@ class VerbBuilder < SentenceBuilderService
   # The method below returns exercice element depending on the previous mistake
   # of the user. When a user first start it get the element he as least perform on.
   # Next when he has tried during the session, the element he got is randomly
-  # selected between the element already show and the one where mistake have been made.
+  # selected between the element already show and the one learning priority.
   def fetch_verb
     return lowest_element if @trials.blank?
 
-    @trials.pluck(:verb_id).each do |verb_id|
-      verbs_prob.delete_at(verbs_prob.index(verb_id))
+    @trials.pluck(:atomizable_id).each do |verb_id|
+      learning_priority.delete_at(learning_priority.index(verb_id))
     end
 
     Verb.find gimme_verb
   end
 
   def gimme_verb
-    verbs_prob.sample || @verbs.sample.id
+    learning_priority.sample || @verbs.sample.id
   end
 
   def lowest_element

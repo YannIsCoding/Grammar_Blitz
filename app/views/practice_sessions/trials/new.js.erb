@@ -1,0 +1,13 @@
+if ('<%= @redirect %>' === ''){
+  $("#sentence-container")
+  .replaceWith("<%= j render 'form', \
+                             trial: @trial, \
+                             previous_value: @previous_trial&.value, \
+                             responses: @responses %>")
+  $("#progress_bar_container")
+  .replaceWith("<%= j render 'practice_sessions/trials/shared/progress_bar', counter: @practice_session.counter %>")
+  showResult()
+} else {
+  window.location = ('<%= @redirect %>')
+}
+

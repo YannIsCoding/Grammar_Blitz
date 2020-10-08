@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_27_095654) do
+ActiveRecord::Schema.define(version: 2020_10_08_184535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,9 +99,6 @@ ActiveRecord::Schema.define(version: 2020_09_27_095654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.bigint "exercice_id"
-    t.bigint "sentence_id"
-    t.bigint "verb_id"
     t.integer "result"
     t.string "value"
     t.string "english"
@@ -109,13 +106,12 @@ ActiveRecord::Schema.define(version: 2020_09_27_095654) do
     t.bigint "atomizable_id"
     t.bigint "predecessor_id"
     t.bigint "edict_id"
+    t.bigint "practice_session_id"
     t.index ["atomizable_type", "atomizable_id"], name: "index_trials_on_atomizable_type_and_atomizable_id"
     t.index ["edict_id"], name: "index_trials_on_edict_id"
-    t.index ["exercice_id"], name: "index_trials_on_exercice_id"
+    t.index ["practice_session_id"], name: "index_trials_on_practice_session_id"
     t.index ["predecessor_id"], name: "index_trials_on_predecessor_id"
-    t.index ["sentence_id"], name: "index_trials_on_sentence_id"
     t.index ["user_id"], name: "index_trials_on_user_id"
-    t.index ["verb_id"], name: "index_trials_on_verb_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -156,10 +152,7 @@ ActiveRecord::Schema.define(version: 2020_09_27_095654) do
   add_foreign_key "buckets", "users"
   add_foreign_key "buckets", "verbs"
   add_foreign_key "trials", "edicts"
-  add_foreign_key "trials", "exercices"
-  add_foreign_key "trials", "practice_sessions", column: "sentence_id"
   add_foreign_key "trials", "users"
-  add_foreign_key "trials", "verbs"
   add_foreign_key "verb_noun_links", "nouns"
   add_foreign_key "verb_noun_links", "verbs"
 end

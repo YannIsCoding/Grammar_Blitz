@@ -1,15 +1,16 @@
-class Sentence < ApplicationRecord
+class PracticeSession < ApplicationRecord
   SESSION_LENGTH = 3
 
+  belongs_to :atomizable, polymorphic: true, optional: true
   belongs_to :exercice
   belongs_to :user
-  belongs_to :atomizable, polymorphic: true, optional: true
+
   has_many :trials
 
   before_create :init_streak_and_counter
 
   def finished?
-    session_counter > SESSION_LENGTH
+    counter > SESSION_LENGTH
   end
 
   def not_finished?
@@ -20,6 +21,6 @@ class Sentence < ApplicationRecord
 
   def init_streak_and_counter
     self.streak = 0
-    self.session_counter = 0
+    self.counter = 1
   end
 end

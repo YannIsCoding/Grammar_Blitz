@@ -5,22 +5,17 @@ FactoryBot.define do
     verb { nil }
   end
 
-  factory :sentence do
-    value { "Ich bin ein Berliner" }
-    english { "I am the president" }
-    word_indexes { [2] }
+  factory :practice_session do
     association :user
     association :exercice
 
-    association :atomizable, factory: :verb
+    # association :atomizable, factory: :verb
   end
 
   factory :trial do
     result { :wrong }
     association :user, strategy: :build
-    association :exercice
-    association :sentence
-    association :verb
+    association :practice_session
   end
 
   factory :user do
@@ -85,6 +80,21 @@ FactoryBot.define do
       association :structure, name: 's_v_io_do'
       hide_index { [2, 4] }
     end
+
+    trait :edicted do
+      name { 'Sentene with preposition mit!' }
+      description { 'Sentene with preposition mit' }
+      structure { 's_v_do_mit' }
+      hide_index { [3] }
+      edicted { true }
+    end
+  end
+
+  factory :edict do
+    value { 'Ich fahre mit dem Fahrrad' }
+    english { 'I drive with the bike' }
+    association :exercice
+    hide_index { [3] }
   end
 
   factory :pronoun, aliases: [:personal_pronoun,] do

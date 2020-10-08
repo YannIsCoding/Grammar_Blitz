@@ -26,7 +26,7 @@
               <h6> <%=  exercice.name %> </h6>
               <div class=" my-2"> <%= exercice.description %> </div>
               <%= link_to 'Play',
-                          new_exercice_sentence_path(exercice),
+                          new_exercice_practice_session_path(exercice),
                           class: 'index-button mx-3 my-4' %>
             </div>
           <% end %>
@@ -38,7 +38,7 @@
             <div class="exercice mr-2">
               <h6> <%=  edict_exercice.name %> </h6>
               <%= link_to "Play",
-                          new_exercice_sentence_path(edict_exercice),
+                          new_exercice_practice_session_path(edict_exercice),
                           class: "index-button"  %>
             </div>
           <% end %>

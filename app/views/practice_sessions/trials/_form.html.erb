@@ -1,15 +1,15 @@
 <div id="sentence-container">
 
-  <%= render 'sentences/shared/streak_congrat' %>
-  <%= render 'sentences/shared/single_result' %>
+  <%= render 'practice_sessions/trials/shared/streak_congrat' %>
+  <%= render 'practice_sessions/trials/shared/single_result' %>
 
   <div id="form-container" style= <%=  "display:none;" unless @start %> >
     <p id="english-sentence"> <%= @trial.english %> </p>
 
-    <%= form_for([@exercice, @sentence],
-                 method: :patch,
-                 remote: true,
-                 html: { autocomplete: "off", autocapitalize: 'off' }) do %>
+    <%= form_with(url: practice_session_trial_path(@practice_session),
+                  method: :post,
+                  remote: true,
+                  html: { autocomplete: "off", autocapitalize: 'off' }) do %>
         <div class='d-flex flex-row'>
           <% @hide_index ||= @trial.edict.hide_index %>
           <% split_sentence(@trial.value, @hide_index).each_with_index do |fragment, index| %>

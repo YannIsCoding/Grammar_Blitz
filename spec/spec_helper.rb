@@ -13,6 +13,14 @@ require 'warden'
 # a separate helper file that requires the additional dependencies and performs
 # the additional setup, and require it from the spec files that actually need
 # it.
+
+ENV["RAILS_ENV"] ||= 'test'
+require File.expand_path("../../config/environment",__FILE__)
+require 'rspec/rails'
+# require "capybara/rspec"
+require 'devise'
+
+# include Capybara::DSL
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -27,7 +35,6 @@ RSpec.configure do |config|
   config.before(:suite) do
     # Rails.application.load_seed # loading seeds
   end
-
 
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`

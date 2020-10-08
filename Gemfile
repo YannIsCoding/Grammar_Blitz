@@ -41,6 +41,7 @@ group :development, :test do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'dotenv-rails'
   gem 'rspec-rails'
+  gem 'rails-controller-testing'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
 end

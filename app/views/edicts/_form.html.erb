@@ -1,11 +1,13 @@
 <% method ||= :put %>
 <% remote ||= false %>
-<% edict.errors.each do |error| %>
-  <%= error %>
+<% if edict.errors.any? %>
+  <div class="sentence-preview">
+    <%= edict.errors.messages %>
+  </div>
 <% end %>
 <%= simple_form_for [@exercice, edict],
                     remote: remote,
-                    html: { method: method, class: 'mt-1' } do |f|  %>
+                    html: { method: method, class: 'edict-form mt-1' } do |f|  %>
   <div class="d-flex justify-content-around">
     <%= f.input_field :value, class: 'mr-1'  %>
     <%= f.input_field :english, class: 'mr-1'  %>
@@ -16,3 +18,4 @@
     <%= f.button :submit, value: 'Submit', class: 'btn-primary' %>
   </div>
 <% end %>
+

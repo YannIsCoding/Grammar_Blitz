@@ -1,5 +1,5 @@
 class PracticeSession < ApplicationRecord
-  SESSION_LENGTH = 3
+  SESSION_LENGTH = 10
 
   belongs_to :atomizable, polymorphic: true, optional: true
   belongs_to :exercice

@@ -4,7 +4,7 @@
   <% end %>
   <%= link_to 'New Exercice', new_exercice_path, class: 'btn btn-warning' %>
 </div>
-
+<h1 class=text-center> <%= @exercice.name %> </h1>
 <!-- Update form -->
 <div id="edicts-container" class="container text-center mt-2">
     <div class="d-flex justify-content-around">
@@ -15,12 +15,16 @@
       <div></div>
     </div>
   <% @edicts.each do |edict| %>
-    <div class="d-flex justify-content-around">
-      <div>
+    <div class="d-flex justify-content-around align-items-center mb-1">
+      <div class="sentence-preview">
         <%= highlight_hidden_word(edict.value, edict.hide_index) %>
       </div>
       <%= render 'form', edict: edict, remote: true %>
-      <%= link_to 'Delete', exercice_edict_path(@exercice, edict), method: :delete, class: 'btn btn-warning' %>
+      <%= link_to 'Delete',
+                  exercice_edict_path(@exercice, edict),
+                  method: :delete,
+                  data: { confirm: 'Sure?' },
+                  class: 'delete-edict btn btn-warning' %>
     </div>
   <% end %>
 

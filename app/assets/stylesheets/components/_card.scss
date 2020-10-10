@@ -17,17 +17,25 @@
   margin-top: 8%;
 }
 
-.verb-exercices{
+.exercices{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .exercice{
-  display: flex;
   border: 3px solid $pink;
+  border-radius: 30px/10px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.10);
-  width: 25%;
+  display: flex;
   flex-direction: column;
   padding: 8px;
+  width: 31%;
+}
+
+.sentence-card{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }

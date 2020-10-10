@@ -1,3 +1,3 @@
 import "bootstrap";
-import { disgustingjs } from '../components/keyboard';
-disgustingjs();
+import { deKeyboard } from '../components/keyboard';
+deKeyboard();

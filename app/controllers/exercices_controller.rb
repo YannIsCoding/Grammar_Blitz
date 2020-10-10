@@ -16,7 +16,7 @@ class ExercicesController < ApplicationController
     @exercice = Exercice.new(exercice_params)
     @exercice.edicted = true
     if @exercice.save
-      redirect_to edicts_path
+      redirect_to exercice_edicts_path(@exercice)
     else
       render :new
     end

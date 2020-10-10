@@ -13,13 +13,25 @@
 .failure{
  background-color: $failure-red;
  color: black;
- font-weight: bold;
+}
+
+.correct{
+  background-color: $light-green;
+  color: black;
+}
+
+.correct-answer{
+  font-size: 32px;
+}
+
+.sentence-preview{
+  width: 200px;
 }
 
 .active-user{
-  font-weight: bold;
-  color: black;
   background-color: $yellow;
+  color: black;
+  font-weight: bold;
   padding-right: 8px;
 }
 
@@ -54,7 +66,6 @@
 
 .result-failure{
   font-size: 32px;
-  font-weight: bolder;
 }
 
 .rorocket{

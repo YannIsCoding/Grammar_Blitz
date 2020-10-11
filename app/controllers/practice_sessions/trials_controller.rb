@@ -11,6 +11,7 @@ module PracticeSessions
       @trial = Trial.create!(user: current_user,
                              practice_session: @practice_session,
                              predecessor: @previous_trial)
+      authorize [:practice_sessions, @trial]
       sentence_feeder unless @practice_session.finished?
       @practice_session.increment!(:counter)
 

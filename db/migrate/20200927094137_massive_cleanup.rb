@@ -1,6 +1,6 @@
 class MassiveCleanup < ActiveRecord::Migration[5.2]
   def change
-    drop_table :progress_trackers
+    # drop_table :progress_trackers
     drop_table :structure_elements
 
     remove_column :sentences, :value

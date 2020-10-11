@@ -5,7 +5,11 @@
   <%= link_to 'New Exercice', new_exercice_path, class: 'btn btn-warning' %>
 </div>
 <h1 class=text-center> <%= @exercice.name %> </h1>
-<!-- Update form -->
+<%= link_to_if policy(Exercice).show?,
+               "show",
+               exercice_path(@exercice),
+               class: 'btn btn-primary d-inline'  %>
+
 <div id="edicts-container" class="container text-center mt-2">
     <div class="d-flex justify-content-around">
       <p>The user will see</p>

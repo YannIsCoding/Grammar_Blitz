@@ -1,14 +1,16 @@
 class User < ApplicationRecord
+  has_many :sentences
+  has_many :trials
+  has_many :exercices, through: :trials
+
+  validates :username, uniqueness: true
+
   after_create :send_welcome_email
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :trials
-  has_many :exercices, through: :trials
-  has_many :sentences
-
-  validates :username, uniqueness: true
 
   mount_uploader :photo, PhotoUploader
 
@@ -20,10 +22,10 @@ class User < ApplicationRecord
   def self.ranking
     shameful_array = []
     User.all.each do |user|
-      user.successes_count = user.successes
+      user.successes_count = user.trials.correct_count
       shameful_array << user
     end
-    shameful_array.select { |user| user.successes.positive? }.sort_by(&:successes_count).reverse!
+    shameful_array.select { |user| user.successes_count.positive? }.sort_by(&:successes_count).reverse!
   end
 
   private

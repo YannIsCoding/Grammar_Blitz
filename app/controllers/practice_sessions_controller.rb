@@ -7,6 +7,8 @@ class PracticeSessionsController < ApplicationController
     @practice_session = PracticeSession.create!(user: current_user, exercice: @exercice)
     @trial = Trial.create(user: current_user,
                           practice_session: @practice_session)
+    authorize @practice_session
+
     sentence_feeder
     render 'practice_sessions/trials/new'
   end

@@ -1,0 +1,8 @@
+<h1> <%= @exercice.name %> </h1>
+<p> <%= @exercice.description %> </p>
+<p> <%= @exercice.structure %> </p>
+<%= link_to_if policy(Exercice).destroy?,
+               "Delete",
+               exercice_path(@exercice),
+               method: :delete,
+               class: 'btn btn-warning'  %>

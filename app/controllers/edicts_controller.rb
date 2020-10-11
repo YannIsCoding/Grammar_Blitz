@@ -3,13 +3,15 @@ class EdictsController < ApplicationController
   before_action :set_edict, only: %i[update destroy]
 
   def index
-    @edicts = Edict.where(exercice: @exercice)
+    @edicts = policy_scope(Edict).where(exercice: @exercice)
     @edict = Edict.new(exercice: @exercice)
+    authorize @edict
   end
 
   def create
     @edict = Edict.new(edict_params.merge(exercice: @exercice))
     @edict.hide_index = edict_params[:hide_index].scan(/\d/)
+    authorize @edict
 
     if @edict.save
       redirect_to exercice_edicts_path(@exercice)
@@ -22,6 +24,7 @@ class EdictsController < ApplicationController
   def update
     array = edict_params[:hide_index].scan(/\d/)
     @edict.hide_index = array
+    authorize @edict
 
     if @edict.update(edict_params)
       @edict.hide_index = edict_params[:hide_index].scan(/\d/)
@@ -37,6 +40,7 @@ class EdictsController < ApplicationController
 
   def destroy
     @edict.destroy
+    authorize @edict
     redirect_to exercice_edicts_path(@exercice)
   end
 

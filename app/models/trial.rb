@@ -9,7 +9,8 @@ class Trial < ApplicationRecord
 
   validates_presence_of :practice_session, :user
 
-  enum result: %i[correct wrong]
-
   scope :completed, -> { where(result: %i[correct wrong]) }
+  scope :correct_count, -> { where(result: 'correct').count }
+
+  enum result: %i[correct wrong]
 end

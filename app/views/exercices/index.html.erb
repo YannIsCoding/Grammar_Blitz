@@ -35,6 +35,7 @@
         <h2>Edict practice</h2>
         <div class="exercices mb-2">
           <% @edicted.each do |edict_exercice| %>
+            <% next if edict_exercice.edicts.none? %>
             <div class="exercice mr-2 mb-2">
               <h6> <%=  edict_exercice.name %> </h6>
               <%= link_to "Play",

@@ -1,18 +1,16 @@
 class Exercice < ApplicationRecord
+  has_many :edicts
+  has_many :practice_sessions
   has_many :trials
   has_many :users, through: :trials
-  has_many :practice_sessions
-  has_many :edicts
 
   validates :name, :description, presence: true
   validates :name, :description, uniqueness: true
 
   scope :edicted, -> { where(edicted: true) }
-  scope :with_verb, -> { where("structure LIKE ?", "%_present") }
   scope :not_verb, -> { where("structure NOT LIKE ?", "%_present") }
   scope :automated, -> { not_verb.where(edicted: false) }
-
-  # scope :automated, -> { where(edicted: false).where("structure NOT LIKE ?", "%_present") }
+  scope :with_verb, -> { where("structure LIKE ?", "%_present") }
 
   def index_mapping
     return [[:subject, 0], [:verb, 1], [:noun, 4]] if structure.edicted?

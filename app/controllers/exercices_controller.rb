@@ -29,6 +29,23 @@ class ExercicesController < ApplicationController
     end
   end
 
+  def edit
+    @exercice = Exercice.find(params[:id])
+    authorize @exercice
+
+    render :new
+  end
+
+  def update
+    @exercice = Exercice.find(params[:id])
+    authorize @exercice
+    if @exercice.update(exercice_params)
+      redirect_to exercice_edicts_path(@exercice)
+    else
+      render :new
+    end
+  end
+
   def destroy
     @exercice = Exercice.find(params[:id])
     authorize @exercice

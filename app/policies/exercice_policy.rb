@@ -10,11 +10,15 @@ class ExercicePolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin?
+    admin_or_contributor?
   end
 
   def create?
     admin_or_contributor?
+  end
+
+  def update?
+    create?
   end
 
   def destroy?

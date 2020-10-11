@@ -1,7 +1,7 @@
 class Exercice < ApplicationRecord
   has_many :trials
   has_many :users, through: :trials
-  has_many :sentences
+  has_many :practice_sessions
   has_many :edicts
 
   validates :name, :description, presence: true

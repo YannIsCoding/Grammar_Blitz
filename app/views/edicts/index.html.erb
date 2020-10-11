@@ -1,14 +1,18 @@
 <div class="container text-center mt-2">
   <% @exercices.each do |exercice| %>
-    <%= link_to exercice.structure, exercice_edicts_path(exercice), class: 'btn btn-success'  %>
+    <%= link_to exercice.structure,
+                exercice_edicts_path(exercice),
+                class: "btn btn-success mb-1 #{'disabled' if exercice == @exercice}" %>
   <% end %>
   <%= link_to 'New Exercice', new_exercice_path, class: 'btn btn-warning' %>
 </div>
 <h1 class=text-center> <%= @exercice.name %> </h1>
-<%= link_to_if policy(Exercice).show?,
-               "show",
-               exercice_path(@exercice),
-               class: 'btn btn-primary d-inline'  %>
+<p class=text-center> <%= @exercice.description %> </p>
+<% if policy(Exercice).show? %>
+  <%= link_to "show",
+              exercice_path(@exercice),
+              class: 'btn btn-primary d-inline'  %>
+<% end %>
 
 <div id="edicts-container" class="container text-center mt-2">
     <div class="d-flex justify-content-around">
@@ -33,7 +37,7 @@
   <% end %>
 
 <!-- Form for new Edicts -->
-  <div id="create_form" class="d-flex justify-content-around">
+  <div id="create_form" class="d-flex justify-content-around mb-5">
     <%= render 'form', edict: @edict, method: :post %>
     <div></div>
   </div>

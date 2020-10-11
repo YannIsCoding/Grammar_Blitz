@@ -6,3 +6,7 @@
                exercice_path(@exercice),
                method: :delete,
                class: 'btn btn-warning'  %>
+<%= link_to_if policy(Exercice).edit?,
+               "Edit",
+               edit_exercice_path(@exercice),
+               class: 'btn btn-warning'  %>

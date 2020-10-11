@@ -1,4 +1,4 @@
-class VerbPracticesController < SentencesController
+class VerbPracticesController < ApplicationController
   def new
     @start = true # TODO: Replace with existence of predecessor on @trial
     @exercice = Exercice.find(params[:exercice_id])

@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :sentences
+  has_many :practice_sessions
   has_many :trials
   has_many :exercices, through: :trials
 

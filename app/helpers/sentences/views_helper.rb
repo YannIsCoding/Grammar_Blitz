@@ -15,9 +15,13 @@ module Sentences
 
     def split_sentence(sentence, positions)
       # Hide the words the user is tested for
-      sentence_array = sentence.split(' ')
+      sentence_array = sentence_to_array(sentence)
       positions.each { |position| sentence_array[position.to_i] = nil }
       sentence_array
+    end
+
+    def sentence_to_array(sentence)
+      sentence.split(' ')
     end
 
     def show_streak?(streak)

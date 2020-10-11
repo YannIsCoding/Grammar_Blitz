@@ -15,7 +15,7 @@ class EdictsController < ApplicationController
       redirect_to exercice_edicts_path(@exercice)
     else
       @edicts = Edict.where(exercice: @exercice)
-      # render :index
+      render :index
     end
   end
 

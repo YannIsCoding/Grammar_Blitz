@@ -1,5 +1,6 @@
 class Edict < ApplicationRecord
   belongs_to :exercice
+  has_many :trials, dependent: :destroy
 
   validates :value, :english, uniqueness: true
 

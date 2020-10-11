@@ -4,9 +4,9 @@ class BucketFiller
   end
 
   def go
-    trials_by_verbs = @trials.group_by(&:atomizable)
-    trials_by_verbs.each do |verb, trials|
-      @bucket = Bucket.find_or_create_by!(user: trials.first.user, verb: verb)
+    trials_by_atoms = @trials.group_by(&:atomizable)
+    trials_by_atoms.each do |atom, trials|
+      @bucket = Bucket.find_or_create_by!(user: trials.first.user, verb: atom)
       if trials.any?(&:wrong?)
         @bucket.zero!
       elsif @bucket.short?

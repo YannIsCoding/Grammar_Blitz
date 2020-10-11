@@ -13,7 +13,14 @@
         </div>
       </div>
     <% end %>
-    <p class="result-failure"> <%= @previous_trial.value %></p>
+    <div class="sentence-card">
+      <% @hide_index ||= @previous_trial.edict.hide_index %>
+      <% sentence_to_array(@previous_trial.value).each_with_index do |word, index| %>
+        <p class="correct-answer d-inline mr-2 <%= 'correct' if @hide_index.include?(index.to_s) %>">
+            <%= word %>
+        </p>
+      <% end %>
+    </div>
     <button id="next-sentence" class="btn-primary cool-button">
       Los!
     </button>

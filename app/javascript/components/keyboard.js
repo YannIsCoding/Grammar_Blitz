@@ -1,6 +1,6 @@
-const disgustingjs = () => {
+const deKeyboard = () => {
+  console.log('in the keyboard')
   // Grab the first input field
-  // var firstField = $('[id^="response"]')[0];
   var firstField = document.querySelectorAll(".input-field")[0];
   firstField.focus()
   firstField.select();
@@ -37,4 +37,4 @@ const focusedField = () => {
 
 }
 
-export { disgustingjs };
+export { deKeyboard };

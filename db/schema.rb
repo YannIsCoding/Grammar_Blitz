@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_11_065550) do
+ActiveRecord::Schema.define(version: 2020_10_15_180536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_10_11_065550) do
     t.string "hide_index", array: true
     t.string "structure"
     t.boolean "edicted", default: false
+    t.boolean "published", default: false
   end
 
   create_table "nouns", force: :cascade do |t|

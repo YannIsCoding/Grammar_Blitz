@@ -3,9 +3,9 @@ class ExercicesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index
 
   def index
-    @exercices = policy_scope(Exercice).automated.order(:created_at)
-    @verb_exercices = policy_scope(Exercice).with_verb
-    @edicted = policy_scope(Exercice).edicted
+    # @exercices = policy_scope(Exercice).automated.order(:created_at)
+    # @verb_exercices = policy_scope(Exercice).with_verb
+    @edicted = policy_scope(Exercice).published.edicted
   end
 
   def show

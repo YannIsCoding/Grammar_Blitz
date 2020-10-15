@@ -3,7 +3,13 @@
     <%= image_tag 'grammar_blitz_logo_blitz.png' %>
     <% end %>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -14,6 +20,9 @@
         <li class="<%= active_class(root_path) %>" >
           <%= link_to "Home", root_path, class: "nav-link" %>
         </li>
+        <li>
+          <%= link_to "Edit Exercises", exercice_edicts_path(Exercice.first), class: "nav-link navbar-links sign-in-button" %>
+        </li>
         <li class=" <%= active_class(exercices_path) %>" >
           <%= link_to "Exercises", exercices_path, class: "nav-link" %>
         </li>
@@ -21,9 +30,18 @@
           <%= link_to "Profile", profile_path, class: "nav-link" %>
         </li>
         <li class="nav-item dropdown">
-          <%= image_tag profile_picture(current_user), class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+          <%= image_tag profile_picture(current_user),
+                        class: "avatar dropdown-toggle",
+                        id: "navbarDropdown",
+                        data: { toggle: "dropdown" },
+                        'aria-haspopup': true,
+                        'aria-expanded': false %>
+          <div class="dropdown-menu dropdown-menu-right"
+               aria-labelledby="navbarDropdown">
+            <%= link_to "Log out",
+                        destroy_user_session_path,
+                        method: :delete,
+                        class: "dropdown-item" %>
           </div>
         </li>
       <% else %>

@@ -6,33 +6,33 @@
     <div class="row justify-content-center">
 
       <div class="col-12 col-md-9">
-        <h2>Verb practice</h2>
+<!--         <h2>Verb practice</h2>
         <div class="exercices mb-2">
-          <% @verb_exercices.each do |verb_exercice| %>
+          <%# @verb_exercices.each do |verb_exercice| %>
             <div class="exercice mr-2">
-              <h6> <%=  verb_exercice.name %> </h6>
-              <%= link_to "Play",
+              <h6> <%#=  verb_exercice.name %> </h6>
+              <%#= link_to "Play",
                           exercice_verb_practice_path(verb_exercice),
                           class: "index-button"  %>
             </div>
-          <% end %>
-        </div>
+          <%# end %>
+        </div> -->
 
-        <h2>Automated practice</h2>
+<!--         <h2>Automated practice</h2>
         <div class="exercices">
 
-          <% @exercices.each do |exercice| %>
+          <%# @exercices.each do |exercice| %>
             <div class="exercice mr-2 mb-2">
-              <h6> <%=  exercice.name %> </h6>
-              <div class=" my-2"> <%= exercice.description %> </div>
-              <%= link_to 'Play',
+              <h6> <%#=  exercice.name %> </h6>
+              <div class=" my-2"> <%#= exercice.description %> </div>
+              <%#= link_to 'Play',
                           new_exercice_practice_session_path(exercice),
                           class: 'index-button mx-3 my-4' %>
             </div>
-          <% end %>
-        </div>
+          <%# end %>
+        </div> -->
 
-        <h2>Edict practice</h2>
+        <!-- <h2>Edict practice</h2> -->
         <div class="exercices mb-2">
           <% @edicted.each do |edict_exercice| %>
             <% next if edict_exercice.edicts.none? %>

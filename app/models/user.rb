@@ -14,11 +14,6 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
-  # def corrects
-  #   # Trial.where(user: self, result: :correct).count
-  #   self.trials.correct
-  # end
-
   def self.ranking
     shameful_array = []
     User.all.each do |user|

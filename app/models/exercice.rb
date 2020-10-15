@@ -7,6 +7,7 @@ class Exercice < ApplicationRecord
   validates :name, :description, presence: true
   validates :name, :description, uniqueness: true
 
+  scope :published, -> { where(published: true) }
   scope :edicted, -> { where(edicted: true) }
   scope :not_verb, -> { where("structure NOT LIKE ?", "%_present") }
   scope :automated, -> { not_verb.where(edicted: false) }

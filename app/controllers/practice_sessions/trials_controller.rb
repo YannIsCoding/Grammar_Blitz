@@ -1,6 +1,7 @@
 module PracticeSessions
   class TrialsController < ApplicationController
     def create
+      # TODO: Debug, somewhere the hide_index is not being past or is empty.
       @practice_session = PracticeSession.find(params[:practice_session_id])
       @previous_trial = @practice_session.trials.last
 

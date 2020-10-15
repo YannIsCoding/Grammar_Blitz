@@ -4,8 +4,9 @@
     <%= f.input :name  %>
     <%= f.input :description  %>
     <%= f.input :structure  %>
-    <%= f.input :published  %>
-    <%= f.button :submit, value: 'Save', class: 'btn-primary' %>
+    <%= f.label "Publish?" %>
+    <%= f.check_box :published, class:'d-block m-auto'  %>
+    <%= f.button :submit, value: 'Save', class: 'btn-primary mt-3' %>
   </div>
 
 <% end %>

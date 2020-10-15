@@ -1,35 +1,51 @@
-
 <div class="profile-container mb-5">
-  <h1>Hello <%= current_user.username %></h1>
+  <h1>Hallo <%= current_user.username %></h1>
   <div class='mb-5'>
-    <%= image_tag profile_picture(current_user), crop: :fill, class: 'avatar-large' %>
+    <%= image_tag profile_picture(current_user),
+                  crop: :fill,
+                  class: 'avatar-large' %>
   </div>
 
   <% if @exercices.empty? %>
-    <%= "You don't have any point yet, "%><%= link_to "give it a go!" , exercices_path %>
+    <%= "You don't have any point yet, "%>
+    <%= link_to "give it a go!" , exercices_path %>
   <% end %>
-  <%= link_to 'Edit your profile', edit_user_registration_path , class: 'cool-button my-5' %>
+  <%= link_to 'Edit your profile',
+              edit_user_registration_path ,
+              class: 'cool-button my-5' %>
 
   <div class="container my-5">
     <div class="row">
       <div class="col-md-8 col-sm-12">
-        <% @exercices.each do |exer| %>
+        <% @exercices.each do |exercice| %>
           <div class="container">
 
             <div class="row justify-content">
               <div class="col mt-2 text-left">
-                <h5> sum up for <%= exer.name %> </h5>
+                <h5> sum up for <%= exercice.name %> </h5>
               </div>
             </div>
 
             <div class="row">
               <% { 'today' => 1, 'week' => 7, 'all of time' => 10_000 }.each do |key, value| %>
-                <% percent = percentage_for_day(current_user, exer, value)  %>
+                <% percent = percentage_for_day(current_user, exercice, value)  %>
                 <div class="col-sm">
                   <p><%= key %>:</p>
                   <div class="progress mb-4 progressbar-container-profile">
-                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: <%= percent %>%" aria-valuemin="0" aria-valuemax="100"> <%= percent %>%</div>
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: <%= 100 - percent %>%" aria-valuemin="0" aria-valuemax="100"><%= 100 - percent %>%</div>
+                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                         role="progressbar"
+                         style="width: <%= percent %>%"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                      <%= percent %>%
+                    </div>
+                    <div class="progress-bar bg-warning"
+                         role="progressbar"
+                         style="width: <%= 100 - percent %>%"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                      <%= 100 - percent %>%
+                    </div>
                   </div>
                 </div>
               <% end %>
@@ -48,14 +64,15 @@
           <% @ranking.each_with_index do |user, index| %>
             <div class="row py-3 align-items-center no-gutters <%= active_user_class(user) %>">
               <div class="col-2 "> <%= index + 1 %> </div>
-              <div class="col-3"> <%= image_tag profile_picture(user), crop: :fill, class: 'avatar' %> </div>
+              <div class="col-3">
+                <%= image_tag profile_picture(user), crop: :fill, class: 'avatar' %>
+              </div>
               <div class="col-5 text-left"> <%= user.username %> </div>
               <div class="col-2"> <%= user.successes_count * 88 %>  </div>
             </div>
           <% end %>
         </div>
       </div>
-
     </div>
   </div>
 

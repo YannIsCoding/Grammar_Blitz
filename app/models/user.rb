@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   after_create :send_welcome_email
 
+  scope :ranking, -> { where("successes_count > '0'").order(successes_count: :desc) }
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -14,20 +16,9 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader
 
-  def self.ranking
-    shameful_array = []
-    User.all.each do |user|
-      user.successes_count = user.trials.correct_count
-      shameful_array << user
-    end
-    shameful_array.select { |user| user.successes_count.positive? }.sort_by(&:successes_count).reverse!
-  end
-
   private
 
   def send_welcome_email
-    unless Rails.env == 'test'
-      UserMailer.welcome(self).deliver_now
-    end
+    UserMailer.welcome(self).deliver_now unless Rails.env == 'test'
   end
 end

@@ -38,9 +38,27 @@
             <% next if edict_exercice.edicts.none? %>
             <div class="exercice mr-2 mb-2">
               <h6> <%=  edict_exercice.name %> </h6>
+              <p><%= edict_exercice.description %> </p>
+              <fieldset class="exercice-indicator-label">
+                <legend class="exercice-indicator-legend">
+                  Weekly points
+                </legend>
+                <p class="exercice-indicator-text">
+                  <%= edict_exercice.total_points(current_user) %>
+                </p>
+              </fieldset>
+
+              <fieldset class="exercice-indicator-label">
+                <legend class="exercice-indicator-legend">
+                  Success rate
+                </legend>
+                <p class="exercice-indicator-text <%= 'weekly-positive' if edict_exercice.successful?(current_user)  %>">
+                  <%= edict_exercice.percentage_correct(current_user) %> %
+                </p>
+              </fieldset>
               <%= link_to "Play",
                           new_exercice_practice_session_path(edict_exercice),
-                          class: "index-button"  %>
+                          class: "#{edict_exercice.successful?(current_user) ? 'discourage-button' : 'index-button'} button mt-2"  %>
             </div>
           <% end %>
         </div>

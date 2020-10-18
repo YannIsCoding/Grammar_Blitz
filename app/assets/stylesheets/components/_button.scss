@@ -1,3 +1,8 @@
+.button{
+  padding: 16px;
+  font-size: 18px;
+}
+
 .cool-button {
     background-color: $pink;
     padding: 16px;
@@ -69,4 +74,10 @@
 
 .delete-edict{
   height: 100%;
+}
+
+
+.discourage-button{
+  background-color: $light-gray;
+  color: $gray;
 }

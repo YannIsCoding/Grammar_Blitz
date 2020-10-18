@@ -1,8 +1,8 @@
 class Exercice < ApplicationRecord
   has_many :edicts
   has_many :practice_sessions
-  has_many :trials
-  has_many :users, through: :trials
+  has_many :trials, through: :practice_sessions
+  # has_many :users, through: :trials
 
   validates :name, :description, presence: true
   validates :name, :description, uniqueness: true
@@ -28,5 +28,34 @@ class Exercice < ApplicationRecord
 
   def preterit
     @preterit ||= structure.split('_').first
+  end
+
+  def correct_trials_count(user)
+    @correct_trials_count ||= trials.where(user: user)
+                                    .where("trials.created_at >= :week_start AND trials.created_at <= :week_end",
+                                           week_start: DateTime.current.beginning_of_week,
+                                           week_end: DateTime.current.end_of_week)
+                                    .where(result: 'correct')
+                                    .count
+  end
+
+  def total_trials_count(user)
+    @total_trials_count = trials.where(user: user)
+                                .where("trials.created_at >= :week_start AND trials.created_at <= :week_end",
+                                       week_start: DateTime.current.beginning_of_week,
+                                       week_end: DateTime.current.end_of_week)
+                                .count
+  end
+
+  def percentage_correct(user)
+    @percentage_correct ||= ((correct_trials_count(user).to_f / total_trials_count(user)) * 100).round
+  end
+
+  def total_points(user)
+    correct_trials_count(user) * 84
+  end
+
+  def successful?(user)
+    percentage_correct(user) > 80
   end
 end

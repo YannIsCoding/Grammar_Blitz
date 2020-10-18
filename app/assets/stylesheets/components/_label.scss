@@ -133,3 +133,22 @@
 .user-hint{
   color: #94949485;
 }
+
+
+.exercice-indicator-label{
+  border: 1px solid $green;
+}
+
+.exercice-indicator-legend{
+  font-size: 12px;
+  width: 50%;
+  margin: 0;
+}
+.exercice-indicator-text{
+  font-weight: bold;
+  margin: 0;
+}
+
+.weekly-positive{
+  color: $green;
+}
